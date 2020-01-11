@@ -1,0 +1,4 @@
+example/keys.json
+.dart_tool/
+pubspec.lock
+.packages
