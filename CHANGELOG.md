@@ -26,3 +26,6 @@ Support updating and deleting method at NCMBObject.
 
 Support Retribing data.
 
+## 0.0.7
+
+Support Acl.

@@ -29,5 +29,39 @@ void main () async{
   print(items[0].get('msg'));
   var item2 = await query.fetch();
   print(item2.get('msg'));
+  
+  query.equalTo('objectId', item.get('objectId'));
+  var item3 = await query.fetch();
+  print(item3.get('objectId'));
+  var acl = new NCMBAcl();
+  acl
+    ..setPublicReadAccess(true)
+    ..setPublicWriteAccess(false)
+    ..setRoleWriteAccess('Admin', true)
+    ..setUserWriteAccess('aaaaa', true);
+  item3
+    ..set('new', 'message')
+    ..set('acl', acl);
+  await item3.save();
+  
+  query.clear();
+  query.equalTo('array', ['a', 'b', 'c']);
+  items = await query.fetchAll();
+  print(items.length);
+  
+  query.clear();
+  query.notEqualTo('array', ['a', 'b', 'c']);
+  items = await query.fetchAll();
+  print(items.length);
+
+  query.clear();
+  query
+    ..notEqualTo('array', ['a', 'b', 'c'])
+    ..limit(2)
+    ..lessThan('int', 4);
+  items = await query.fetchAll();
+  print(items.length);
+  
+  print(items[0].get('acl'));
 }
 

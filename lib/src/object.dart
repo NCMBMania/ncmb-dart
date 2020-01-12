@@ -15,6 +15,13 @@ class NCMBObject {
     if (name == 'createDate' || name == 'updateDate') {
       value = DateTime.parse(value);
     }
+    if (name == 'acl') {
+      if (!(value is NCMBAcl)) {
+        var acl = new NCMBAcl();
+        acl.sets(value);
+        value = acl;
+      }
+    }
     _fields[name] = value;
   }
   

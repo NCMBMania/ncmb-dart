@@ -50,7 +50,21 @@ print(items[0].get('msg'));
 // First data
 var item2 = await query.fetch();
 print(item2.get('msg'));
+
+// Query (Equal)
+query.equalTo('objectId', item.get('objectId'));
+var item3 = await query.fetch();
+print(item3.get('objectId'));
+
+query.clear();
+query
+  ..notEqualTo('array', ['a', 'b', 'c'])
+  ..limit(2)
+  ..lessThan('int', 4);
+items = await query.fetchAll();
+print(items.length);
 ```
+
 
 ## LICENSE
 
