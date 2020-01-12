@@ -8,3 +8,4 @@ part 'src/main.dart';
 part 'src/object.dart';
 part 'src/request.dart';
 part 'src/signature.dart';
+part 'src/query.dart';

@@ -25,6 +25,33 @@ await item.save();
 debugPrint(item.get('objectId'));
 ```
 
+#### Update data
+
+```dart
+await item.set('name', 'goofmint');
+await item.save();
+```
+
+#### Delete data
+
+```dart
+await item.destroy();
+```
+
+#### Retribe data
+
+```dart
+NCMBQuery query = ncmb.Query('Item');
+
+// All data
+var items = await query.fetchAll();
+print(items[0].get('msg'));
+
+// First data
+var item2 = await query.fetch();
+print(item2.get('msg'));
+```
+
 ## LICENSE
 
 MIT.

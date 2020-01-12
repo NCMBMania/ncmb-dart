@@ -11,4 +11,8 @@ class NCMB {
   NCMBObject Object(name) {
     return new NCMBObject(this, name);
   }
+  
+  NCMBQuery Query(name) {
+    return new NCMBQuery(this, name);
+  }
 }
