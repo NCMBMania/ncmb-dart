@@ -45,6 +45,19 @@ class NCMBRequest {
     }
   }
   
+  String jsonEncode(Map fields) {
+    fields.forEach((k, v) {
+      if (v is DateTime) {
+        var format = new DateFormat("yyyy-MM-ddTHH:mm:ss.S'Z'");
+        fields[k] = {
+          '__type': 'Date', 'iso': format.format(v)
+        };
+      }
+    });
+    print(fields);
+    return json.encode(fields);
+  }
+  
   Future<http.Response> req(String url, String method, Map fields, Map headers) async {
     http.Response response;
     switch (method) {
@@ -57,7 +70,7 @@ class NCMBRequest {
       
       case 'POST': {
         response = await http.post(url,
-          body: json.encode(fields),
+          body: jsonEncode(fields),
           headers: headers
         );
       }
@@ -65,7 +78,7 @@ class NCMBRequest {
       
       case 'PUT': {
         response = await http.put(url,
-          body: json.encode(fields),
+          body: jsonEncode(fields),
           headers: headers
         );
       }

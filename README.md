@@ -65,6 +65,29 @@ items = await query.fetchAll();
 print(items.length);
 ```
 
+#### ACL
+
+```dart
+var acl = NCMBAcl();
+acl
+  ..setPublicReadAccess(true)
+  ..setPublicWriteAccess(false)
+  ..setRoleWriteAccess('Admin', true)
+  ..setUserWriteAccess('aaaaa', true);
+item3.set('acl', acl);
+```
+
+#### Special type
+
+```dart
+items[0]
+  // Class of Datastore
+  ..set('item', items[1])
+  // DateTime
+  ..set('time', DateTime.now())
+  // Geo location
+  ..set('geo', NCMBGeoPoint(35.658611, 139.745556));
+```
 
 ## LICENSE
 

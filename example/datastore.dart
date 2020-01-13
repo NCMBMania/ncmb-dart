@@ -5,7 +5,7 @@ import 'dart:convert';
 void main () async{
   String str = await new File('example/keys.json').readAsString();
   Map keys = json.decode(str);
-  NCMB ncmb = new NCMB(keys['applicationKey'], keys['clientKey']);
+  NCMB ncmb = NCMB(keys['applicationKey'], keys['clientKey']);
   
   // Create data
   NCMBObject item = ncmb.Object('Item')
@@ -33,7 +33,7 @@ void main () async{
   query.equalTo('objectId', item.get('objectId'));
   var item3 = await query.fetch();
   print(item3.get('objectId'));
-  var acl = new NCMBAcl();
+  var acl = NCMBAcl();
   acl
     ..setPublicReadAccess(true)
     ..setPublicWriteAccess(false)
@@ -63,5 +63,11 @@ void main () async{
   print(items.length);
   
   print(items[0].get('acl'));
+  
+  items[0]
+    ..set('item', items[1])
+    ..set('time', DateTime.now())
+    ..set('geo', NCMBGeoPoint(35.658611, 139.745556));
+  await items[0].save();
 }
 

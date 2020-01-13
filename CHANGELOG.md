@@ -29,3 +29,7 @@ Support Retribing data.
 ## 0.0.7
 
 Support Acl.
+
+## 0.0.8
+
+Support GeoPoint, DateTime and Class of DataStore.

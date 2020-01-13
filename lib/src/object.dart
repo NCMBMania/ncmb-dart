@@ -53,4 +53,12 @@ class NCMBObject {
   Object get(String name) {
     return _fields[name];
   }
+  
+  dynamic toJson() {
+    return {
+      '__type':'Pointer',
+      'className':_name,
+      'objectId': _fields['objectId']
+    };
+  }
 }
