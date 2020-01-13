@@ -89,6 +89,29 @@ items[0]
   ..set('geo', NCMBGeoPoint(35.658611, 139.745556));
 ```
 
+
+### User
+
+#### Register
+
+```dart
+var userName = 'aaa';
+var password = 'bbb';
+var user = await ncmb.User.signUpByAccount(userName, password);
+```
+
+### Login
+
+```dart
+user = await ncmb.User.login(userName, password);
+```
+
+### Logout
+
+```dart
+user.logout();
+```
+
 ## LICENSE
 
 MIT.

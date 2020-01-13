@@ -3,12 +3,12 @@ import 'dart:io';
 import 'dart:convert';
 
 void main () async{
-  String str = await new File('example/keys.json').readAsString();
+  String str = await File('example/keys.json').readAsString();
   Map keys = json.decode(str);
-  NCMB ncmb = NCMB(keys['applicationKey'], keys['clientKey']);
+  var ncmb = NCMB(keys['applicationKey'], keys['clientKey']);
   
   // Create data
-  NCMBObject item = ncmb.Object('Item')
+  var item = ncmb.Object('Item')
     ..set('msg', 'Hello World')
     ..set('array', ['a', 'b'])
     ..set('int', 1)
@@ -24,7 +24,7 @@ void main () async{
   // Delete data.
   // await item.destroy();
   
-  NCMBQuery query = ncmb.Query('Item');
+  var query = ncmb.Query('Item');
   var items = await query.fetchAll();
   print(items[0].get('msg'));
   var item2 = await query.fetch();
@@ -33,7 +33,7 @@ void main () async{
   query.equalTo('objectId', item.get('objectId'));
   var item3 = await query.fetch();
   print(item3.get('objectId'));
-  var acl = NCMBAcl();
+  var acl = ncmb.Acl();
   acl
     ..setPublicReadAccess(true)
     ..setPublicWriteAccess(false)
@@ -67,7 +67,7 @@ void main () async{
   items[0]
     ..set('item', items[1])
     ..set('time', DateTime.now())
-    ..set('geo', NCMBGeoPoint(35.658611, 139.745556));
+    ..set('geo', ncmb.GeoPoint(35.658611, 139.745556));
   await items[0].save();
 }
 

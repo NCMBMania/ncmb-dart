@@ -8,9 +8,7 @@ class NCMBAcl {
     }
   };
   
-  NCMBAcl() {
-    
-  }
+  NCMBAcl();
   
   void sets(Map map) {
     map.forEach((k, v) {

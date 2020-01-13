@@ -20,9 +20,12 @@ class Signature {
     baseInfo['X-NCMB-Application-Key'] = ncmb.applicationKey;
   }
   
-  String path(className, {String objectId = ''}) {
-    String path = "/${_version}";
-    if (['user', 'push', 'role', 'file'].indexOf(className) > -1) {
+  String path(className, {objectId = '', definePath = ''}) {
+    String path = "/$_version";
+    if (definePath != '') {
+      return "$path/$definePath";
+    }
+    if (['users', 'push', 'role', 'file', 'installations'].indexOf(className) > -1) {
       path = "$path/$className";
     } else {
       path = "$path/classes/$className";
@@ -32,24 +35,34 @@ class Signature {
     return path;
   }
   
-  String url(className, {String objectId = '', Map queries = const {}}) {
+  String url(className, {objectId = '', queries = const {}, definePath = ''}) {
     List queryList = [];
-    queries.forEach((key, value) => queryList.add("$key=${Uri.encodeQueryComponent(jsonEncode(value))}"));
+    queries.forEach((key, value) {
+      if (value is Map || value is List) {
+        value = jsonEncode(value);
+      }
+      queryList.add("$key=${Uri.encodeQueryComponent(value)}");
+    });
     String queryString = queryList.length == 0 ? '' : "?${queryList.join('&')}";
-    return "https://${_fqdn}${path(className, objectId: objectId)}$queryString";
+    return "https://$_fqdn${path(className, objectId: objectId, definePath: definePath)}$queryString";
   }
   
-  String generate(String method, String className, DateTime time, {String objectId = '', Map queries = const {}}) {
+  String generate(String method, String className, DateTime time, {objectId = '', queries = const {}, definePath = ''}) {
     baseInfo['X-NCMB-Timestamp'] = time.toIso8601String();
     List sigList = [];
-    queries.forEach((key, value) => baseInfo[key] = Uri.encodeQueryComponent(jsonEncode(value)));
+    queries.forEach((key, value) {
+      if (value is Map || value is List) {
+        value = jsonEncode(value);
+      }
+      baseInfo[key] = Uri.encodeQueryComponent(value);
+    });
     baseInfo.keys.toList().forEach((key) => sigList.add("$key=${baseInfo[key]}"));
     sigList.sort();
     String queryString = sigList.join('&');
     String str = [
       method,
       _fqdn,
-      path(className, objectId: objectId),
+      path(className, objectId: objectId, definePath: definePath),
       queryString
     ].join("\n");
     List<int> key = utf8.encode(_ncmb.clientKey);

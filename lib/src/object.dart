@@ -2,14 +2,10 @@ part of ncmb;
 
 class NCMBObject {
   String _name;
-  Map _fields;
+  Map _fields = {};
   NCMB _ncmb;
   
-  NCMBObject(NCMB ncmb, String name) {
-    _ncmb = ncmb;
-    _name = name;
-    _fields = {};
-  }
+  NCMBObject(this._ncmb, this._name);
   
   void set(String name, Object value) {
     if (name == 'createDate' || name == 'updateDate') {

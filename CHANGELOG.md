@@ -33,3 +33,7 @@ Support Acl.
 ## 0.0.8
 
 Support GeoPoint, DateTime and Class of DataStore.
+
+## 0.0.9
+
+Supprt user login and logout.

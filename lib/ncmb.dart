@@ -4,6 +4,10 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:crypto/crypto.dart';
 import "package:intl/intl.dart";
+import 'package:package_info/package_info.dart';
+import 'package:plain_notification_token/plain_notification_token.dart';
+import 'dart:io';
+import 'package:notification_reactor/notification_reactor.dart';
 
 part 'src/main.dart';
 part 'src/object.dart';
@@ -12,3 +16,5 @@ part 'src/signature.dart';
 part 'src/query.dart';
 part 'src/acl.dart';
 part 'src/geopoint.dart';
+part 'src/user.dart';
+part 'src/installation.dart';
