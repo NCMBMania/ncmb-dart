@@ -25,7 +25,7 @@ class Signature {
     if (definePath != '') {
       return "$path/$definePath";
     }
-    if (['users', 'push', 'role', 'file', 'installations'].indexOf(className) > -1) {
+    if (['users', 'push', 'role', 'files', 'installations'].indexOf(className) > -1) {
       path = "$path/$className";
     } else {
       path = "$path/classes/$className";

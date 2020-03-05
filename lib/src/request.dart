@@ -39,13 +39,12 @@ class NCMBRequest {
     if (_ncmb.sessionToken != null) {
       headers['X-NCMB-Apps-Session-Token'] = _ncmb.sessionToken;
     }
-    var response = await req(url, method, newFields, headers);
-    if (response.statusCode == 201 || response.statusCode == 200) {
+    try {
+      var response = await req(url, method, newFields, headers, multipart: (name == 'files'), fileName: objectId);
       if (method == 'DELETE') return {};
-      return json.decode(response.body);
-    } else {
-      print(response.body);
-      throw Exception(response.body);
+      return response.data;
+    } on DioError catch(e) {
+      throw Exception(e.response.data);
     }
   }
   
@@ -58,39 +57,57 @@ class NCMBRequest {
         };
       }
     });
-    print(fields);
     return json.encode(fields);
   }
   
-  Future<http.Response> req(String url, String method, Map fields, Map headers) async {
-    http.Response response;
+  Future<Response> req(String url, String method, Map fields, Map headers, {multipart = false, fileName = ''}) async {
+    Response response;
+    var dio = new Dio();
     switch (method) {
       case 'GET': {
-        response = await http.get(url,
-          headers: headers
+        response = await dio.get(url,
+          options: Options(
+            headers: headers
+          )
         );
       }
       break;
       
       case 'POST': {
-        response = await http.post(url,
-          body: jsonEncode(fields),
-          headers: headers
+        var data;
+        if (multipart) {
+          FormData formData = FormData.fromMap({
+            'acl': fields['acl'].toJson(),
+            'file': MultipartFile.fromBytes(fields['file'], filename: fileName, contentType: fields['mimeType'])
+          });
+          data = formData;
+        } else {
+          data = jsonEncode(fields);
+        }
+        response = await dio.post(url,
+          data: data,
+          options: Options(
+            headers: headers
+          )
         );
       }
       break;
       
       case 'PUT': {
-        response = await http.put(url,
-          body: jsonEncode(fields),
-          headers: headers
+        response = await dio.put(url,
+          data: jsonEncode(fields),
+          options: Options(
+            headers: headers
+          )
         );
       }
       break;
 
       case 'DELETE': {
-        response = await http.delete(url,
-          headers: headers
+        response = await dio.delete(url,
+          options: Options(
+            headers: headers
+          )
         );
       }
       break;

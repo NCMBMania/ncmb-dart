@@ -17,6 +17,27 @@ class NCMBUser extends NCMBObject {
     return _currentUser;
   }
   
+  Future<NCMBUser> loginAsAnonymous({String id = ''}) async {
+    var uuid = Uuid();
+    if (id == '') {
+      id = uuid.v4();
+    }
+    _fields = {
+      'authData': {
+        'anonymous': {
+          'id': id
+        }
+      }
+    };
+    NCMBRequest r = new NCMBRequest(_ncmb);
+    Map response = await r.post(_name, _fields);
+    _ncmb.sessionToken = response['sessionToken'];
+    response.removeWhere((k, v) => k == 'sessionToken');
+    _currentUser = NCMBUser(_ncmb);
+    _currentUser.sets(response);
+    return _currentUser;
+  }
+  
   void logout() {
     _ncmb.sessionToken = null;
   }
@@ -32,7 +53,6 @@ class NCMBUser extends NCMBObject {
     };
     NCMBRequest r = new NCMBRequest(_ncmb);
     Map response = await r.exec('GET', _name, queries: _fields, path: 'login');
-    print(response);
     _ncmb.sessionToken = response['sessionToken'];
     response.removeWhere((k, v) => k == 'sessionToken');
     _currentUser = NCMBUser(_ncmb);

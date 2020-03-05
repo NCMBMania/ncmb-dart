@@ -4,16 +4,18 @@ class NCMB {
   String applicationKey;
   String clientKey;
   String sessionToken;
-  String version = '0.1.0';
+  String version = '0.1.2';
   
   NCMBUser User;
   NCMBInstallation Installation;
+  NCMBFile File;
   
   NCMB(String applicationKey, String clientKey) {
     this.applicationKey = applicationKey;
     this.clientKey = clientKey;
     this.User = NCMBUser(this);
     this.Installation = NCMBInstallation(this);
+    this.File = NCMBFile(this);
   }
   
   NCMBObject Object(name) {

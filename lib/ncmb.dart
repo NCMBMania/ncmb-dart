@@ -1,6 +1,5 @@
 library ncmb;
 import 'dart:async';
-import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:crypto/crypto.dart';
 import "package:intl/intl.dart";
@@ -8,6 +7,11 @@ import 'package:package_info/package_info.dart';
 import 'package:plain_notification_token/plain_notification_token.dart';
 import 'dart:io';
 import 'package:notification_reactor/notification_reactor.dart';
+import 'dart:typed_data';
+import 'package:dio/dio.dart';
+import 'package:mime/mime.dart';
+import 'package:http_parser/http_parser.dart';
+import 'package:uuid/uuid.dart';
 
 part 'src/main.dart';
 part 'src/object.dart';
@@ -18,3 +22,4 @@ part 'src/acl.dart';
 part 'src/geopoint.dart';
 part 'src/user.dart';
 part 'src/installation.dart';
+part 'src/file.dart';

@@ -38,12 +38,13 @@ class NCMBObject {
     return true;
   }
   
-  Future<void> destroy() async {
+  Future<bool> destroy() async {
     if (!_fields.containsKey('objectId')) {
       throw Exception('objectId is not found.');
     }
     NCMBRequest r = new NCMBRequest(_ncmb);
-    await r.delete(_name, _fields['objectId']);
+    Map res = await r.delete(_name, _fields['objectId']);
+    return res.keys.length == 0;
   }
   
   Object get(String name) {

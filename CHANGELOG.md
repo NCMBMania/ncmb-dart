@@ -37,3 +37,15 @@ Support GeoPoint, DateTime and Class of DataStore.
 ## 0.0.9
 
 Supprt user login and logout.
+
+## 0.1.0
+
+Support push notification.
+
+## 0.1.1
+
+Delete debug print.
+
+## 0.1.2
+
+Support upload file.

@@ -100,16 +100,43 @@ var password = 'bbb';
 var user = await ncmb.User.signUpByAccount(userName, password);
 ```
 
-### Login
+#### Login
 
 ```dart
 user = await ncmb.User.login(userName, password);
 ```
 
-### Logout
+#### Logout
 
 ```dart
 user.logout();
+```
+
+### File
+
+#### Upload
+
+Upload binary file
+
+```dart
+var fileName = 'dart.png';
+var blob = await File(fileName).readAsBytes();
+var file = await ncmb.File.upload(fileName, blob);
+```
+
+Upload text data as text file.
+
+```dart
+test("Upload text file", () async {
+var fileName = 'dart.txt';
+var file = await ncmb.File.upload(fileName, 'Hello world');
+```
+
+Custom mime type.
+
+```dart
+var fileName = 'dart.csv';
+var file = await ncmb.File.upload(fileName, 'a,b,c', mimeType: 'text/csv');
 ```
 
 ## LICENSE
