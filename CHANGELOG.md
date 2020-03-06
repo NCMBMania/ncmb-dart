@@ -49,3 +49,7 @@ Delete debug print.
 ## 0.1.2
 
 Support upload file.
+
+## 0.1.3
+
+Support anonymous login.
