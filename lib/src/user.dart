@@ -10,10 +10,11 @@ class NCMBUser extends NCMBObject {
     };
     NCMBRequest r = new NCMBRequest(_ncmb);
     Map response = await r.post(_name, _fields);
-    _ncmb.sessionToken = response['sessionToken'];
-    response.removeWhere((k, v) => k == 'sessionToken');
-    _currentUser = NCMBUser(_ncmb);
-    _currentUser.sets(response);
+    return loginSuccess(response);
+  }
+  
+  Future<NCMBUser> loginSuccess(Map response) async {
+    _currentUser = _ncmb.setLoginResponse(response);
     return _currentUser;
   }
   
@@ -31,19 +32,19 @@ class NCMBUser extends NCMBObject {
     };
     NCMBRequest r = new NCMBRequest(_ncmb);
     Map response = await r.post(_name, _fields);
-    _ncmb.sessionToken = response['sessionToken'];
-    response.removeWhere((k, v) => k == 'sessionToken');
-    _currentUser = NCMBUser(_ncmb);
-    _currentUser.sets(response);
-    return _currentUser;
+    return loginSuccess(response);
   }
   
   void logout() {
-    _ncmb.sessionToken = null;
+    _ncmb.clear_prefs();
   }
   
   NCMBUser CurrentUser() {
     return _currentUser;
+  }
+  
+  String toString() {
+    return json.encode(_fields);
   }
   
   Future<NCMBUser> login(String userName, String password) async {
@@ -53,10 +54,6 @@ class NCMBUser extends NCMBObject {
     };
     NCMBRequest r = new NCMBRequest(_ncmb);
     Map response = await r.exec('GET', _name, queries: _fields, path: 'login');
-    _ncmb.sessionToken = response['sessionToken'];
-    response.removeWhere((k, v) => k == 'sessionToken');
-    _currentUser = NCMBUser(_ncmb);
-    _currentUser.sets(response);
-    return _currentUser;
+    return loginSuccess(response);
   }
 }
