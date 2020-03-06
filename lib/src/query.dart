@@ -15,20 +15,30 @@ class NCMBQuery {
   }
   
   Future<NCMBObject> fetch() async {
-    _queries['limit'] = 1;
-    return (await fetchAll())[0];
+    try {
+      _queries['limit'] = 1;
+      var res = await fetchAll();
+      if (res.length == 0) return null;
+      return res[0];
+    } catch (e) {
+      throw e;
+    }
   }
   
   Future<List> fetchAll() async {
-    var r = new NCMBRequest(_ncmb);
-    List ary = await r.get(_name, _queries);
-    var results = [];
-    ary.forEach((item) {
-      var obj = new NCMBObject(_ncmb, _name);
-      obj.sets(item);
-      results.add(obj);
-    });
-    return results;
+    try {
+      var r = new NCMBRequest(_ncmb);
+      List ary = await r.get(_name, _queries);
+      var results = [];
+      ary.forEach((item) {
+        var obj = new NCMBObject(_ncmb, _name);
+        obj.sets(item);
+        results.add(obj);
+      });
+      return results;
+    } catch (e) {
+      throw e;
+    }
   }
   
   void initWhere() {

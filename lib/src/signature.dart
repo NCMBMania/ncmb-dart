@@ -41,6 +41,9 @@ class Signature {
       if (value is Map || value is List) {
         value = jsonEncode(value);
       }
+      if (value is int) {
+        value = value.toString();
+      }
       queryList.add("$key=${Uri.encodeQueryComponent(value)}");
     });
     String queryString = queryList.length == 0 ? '' : "?${queryList.join('&')}";
@@ -53,6 +56,9 @@ class Signature {
     queries.forEach((key, value) {
       if (value is Map || value is List) {
         value = jsonEncode(value);
+      }
+      if (value is int) {
+        value = value.toString();
       }
       baseInfo[key] = Uri.encodeQueryComponent(value);
     });

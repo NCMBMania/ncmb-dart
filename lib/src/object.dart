@@ -58,4 +58,15 @@ class NCMBObject {
       'objectId': _fields['objectId']
     };
   }
+
+  String toString() {
+    return json.encode(_fields, toEncodable: myEncode);
+  }
+  
+  dynamic myEncode(dynamic item) {
+    if(item is DateTime) {
+      return item.toIso8601String();
+    }
+    return item;
+  }
 }

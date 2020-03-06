@@ -7,8 +7,12 @@ class NCMBRequest {
   }
   
   Future<List> get(String name, Map queries) async {
-    var res = await exec('GET', name, queries: queries);
-    return res['results'] as List;
+    try {
+      var res = await exec('GET', name, queries: queries);
+      return res['results'] as List;
+    } catch (e) {
+      throw e;
+    }
   }
   
   Future<Map> post(String name, Map fields) async {

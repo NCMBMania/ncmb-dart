@@ -106,6 +106,24 @@ var user = await ncmb.User.signUpByAccount(userName, password);
 user = await ncmb.User.login(userName, password);
 ```
 
+#### Anonymous Login
+
+```dart
+user = await ncmb.User.loginAsAnonymous();
+```
+
+#### Check session stats
+
+```dart
+var user = await ncmb.User.CurrentUser();
+if (user != null && (await user.enableSession())) {
+  print('Login');
+} else {
+  print('no login');
+  await user.logout();
+}
+```
+
 #### Logout
 
 ```dart
