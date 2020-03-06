@@ -60,6 +60,9 @@ class NCMBRequest {
           '__type': 'Date', 'iso': format.format(v)
         };
       }
+      if (v is NCMBAcl) {
+        fields[k] = v.toJson();
+      }
     });
     return json.encode(fields);
   }

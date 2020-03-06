@@ -29,11 +29,11 @@ class NCMBObject {
     if (!_fields.containsKey('objectId')) {
       NCMBRequest r = new NCMBRequest(_ncmb);
       Map response = await r.post(_name, _fields);
-      response.forEach((key, value) => set(key, value));
+      sets(response);
     } else {
       NCMBRequest r = new NCMBRequest(_ncmb);
       Map response = await r.put(_name, _fields['objectId'], _fields);
-      response.forEach((key, value) => set(key, value));
+      sets(response);
     }
     return true;
   }

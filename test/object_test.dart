@@ -14,12 +14,19 @@ void main() {
   
   group('Object test', () {
     test("Save data", () async {
+      var acl = ncmb.Acl();
+      acl
+        ..setPublicReadAccess(false)
+        ..setPublicWriteAccess(true)
+        ..setUserReadAccess('aaa', true);
       var item = ncmb.Object('Item')
         ..set('msg', 'Hello World')
         ..set('array', ['a', 'b'])
         ..set('int', 1)
+        ..set('acl', acl)
         ..set('name', 'Atsushi');
       await item.save();
+      print(item.get('objectId'));
       expect(item.get('objectId') != null, true);
     });
     

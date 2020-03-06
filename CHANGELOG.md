@@ -53,3 +53,11 @@ Support upload file.
 ## 0.1.3
 
 Support anonymous login.
+
+## 0.1.4
+
+Bug fix.
+
+## 0.1.4
+
+Bug fix in ACL.

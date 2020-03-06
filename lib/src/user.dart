@@ -36,7 +36,7 @@ class NCMBUser extends NCMBObject {
   
   Future<void> logout() async {
     _prefs = await SharedPreferences.getInstance();
-    _ncmb.sessionToken = '';
+    _ncmb.sessionToken = null;
     _prefs.remove(_userKey);
     _prefs.remove(_sessionKey);
   }
