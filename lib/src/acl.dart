@@ -59,6 +59,7 @@ class NCMBAcl {
       if (v['read'] == true) res[k]['read'] = true;
       if (v['write'] == true) res[k]['write'] = true;
     });
-    return res;
+    return Map.from(res)
+      ..removeWhere((k, v) => res[k].length == 0);
   }
 }

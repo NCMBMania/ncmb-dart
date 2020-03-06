@@ -18,7 +18,21 @@ class NCMBObject {
         value = acl;
       }
     }
+    if (value.runtimeType.toString() == '_InternalLinkedHashMap<String, dynamic>') {
+      var map = value as Map;
+      if (map['className'] != null) {
+        NCMBObject obj = _ncmb.Object(map['className']);
+        map.remove('className');
+        map.remove('__type');
+        obj.sets(map);
+        value = obj;
+      }
+    }
     _fields[name] = value;
+  }
+  
+  String className() {
+    return _name;
   }
   
   void sets(Map map) {
@@ -64,8 +78,11 @@ class NCMBObject {
   }
   
   dynamic myEncode(dynamic item) {
-    if(item is DateTime) {
+    if (item is DateTime) {
       return item.toIso8601String();
+    }
+    if (item is NCMBAcl) {
+      return item.toJson();
     }
     return item;
   }

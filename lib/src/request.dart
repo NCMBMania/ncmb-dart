@@ -8,7 +8,7 @@ class NCMBRequest {
   
   Future<List> get(String name, Map queries) async {
     try {
-      var res = await exec('GET', name, queries: queries);
+      Map<String, dynamic> res = await exec('GET', name, queries: queries);
       return res['results'] as List;
     } catch (e) {
       throw e;
@@ -67,6 +67,10 @@ class NCMBRequest {
     return json.encode(fields);
   }
   
+  void printWrapped(String text) {
+    final pattern = new RegExp('.{1,800}'); // 800 is the size of each chunk
+    pattern.allMatches(text).forEach((match) => print(match.group(0)));
+  }
   Future<Response> req(String url, String method, Map fields, Map headers, {multipart = false, fileName = ''}) async {
     Response response;
     var dio = new Dio();
@@ -75,11 +79,9 @@ class NCMBRequest {
         response = await dio.get(url,
           options: Options(
             headers: headers
-          )
-        );
-      }
-      break;
-      
+          ));
+        }
+        break;
       case 'POST': {
         var data;
         if (multipart) {
