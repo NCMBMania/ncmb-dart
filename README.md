@@ -157,6 +157,12 @@ var fileName = 'dart.csv';
 var file = await ncmb.File.upload(fileName, 'a,b,c', mimeType: 'text/csv');
 ```
 
+#### Download
+
+```dart
+var file = await ncmb.File.download('dart.png');
+```
+
 ## LICENSE
 
 MIT.

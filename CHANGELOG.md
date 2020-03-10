@@ -65,3 +65,7 @@ Bug fix in ACL.
 ## 0.1.6
 
 Bug fix in DataStore.
+
+## 0.1.7
+
+Support file download.
