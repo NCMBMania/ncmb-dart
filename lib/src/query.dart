@@ -29,7 +29,7 @@ class NCMBQuery {
     try {
       var r = new NCMBRequest(_ncmb);
       List ary = await r.get(_name, _queries);
-      var results = [];
+      List<NCMBObject> results = [];
       ary.forEach((item) {
         var obj = new NCMBObject(_ncmb, _name);
         obj.sets(item);
@@ -131,6 +131,15 @@ class NCMBQuery {
   
   void setOperand(String key, Object value, {String ope = ''}) {
     initWhere();
+    if (value.runtimeType == NCMBObject) {
+      var obj = value as NCMBObject;
+      value = {
+        '__type': 'Pointer',
+        'className': obj.className(),
+        'objectId': obj.get('objectId')
+      };
+    }
+    
     if (ope == '') {
       _queries['where'][key] = value;
     } else {
