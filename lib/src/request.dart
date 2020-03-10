@@ -40,11 +40,17 @@ class NCMBRequest {
       "X-NCMB-Signature": signature,
       "Content-Type": "application/json"
     };
+    if (name == 'files') {
+      headers.remove('Content-Type');
+    }
     if (_ncmb.sessionToken != null) {
       headers['X-NCMB-Apps-Session-Token'] = _ncmb.sessionToken;
     }
     try {
       var response = await req(url, method, newFields, headers, multipart: (name == 'files'), fileName: objectId);
+      if (response.data is Uint8List) {
+        return {"data": response.data};
+      }
       if (method == 'DELETE') return {};
       return response.data;
     } on DioError catch(e) {
@@ -72,11 +78,20 @@ class NCMBRequest {
     var dio = new Dio();
     switch (method) {
       case 'GET': {
-        response = await dio.get(url,
-          options: Options(
-            headers: headers
-          )
-        );
+        if (multipart) {
+          response = await dio.get<List<int>>(url,
+            options: Options(
+              headers: headers,
+              responseType: ResponseType.bytes
+            )
+          );
+        } else {
+          response = await dio.get(url,
+            options: Options(
+              headers: headers
+            )
+          );
+        }
       }
       break;
       
