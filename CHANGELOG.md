@@ -1,3 +1,7 @@
+## 0.1.8
+
+* Prepare for 1.0.0 version of sensors and package_info. ([dart_lsc](http://github.com/amirh/dart_lsc))
+
 # CHANGELOG
 
 ## 0.0.1
