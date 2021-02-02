@@ -69,3 +69,11 @@ Bug fix in DataStore.
 ## 0.1.7
 
 Support file download.
+
+## 0.1.8
+
+Remove native features. Change target platform with web.
+
+## 0.1.9
+
+Bug fix for web.

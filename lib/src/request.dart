@@ -37,8 +37,7 @@ class NCMBRequest {
     Map<String, String> headers = {
       "X-NCMB-Application-Key": _ncmb.applicationKey,
       "X-NCMB-Timestamp": time.toIso8601String(),
-      "X-NCMB-Signature": signature,
-      "Content-Type": "application/json"
+      "X-NCMB-Signature": signature
     };
     if (name == 'files') {
       headers.remove('Content-Type');
