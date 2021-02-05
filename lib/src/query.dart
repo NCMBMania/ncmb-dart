@@ -2,10 +2,9 @@ part of ncmb;
 
 class NCMBQuery {
   String _name;
-  NCMB _ncmb;
+  static NCMB ncmb;
   Map _queries;
-  NCMBQuery(NCMB ncmb, String name) {
-    _ncmb = ncmb;
+  NCMBQuery(String name) {
     _name = name;
     _queries = {};
   }
@@ -14,7 +13,7 @@ class NCMBQuery {
     _queries = {};
   }
   
-  Future<NCMBObject> fetch() async {
+  Future fetch() async {
     try {
       _queries['limit'] = 1;
       var res = await fetchAll();
@@ -27,11 +26,25 @@ class NCMBQuery {
   
   Future<List> fetchAll() async {
     try {
-      var r = new NCMBRequest(_ncmb);
+      var r = new NCMBRequest();
       List ary = await r.get(_name, _queries);
       List<NCMBObject> results = [];
       ary.forEach((item) {
-        var obj = new NCMBObject(_ncmb, _name);
+        var obj;
+        switch (_name) {
+        case 'files':
+          obj = new NCMBFile();
+          break;
+        case 'users':
+          obj = new NCMBUser();
+          break;
+        case 'roles':
+          obj = new NCMBRole(item['roleName']);
+          break;
+        default:
+          obj = new NCMBObject(_name);
+          break;
+        }
         obj.sets(item);
         results.add(obj);
       });
@@ -96,6 +109,29 @@ class NCMBQuery {
   void allInArray(String key, Object value) {
     setOperand(key, value, ope: '\$all');
   }
+
+  void relatedTo(obj, String key) {
+    var className;
+    if (obj is NCMBUser) {
+      className = 'user';
+    } else if (obj is NCMBRole) {
+      className = 'role';
+    } else if (obj is NCMBInstallation) {
+      className = 'installation';
+    } else {
+      className = obj.name;
+    }
+    var query = {
+      'object': {
+        '__type': 'Pointer',
+        'className': className,
+        'objectId': obj.get('objectId')
+      },
+      'key': key
+    };
+    initWhere();
+    _queries['where']['\$relatedTo'] = query;
+  }
   
   void include(String className) {
     if (!_queries.containsKey('include')) _queries['include'] = '';
@@ -128,7 +164,11 @@ class NCMBQuery {
     }
     _queries['skip'] = number;
   }
-  
+
+  Map toJson() {
+    return _queries;
+  }
+
   void setOperand(String key, Object value, {String ope = ''}) {
     initWhere();
     if (value.runtimeType == NCMBObject) {

@@ -1,11 +1,18 @@
 part of ncmb;
 
 class NCMBObject {
+  static NCMB ncmb;
+
   String _name;
   Map _fields = {};
-  NCMB _ncmb;
   
-  NCMBObject(this._ncmb, this._name);
+  NCMBObject(this._name);
+
+  get name => _name;
+
+  NCMBObject.initWithParams(this._name, params) {
+    this.sets(params);
+  }
   
   void set(String name, Object value) {
     if (name == 'createDate' || name == 'updateDate') {
@@ -21,7 +28,7 @@ class NCMBObject {
     if (value.runtimeType.toString() == '_InternalLinkedHashMap<String, dynamic>') {
       var map = value as Map;
       if (map['className'] != null) {
-        NCMBObject obj = _ncmb.Object(map['className']);
+        NCMBObject obj = NCMBObject(map['className']);
         map.remove('className');
         map.remove('__type');
         obj.sets(map);
@@ -38,25 +45,82 @@ class NCMBObject {
   void sets(Map map) {
     map.forEach((k, v) => set(k, v));
   }
-  
+
+  Future<void> fetch() async {
+    if (!_fields.containsKey('objectId')) {
+      throw Exception('ObjectId is required.');
+    }
+    NCMBRequest r = new NCMBRequest();
+    Map response = await r.exec('GET', _name, objectId: get('objectId'));
+    sets(response);
+  }
+
+  void increment(String name, int number) {
+    if (!_fields.containsKey('objectId')) {
+      return set(name, number);
+    }
+    set(name, {
+      '__op': 'Increment',
+      'amount': number
+    });
+  }
+
+  void add(String name, Object value) {
+    if (!_fields.containsKey('objectId')) {
+      return set(name, value);
+    }
+    if (!(value is List)) {
+      value = [value];
+    }
+    set(name, {
+      '__op': 'Add',
+      'objects': value
+    });
+  }
+
+  void addUnique(String name, Object value) {
+    if (!_fields.containsKey('objectId')) {
+      return set(name, value);
+    }
+    if (!(value is List)) {
+      value = [value];
+    }
+    set(name, {
+      '__op': 'AddUnique',
+      'objects': value
+    });
+  }
+
+  void remove(String name, Object value) {
+    if (!_fields.containsKey('objectId')) {
+      return set(name, value);
+    }
+    if (!(value is List)) {
+      value = [value];
+    }
+    set(name, {
+      '__op': 'Remove',
+      'objects': value
+    });
+  }
+
   Future<void> save() async {
     if (!_fields.containsKey('objectId')) {
-      NCMBRequest r = new NCMBRequest(_ncmb);
+      NCMBRequest r = new NCMBRequest();
       Map response = await r.post(_name, _fields);
       sets(response);
     } else {
-      NCMBRequest r = new NCMBRequest(_ncmb);
+      NCMBRequest r = new NCMBRequest();
       Map response = await r.put(_name, _fields['objectId'], _fields);
       sets(response);
     }
-    return true;
   }
   
-  Future<bool> destroy() async {
+  Future<bool> delete() async {
     if (!_fields.containsKey('objectId')) {
       throw Exception('objectId is not found.');
     }
-    NCMBRequest r = new NCMBRequest(_ncmb);
+    NCMBRequest r = new NCMBRequest();
     Map res = await r.delete(_name, _fields['objectId']);
     return res.keys.length == 0;
   }

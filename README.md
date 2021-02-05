@@ -8,7 +8,7 @@ Dart and Flutter library for Nifcloud mobile backend(NCMB).
 
 ```dart
 import 'package:ncmb/ncmb.dart';
-NCMB ncmb = new NCMB('YOUR_APPLICATION_KEY', 'YOUR_CLIENT_KEY');
+NCMB('YOUR_APPLICATION_KEY', 'YOUR_CLIENT_KEY');
 ```
 
 ### DataStore
@@ -16,7 +16,7 @@ NCMB ncmb = new NCMB('YOUR_APPLICATION_KEY', 'YOUR_CLIENT_KEY');
 #### Create data
 
 ```dart
-NCMBObject item = ncmb.Object('Item')
+NCMBObject item = NCMBObject('Item')
   ..set('msg', 'Hello World')
   ..set('array', ['a', 'b'])
   ..set('int', 1)
@@ -35,13 +35,13 @@ await item.save();
 #### Delete data
 
 ```dart
-await item.destroy();
+await item.delete();
 ```
 
 #### Retribe data
 
 ```dart
-NCMBQuery query = ncmb.Query('Item');
+NCMBQuery query = NCMBQuery('Item');
 
 // All data
 var items = await query.fetchAll();
@@ -97,25 +97,29 @@ items[0]
 ```dart
 var userName = 'aaa';
 var password = 'bbb';
-var user = await ncmb.User.signUpByAccount(userName, password);
+var user = NCMBUser();
+user
+  ..set('userName', userName)
+  ..set('password', password);
+await user.signUpByAccount();
 ```
 
 #### Login
 
 ```dart
-user = await ncmb.User.login(userName, password);
+var user = await NCMBUser.login(userName, password);
 ```
 
 #### Anonymous Login
 
 ```dart
-user = await ncmb.User.loginAsAnonymous();
+var user = await NCMBUser.loginAsAnonymous();
 ```
 
 #### Check session stats
 
 ```dart
-var user = await ncmb.User.CurrentUser();
+var user = await NCMBUser.CurrentUser();
 if (user != null && (await user.enableSession())) {
   print('Login');
 } else {
@@ -139,7 +143,7 @@ Upload binary file
 ```dart
 var fileName = 'dart.png';
 var blob = await File(fileName).readAsBytes();
-var file = await ncmb.File.upload(fileName, blob);
+var file = await NCMBFile.upload(fileName, blob);
 ```
 
 Upload text data as text file.
@@ -147,20 +151,20 @@ Upload text data as text file.
 ```dart
 test("Upload text file", () async {
 var fileName = 'dart.txt';
-var file = await ncmb.File.upload(fileName, 'Hello world');
+var file = await NCMBFile.upload(fileName, 'Hello world');
 ```
 
 Custom mime type.
 
 ```dart
 var fileName = 'dart.csv';
-var file = await ncmb.File.upload(fileName, 'a,b,c', mimeType: 'text/csv');
+var file = await NCMBFile.upload(fileName, 'a,b,c', mimeType: 'text/csv');
 ```
 
 #### Download
 
 ```dart
-var file = await ncmb.File.download('dart.png');
+var file = await NCMBFile.download('dart.png');
 ```
 
 ## LICENSE

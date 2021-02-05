@@ -1,9 +1,10 @@
 part of ncmb;
 
 class NCMBFile extends NCMBObject {
-  NCMBFile(NCMB ncmb) : super(ncmb, 'files');
+  static NCMB ncmb;
+  NCMBFile() : super('files');
   
-  Future<NCMBFile> upload(String fileName, dynamic blob, {acl = '', mimeType = ''}) async {
+  static Future<NCMBFile> upload(String fileName, dynamic blob, {acl = '', mimeType = ''}) async {
     List mime;
     if (mimeType == '') {
       if (blob is Uint8List) {
@@ -17,26 +18,39 @@ class NCMBFile extends NCMBObject {
     if (blob is! Uint8List) blob = utf8.encode(blob);
     
     if (acl == '') {
-      acl = _ncmb.Acl()
+      acl = new NCMBAcl()
         ..setPublicReadAccess(true)
         ..setPublicWriteAccess(true);
     }
-    NCMBRequest r = new NCMBRequest(_ncmb);
-    Map response = await r.exec('POST', _name, objectId: fileName, fields: {
+    NCMBRequest r = new NCMBRequest();
+    Map response = await r.exec('POST', 'files', objectId: fileName, fields: {
       'acl': acl,
       'file': blob,
-      'mimeType': MediaType(mime[0], mime[1])
-    });
-    var f = NCMBFile(_ncmb);
+      'mimeType': MediaType(mime[0], mime[1]),
+    }, multipart: true);
+    var f = NCMBFile();
     f.sets(response);
     return f;
   }
   
   Future<NCMBFile> download(String fileName) async {
-    NCMBRequest r = new NCMBRequest(_ncmb);
-    Map response = await r.exec('GET', _name, objectId: fileName);
-    var f = NCMBFile(_ncmb);
+    NCMBRequest r = new NCMBRequest();
+    Map response = await r.exec('GET', _name, objectId: fileName, multipart: true);
+    var f = NCMBFile();
     f.set('blob', response['data']);
     return f;
+  }
+
+  static NCMBQuery query() {
+    return NCMBQuery('files');
+  }
+
+  Future<bool> delete() async {
+    if (!_fields.containsKey('fileName')) {
+      throw Exception('fileName is not found.');
+    }
+    NCMBRequest r = new NCMBRequest();
+    Map res = await r.delete(_name, _fields['fileName']);
+    return res.keys.length == 0;
   }
 }

@@ -1,83 +1,141 @@
 part of ncmb;
 
 class NCMBUser extends NCMBObject {
-  SharedPreferences _prefs;
-  String _userKey = 'CurrentUser';
-  String _sessionKey = 'SessionId';
+  static NCMB ncmb;
+  static SharedPreferences _prefs;
+  static String _userKey = 'CurrentUser';
+  static String _sessionKey = 'SessionId';
   
-  NCMBUser _currentUser;
-  NCMBUser(NCMB ncmb) : super(ncmb, 'users');
-  Future<NCMBUser> signUpByAccount(String userName, String password) async {
+  static NCMBUser _currentUser;
+  NCMBUser() : super('users');
+  
+  Future<void> signUpByAccount() async {
     _fields = {
-      'userName': userName,
-      'password': password
+      'userName': get('userName'),
+      'password': get('password')
     };
-    NCMBRequest r = new NCMBRequest(_ncmb);
+    NCMBRequest r = new NCMBRequest();
     Map response = await r.post(_name, _fields);
-    return await setLoginResponse(response);
+    _fields.remove('password');
+    await setLoginResponse(response);
   }
   
-  Future<NCMBUser> loginAsAnonymous({String id = ''}) async {
+  static Future<NCMBUser> loginAsAnonymous({String id = ''}) async {
     var uuid = Uuid();
     if (id == '') {
       id = uuid.v4();
     }
-    _fields = {
+    Map _fields = {
       'authData': {
         'anonymous': {
           'id': id
         }
       }
     };
-    NCMBRequest r = new NCMBRequest(_ncmb);
-    Map response = await r.post(_name, _fields);
-    return await setLoginResponse(response);
+    NCMBRequest r = new NCMBRequest();
+    Map response = await r.post('users', _fields);
+    var user = NCMBUser();
+    await user.setLoginResponse(response);
+    return user;
+  }
+
+  static Future<NCMBUser> loginWithMailAddress(String mailAddress, String password) async {
+    var _fields = {
+      'mailAddress': mailAddress,
+      'password': password
+    };
+    NCMBRequest r = new NCMBRequest();
+    Map response = await r.exec('GET', 'users', queries: _fields, path: 'login');
+    var user = NCMBUser();
+    await user.setLoginResponse(response);
+    return user;
+  }
+
+  static Future<NCMBUser> loginWith(String provider, Map data) async {
+    NCMBRequest r = new NCMBRequest();
+    var fields = {'authData': {}};
+    fields['authData'][provider] = data;
+    Map response = await r.post('users', fields);
+    var user = NCMBUser();
+    await user.setLoginResponse(response);
+    return user;
+  }
+
+  static Future<void> requestSignUpEmail(String mailAddress) async {
+    Map _fields = {
+      'mailAddress': mailAddress
+    };
+    NCMBRequest r = new NCMBRequest();
+    Map response = await r.exec('POST', 'users', fields: _fields, path: 'requestMailAddressUserEntry');
   }
   
-  Future<void> logout() async {
-    _prefs = await SharedPreferences.getInstance();
-    _ncmb.sessionToken = null;
-    _prefs.remove(_userKey);
-    _prefs.remove(_sessionKey);
+  static Future<void> logout() async {
+    NCMBUser.ncmb.sessionToken = null;
+    try {
+      NCMBUser._prefs = await SharedPreferences.getInstance();
+      NCMBUser._prefs.remove(NCMBUser._userKey);
+      NCMBUser._prefs.remove(NCMBUser._sessionKey);
+    } catch (e) {
+    }
+    return;
   }
   
   Future<NCMBUser> CurrentUser() async {
-    if (_currentUser != null) return _currentUser;
-    _prefs = await SharedPreferences.getInstance();
-    var string = _prefs.getString(_userKey);
-    if (string != null) {
-      _ncmb.sessionToken = _prefs.getString(_sessionKey);
-      var user = NCMBUser(_ncmb);
-      user.sets(json.decode(string));
-      _currentUser = user;
+    if (NCMBUser._currentUser != null) return NCMBUser._currentUser;
+    try {
+      NCMBUser._prefs = await SharedPreferences.getInstance();
+      var string = NCMBUser._prefs.getString(NCMBUser._userKey);
+      if (string != null) {
+        NCMBUser.ncmb.sessionToken = NCMBUser._prefs.getString(NCMBUser._sessionKey);
+        var user = NCMBUser();
+        user.sets(json.decode(string));
+        NCMBUser._currentUser = user;
+      }
+      return NCMBUser._currentUser;
+    } catch (e) {
+      return null;
     }
-    return _currentUser;
   }
   
-  Future<NCMBUser> login(String userName, String password) async {
-    _fields = {
+  static Future<NCMBUser> login(String userName, String password) async {
+    Map _fields = {
       'userName': userName,
       'password': password
     };
-    NCMBRequest r = new NCMBRequest(_ncmb);
-    Map response = await r.exec('GET', _name, queries: _fields, path: 'login');
-    return setLoginResponse(response);
-  }
-
-  Future<NCMBUser> setLoginResponse(Map response) async {
-    _ncmb.sessionToken = response['sessionToken'];
-    response.removeWhere((k, v) => k == 'sessionToken');
-    var user = NCMBUser(_ncmb);
-    user.sets(response);
-    _prefs = await SharedPreferences.getInstance();
-    _prefs.setString(_userKey, user.toString());
-    _prefs.setString(_sessionKey, _ncmb.sessionToken);
+    NCMBRequest r = new NCMBRequest();
+    Map response = await r.exec('GET', 'users', queries: _fields, path: 'login');
+    var user = NCMBUser();
+    user.setLoginResponse(response);
     return user;
   }
+
+  Future<void> setLoginResponse(Map response) async {
+    NCMBUser.ncmb.sessionToken = response['sessionToken'];
+    response.removeWhere((k, v) => k == 'sessionToken');
+    this.sets(response);
+    try {
+      _prefs = await SharedPreferences.getInstance();
+      _prefs.setString(_userKey, this.toString());
+      _prefs.setString(_sessionKey, NCMBUser.ncmb.sessionToken);
+    } catch (e) {
+    }
+  }
   
+  static NCMBQuery query() {
+    return new NCMBQuery('users');
+  }
+
+  Map toJson() {
+    return {
+      '__type': 'Pointer',
+      'className': 'user',
+      'objectId': this.get('objectId')
+    };
+  }
+
   Future<bool> enableSession() async {
     try {
-      var query = _ncmb.Query('users');
+      var query = NCMBUser.query();
       query
         ..equalTo('test', 'test');
       await query.fetch();

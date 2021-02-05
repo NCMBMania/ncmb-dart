@@ -22,3 +22,6 @@ part 'src/geopoint.dart';
 part 'src/user.dart';
 part 'src/installation.dart';
 part 'src/file.dart';
+part 'src/role.dart';
+part 'src/relation.dart';
+part 'src/push.dart';
