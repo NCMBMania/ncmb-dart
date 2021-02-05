@@ -3,7 +3,6 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:crypto/crypto.dart';
 import "package:intl/intl.dart";
-import 'package:package_info/package_info.dart';
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:dio/dio.dart';
