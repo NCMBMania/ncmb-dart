@@ -26,14 +26,14 @@ class NCMBAcl {
     fields['*']['write'] = allow;
   }
   
-  void setUserReadAccess(String objectId, bool allow) {
-    roleInit(objectId);
-    fields[objectId]['read'] = allow;
+  void setUserReadAccess(NCMBUser user, bool allow) {
+    roleInit(user.get('objectId'));
+    fields[user.get('objectId')]['read'] = allow;
   }
   
-  void setUserWriteAccess(String objectId, bool allow) {
-    roleInit(objectId);
-    fields[objectId]['write'] = allow;
+  void setUserWriteAccess(NCMBUser user, bool allow) {
+    roleInit(user.get('objectId'));
+    fields[user.get('objectId')]['write'] = allow;
   }
   
   void setRoleReadAccess(String roleName, bool allow) {

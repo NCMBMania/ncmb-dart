@@ -1,22 +1,21 @@
 part of '../ncmb.dart';
 
 class NCMBRequest {
-  NCMB _ncmb;
-  NCMBRequest(NCMB ncmb) {
-    _ncmb = ncmb;
+  static NCMB ncmb;
+  NCMBRequest() {
   }
   
-  Future<List> get(String name, Map queries) async {
+  Future<List> get(String name, Map queries, {multipart = false}) async {
     try {
-      Map<String, dynamic> res = await exec('GET', name, queries: queries);
+      Map<String, dynamic> res = await exec('GET', name, queries: queries, multipart: multipart);
       return res['results'] as List;
     } catch (e) {
       throw e;
     }
   }
   
-  Future<Map> post(String name, Map fields) async {
-    return exec('POST', name, fields: fields);
+  Future<Map> post(String name, Map fields, {multipart = false}) async {
+    return exec('POST', name, fields: fields, multipart: multipart);
   }
   
   Future<Map> put(String name, String objectId, Map fields) async {
@@ -27,26 +26,26 @@ class NCMBRequest {
     return exec('DELETE', name, objectId: objectId);
   }
   
-  Future<Map> exec(String method, String name, {fields = const {}, objectId = '', queries = const {}, path = ''}) async {
-    Signature s = new Signature(_ncmb);
+  Future<Map> exec(String method, String name, {fields = const {}, objectId = '', queries = const {}, path = '', multipart = false}) async {
+    Signature s = new Signature(NCMBRequest.ncmb);
     DateTime time = DateTime.now();
     final newFields = Map.from(fields)
       ..removeWhere((k, v) => (k == 'objectId' || k == 'createDate' || k == 'updateDate'));
     String signature = s.generate(method, name, time, objectId: objectId, queries: queries, definePath: path);
     String url = s.url(name, objectId: objectId, queries: queries, definePath: path);
     Map<String, String> headers = {
-      "X-NCMB-Application-Key": _ncmb.applicationKey,
+      "X-NCMB-Application-Key": NCMBRequest.ncmb.applicationKey,
       "X-NCMB-Timestamp": time.toIso8601String(),
       "X-NCMB-Signature": signature
     };
     if (name == 'files') {
       headers.remove('Content-Type');
     }
-    if (_ncmb.sessionToken != null) {
-      headers['X-NCMB-Apps-Session-Token'] = _ncmb.sessionToken;
+    if (NCMBRequest.ncmb.sessionToken != null) {
+      headers['X-NCMB-Apps-Session-Token'] = NCMBRequest.ncmb.sessionToken;
     }
     try {
-      var response = await req(url, method, newFields, headers, multipart: (name == 'files'), fileName: objectId);
+      var response = await req(url, method, newFields, headers, multipart: multipart, fileName: objectId);
       if (response.data is Uint8List) {
         return {"data": response.data};
       }
@@ -66,6 +65,12 @@ class NCMBRequest {
         };
       }
       if (v is NCMBAcl) {
+        fields[k] = v.toJson();
+      }
+      if (v is NCMBRelation) {
+        fields[k] = v.toJson();
+      }
+      if (v is NCMBQuery) {
         fields[k] = v.toJson();
       }
     });

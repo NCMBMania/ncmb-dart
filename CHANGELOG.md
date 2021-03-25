@@ -77,3 +77,15 @@ Remove native features. Change target platform with web.
 ## 0.1.9
 
 Bug fix for web.
+
+## 2.0.0
+
+Major update.
+
+## 2.0.1
+
+Remove Package info.
+
+## 2.0.2
+
+Update library version.

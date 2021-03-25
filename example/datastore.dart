@@ -22,7 +22,7 @@ void main () async{
   print(item.get('updateDate'));
   
   // Delete data.
-  // await item.destroy();
+  // await item.delete();
   
   var query = ncmb.Query('Item');
   var items = await query.fetchAll();

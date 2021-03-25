@@ -14,6 +14,6 @@ void main () async{
   ncmb.sessionToken = null;
   user = await ncmb.User.login(userName, password);
   print(user.get('objectId'));
-  await user.destroy();
+  await user.delete();
   user.logout();
 }
