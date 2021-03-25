@@ -89,3 +89,7 @@ Remove Package info.
 ## 2.0.2
 
 Update library version.
+
+## 2.0.3
+
+Support Flutter 2.
