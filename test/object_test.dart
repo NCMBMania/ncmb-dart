@@ -7,7 +7,7 @@ NCMB ncmb;
 
 void main() {
   setUp(() async {
-    String str = await File('../example/keys.json').readAsString();
+    String str = await File('./example/keys.json').readAsString();
     Map keys = json.decode(str);
     ncmb = NCMB(keys['applicationKey'], keys['clientKey']);
   });

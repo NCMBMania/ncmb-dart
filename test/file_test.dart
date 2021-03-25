@@ -7,7 +7,7 @@ NCMB ncmb;
 
 void main() {
   setUp(() async {
-    String str = await File('../example/keys.json').readAsString();
+    String str = await File('./example/keys.json').readAsString();
     Map keys = json.decode(str);
     ncmb = NCMB(keys['applicationKey'], keys['clientKey']);
   });
@@ -15,7 +15,7 @@ void main() {
   group('File test', () {
     test("Upload binary file", () async {
       var fileName = 'dart.png';
-      var blob = await File(fileName).readAsBytes();
+      var blob = await File('./test/' + fileName).readAsBytes();
       var file = await ncmb.File.upload(fileName, blob);
       expect(file.get('fileName'), fileName);
     });

@@ -3,3 +3,4 @@ example/keys.json
 pubspec.lock
 .packages
 .DS_Store
+build/
