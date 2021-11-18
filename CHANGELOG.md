@@ -93,3 +93,8 @@ Update library version.
 ## 2.0.3
 
 Support Flutter 2.
+
+## 2.0.4
+
+- Update dependencies
+- Support "or" query

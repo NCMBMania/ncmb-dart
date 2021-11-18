@@ -68,7 +68,15 @@ class NCMBUser extends NCMBObject {
     NCMBRequest r = new NCMBRequest();
     Map response = await r.exec('POST', 'users', fields: _fields, path: 'requestMailAddressUserEntry');
   }
-  
+
+  static Future<void> requestPasswordReset(String mailAddress) async {
+    Map _fields = {
+      'mailAddress': mailAddress
+    };
+    NCMBRequest r = new NCMBRequest();
+    Map response = await r.exec('POST', 'users', fields: _fields, path: 'requestPasswordReset');
+  }
+
   static Future<void> logout() async {
     NCMBUser.ncmb.sessionToken = null;
     try {

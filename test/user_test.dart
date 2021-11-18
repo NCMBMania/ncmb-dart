@@ -17,13 +17,18 @@ void main() {
     NCMB(keys['applicationKey'], keys['clientKey']);
     SharedPreferences.setMockInitialValues({});
   });
-  /*
+  
   group('User test', () {
+    /*
     test("Request register email", () async {
       await NCMBUser.requestSignUpEmail('atsushi@moongift.jp');
     });
+    */
+    test("Request password reset", () async {
+      await NCMBUser.requestPasswordReset('atsushi@moongift.jp');
+    });
   });
-  */
+  
   group('Sign up by account', () {
     test("User registered", () async {
       var user = NCMBUser();
@@ -61,6 +66,10 @@ void main() {
     });
 
     test("Retrive users", () async {
+      var query = NCMBUser.query();
+      query.limit(100);
+      var ary = await query.fetchAll();
+      expect(ary.length, 0);
       var acl = NCMBAcl();
       acl
         ..setPublicReadAccess(true)
@@ -73,9 +82,9 @@ void main() {
         await user.save();
         await NCMBUser.logout();
       }
-      var query = NCMBUser.query();
+      query = NCMBUser.query();
       query.limit(100);
-      var ary = await query.fetchAll();
+      ary = await query.fetchAll();
       print(ary);
       expect(ary.length, 5);
       await Future.forEach(ary, (u) async {

@@ -133,6 +133,16 @@ class NCMBQuery {
     _queries['where']['\$relatedTo'] = query;
   }
   
+  void or(List<NCMBQuery> queries) {
+    initWhere();
+    _queries['where']['\$or'] = [];
+    for (var i = 0; i < queries.length; i++) {
+      var query = queries[i];
+      _queries['where']['\$or'].add(query.where());
+    }
+  }
+
+
   void include(String className) {
     if (!_queries.containsKey('include')) _queries['include'] = '';
     _queries['include'] = className;
@@ -141,7 +151,7 @@ class NCMBQuery {
   void count() {
     _queries['count'] = 1;
   }
-  
+
   void order(String key, {bool descending = true}) {
     var symbol = descending == true ? '-' : '';
     if (!_queries.containsKey('order')) {
@@ -167,6 +177,11 @@ class NCMBQuery {
 
   Map toJson() {
     return _queries;
+  }
+
+  Map where() {
+    initWhere();
+    return _queries['where'];
   }
 
   void setOperand(String key, Object value, {String ope = ''}) {
