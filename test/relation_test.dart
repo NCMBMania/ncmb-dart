@@ -60,17 +60,17 @@ void main() {
     query
       ..limit(100)
       ..fetchAll();
-    var items = await query.fetchAll() as List<NCMBObject>;
-    await Future.forEach(items, (NCMBObject o) async {
+    var items = await query.fetchAll() ;
+    for (NCMBObject o in items) {
       await o.delete();
-    });
+    }
     query = new NCMBQuery('Main');
     query
       ..limit(100)
       ..fetchAll();
-    items = await query.fetchAll() as List<NCMBObject>;
-    await Future.forEach(items, (NCMBObject o) async {
+    items = await query.fetchAll();
+    for (NCMBObject o in items) {
       await o.delete();
-    });
+    }
   });
 }

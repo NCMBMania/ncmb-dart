@@ -10,7 +10,9 @@ void main() {
   setUp(() async {
     var path = 'example/keys.json';
     var file = File('../${path}');
-    var str = (await file.exists()) ? await file.readAsString() : await File('./${path}').readAsString();
+    var str = (await file.exists())
+        ? await file.readAsString()
+        : await File('./${path}').readAsString();
     keys = json.decode(str);
     NCMB(keys['applicationKey'], keys['clientKey']);
   });
@@ -45,8 +47,7 @@ void main() {
         ..set('deviceType', 'ios');
       await installation.save();
       expect(installation.get('objectId') != '', true);
-      installation
-        ..set('another', 'value');
+      installation..set('another', 'value');
       await installation.save();
       var installation2 = NCMBInstallation();
       installation2.set('objectId', installation.get('objectId'));
@@ -57,9 +58,9 @@ void main() {
 
   tearDownAll(() async {
     var query = NCMBInstallation.query();
-    var items = await query.fetchAll() as List<NCMBInstallation>;
-    await Future.forEach(items, (NCMBInstallation o) async {
+    var items = await query.fetchAll();
+    for (NCMBInstallation o in items) {
       await o.delete();
-    });
+    }
   });
 }

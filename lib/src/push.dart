@@ -6,7 +6,8 @@ class NCMBPush extends NCMBObject {
 
   @override
   Future<void> save() async {
-    if (this._fields['deliveryTime'] == null && this._fields['immediateDeliveryFlag'] == null) {
+    if (this._fields['deliveryTime'] == null &&
+        this._fields['immediateDeliveryFlag'] == null) {
       throw Exception('deliveryTime or immediateDeliveryFlag are required.');
     }
     return super.save();

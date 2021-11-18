@@ -5,7 +5,7 @@ class NCMBObject {
 
   String _name = '';
   Map _fields = {};
-  
+
   NCMBObject(this._name);
 
   get name => _name;
@@ -13,7 +13,7 @@ class NCMBObject {
   NCMBObject.initWithParams(this._name, params) {
     this.sets(params);
   }
-  
+
   void set(String name, Object value) {
     if (name == 'createDate' || name == 'updateDate') {
       value = DateTime.parse(value as String);
@@ -25,7 +25,8 @@ class NCMBObject {
         value = acl;
       }
     }
-    if (value.runtimeType.toString() == '_InternalLinkedHashMap<String, dynamic>') {
+    if (value.runtimeType.toString() ==
+        '_InternalLinkedHashMap<String, dynamic>') {
       var map = value as Map;
       if (map['className'] != null) {
         NCMBObject obj = NCMBObject(map['className']);
@@ -37,12 +38,13 @@ class NCMBObject {
     }
     _fields[name] = value;
   }
-  
+
   String className() {
     return _name;
   }
-  
+
   void sets(Map map) {
+    map.removeWhere((k, v) => v == null);
     map.forEach((k, v) => set(k, v));
   }
 
@@ -59,10 +61,7 @@ class NCMBObject {
     if (!_fields.containsKey('objectId')) {
       return set(name, number);
     }
-    set(name, {
-      '__op': 'Increment',
-      'amount': number
-    });
+    set(name, {'__op': 'Increment', 'amount': number});
   }
 
   void add(String name, Object value) {
@@ -72,10 +71,7 @@ class NCMBObject {
     if (!(value is List)) {
       value = [value];
     }
-    set(name, {
-      '__op': 'Add',
-      'objects': value
-    });
+    set(name, {'__op': 'Add', 'objects': value});
   }
 
   void addUnique(String name, Object value) {
@@ -85,10 +81,7 @@ class NCMBObject {
     if (!(value is List)) {
       value = [value];
     }
-    set(name, {
-      '__op': 'AddUnique',
-      'objects': value
-    });
+    set(name, {'__op': 'AddUnique', 'objects': value});
   }
 
   void remove(String name, Object value) {
@@ -98,10 +91,7 @@ class NCMBObject {
     if (!(value is List)) {
       value = [value];
     }
-    set(name, {
-      '__op': 'Remove',
-      'objects': value
-    });
+    set(name, {'__op': 'Remove', 'objects': value});
   }
 
   Future<void> save() async {
@@ -115,7 +105,7 @@ class NCMBObject {
       sets(response);
     }
   }
-  
+
   Future<bool> delete() async {
     if (!_fields.containsKey('objectId')) {
       throw Exception('objectId is not found.');
@@ -124,7 +114,7 @@ class NCMBObject {
     Map res = await r.delete(_name, _fields['objectId']);
     return res.keys.length == 0;
   }
-  
+
   Object get(String name) {
     return _fields[name];
   }
@@ -132,11 +122,11 @@ class NCMBObject {
   String getString(String name) {
     return _fields[name]! as String;
   }
-  
+
   dynamic toJson() {
     return {
-      '__type':'Pointer',
-      'className':_name,
+      '__type': 'Pointer',
+      'className': _name,
       'objectId': _fields['objectId']
     };
   }
@@ -144,7 +134,7 @@ class NCMBObject {
   String toString() {
     return json.encode(_fields, toEncodable: myEncode);
   }
-  
+
   dynamic myEncode(dynamic item) {
     if (item is DateTime) {
       return item.toIso8601String();

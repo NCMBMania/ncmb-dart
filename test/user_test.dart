@@ -17,7 +17,7 @@ void main() {
     NCMB(keys['applicationKey'], keys['clientKey']);
     SharedPreferences.setMockInitialValues({});
   });
-  
+
   group('User test', () {
     /*
     test("Request register email", () async {
@@ -28,11 +28,13 @@ void main() {
       await NCMBUser.requestPasswordReset('atsushi@moongift.jp');
     });
   });
-  
+
   group('Sign up by account', () {
     test("User registered", () async {
       var user = NCMBUser();
-      user..set('userName', 'aaa')..set('password', 'bbb');
+      user
+        ..set('userName', 'aaa')
+        ..set('password', 'bbb');
       await user.signUpByAccount();
       expect(user.get('objectId') != '', true);
       await user.delete();
@@ -41,7 +43,9 @@ void main() {
 
     test("User login", () async {
       var user = NCMBUser();
-      user..set('userName', 'aaa')..set('password', 'bbb');
+      user
+        ..set('userName', 'aaa')
+        ..set('password', 'bbb');
       await user.signUpByAccount();
       expect(user.get('objectId') != '', true);
       var user2 = await NCMBUser.login('aaa', 'bbb');
@@ -52,7 +56,9 @@ void main() {
 
     test("Update user and fetch", () async {
       var user = NCMBUser();
-      user..set('userName', 'aaa')..set('password', 'bbb');
+      user
+        ..set('userName', 'aaa')
+        ..set('password', 'bbb');
       await user.signUpByAccount();
       try {
         user.set('testName', 'testValue');
@@ -76,7 +82,9 @@ void main() {
         ..setPublicWriteAccess(true);
       for (var i = 0; i < 5; i++) {
         var user = NCMBUser();
-        user..set('userName', 'aaa$i')..set('password', 'bbb');
+        user
+          ..set('userName', 'aaa$i')
+          ..set('password', 'bbb');
         await user.signUpByAccount();
         user.set('acl', acl);
         await user.save();
@@ -86,9 +94,9 @@ void main() {
       query.limit(100);
       var ary1 = await query.fetchAll() as List<NCMBUser>;
       expect(ary1.length, 5);
-      await Future.forEach(ary1, (NCMBUser u) async {
+      for (NCMBUser u in ary1) {
         await u.delete();
-      });
+      }
       var ary2 = await query.fetchAll();
       expect(ary2.length, 0);
     });

@@ -3,7 +3,8 @@ part of ncmb;
 class NCMBRole extends NCMBObject {
   static NCMB? ncmb;
 
-  NCMBRole(String roleName) : super.initWithParams('roles', {'roleName': roleName});
+  NCMBRole(String roleName)
+      : super.initWithParams('roles', {'roleName': roleName});
 
   void addRole(role) {
     var key = 'belongRole';
@@ -38,7 +39,8 @@ class NCMBRole extends NCMBObject {
   }
 
   void add(key, obj) {
-    var exist = this._fields.keys.firstWhere((k) => k == key, orElse: () => null);
+    var exist =
+        this._fields.keys.firstWhere((k) => k == key, orElse: () => null);
     if (exist == null || !(this._fields[key] is NCMBRelation)) {
       this._fields[key] = NCMBRelation();
     }
@@ -46,7 +48,8 @@ class NCMBRole extends NCMBObject {
   }
 
   void remove(key, obj) {
-    var exist = this._fields.keys.firstWhere((k) => k == key, orElse: () => null);
+    var exist =
+        this._fields.keys.firstWhere((k) => k == key, orElse: () => null);
     if (exist == null || !(this._fields[key] is NCMBRelation)) {
       this._fields[key] = NCMBRelation();
     }

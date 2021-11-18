@@ -10,7 +10,9 @@ void main() {
   setUp(() async {
     var path = 'example/keys.json';
     var file = File('../${path}');
-    var str = (await file.exists()) ? await file.readAsString() : await File('./${path}').readAsString();
+    var str = (await file.exists())
+        ? await file.readAsString()
+        : await File('./${path}').readAsString();
     keys = json.decode(str);
     NCMB(keys['applicationKey'], keys['clientKey']);
   });
@@ -45,8 +47,7 @@ void main() {
         ..set('message', 'Hello');
       await push.save();
       expect(push.get('objectId') != '', true);
-      push
-        ..set('message', 'Hello, world');
+      push..set('message', 'Hello, world');
       await push.save();
       var push2 = NCMBPush();
       push2.set('objectId', push.get('objectId'));
@@ -57,9 +58,9 @@ void main() {
 
   tearDownAll(() async {
     var query = NCMBPush.query();
-    var items = await query.fetchAll() as List<NCMBPush>;
-    await Future.forEach(items, (NCMBPush o) async {
+    var items = await query.fetchAll();
+    for (NCMBPush o in items) {
       await o.delete();
-    });
+    }
   });
 }

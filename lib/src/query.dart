@@ -7,11 +7,11 @@ class NCMBQuery {
   NCMBQuery(String name) {
     _name = name;
   }
-  
+
   void clear() {
     _queries = {};
   }
-  
+
   Future fetch() async {
     try {
       _queries['limit'] = 1;
@@ -22,33 +22,33 @@ class NCMBQuery {
       throw e;
     }
   }
-  
+
   Future<List> fetchAll() async {
     try {
       var r = new NCMBRequest();
       List ary = await r.get(_name, _queries);
-      List<NCMBObject> results = [];
+      List results = [];
       ary.forEach((item) {
         var obj;
         switch (_name) {
-        case 'files':
-          obj = new NCMBFile();
-          break;
-        case 'users':
-          obj = new NCMBUser();
-          break;
-        case 'roles':
-          obj = new NCMBRole(item['roleName']);
-          break;
-        case 'installations':
-          obj = new NCMBInstallation();
-          break;
-        case 'push':
-          obj = new NCMBPush();
-          break;
-        default:
-          obj = new NCMBObject(_name);
-          break;
+          case 'files':
+            obj = new NCMBFile();
+            break;
+          case 'users':
+            obj = new NCMBUser();
+            break;
+          case 'roles':
+            obj = new NCMBRole(item['roleName']);
+            break;
+          case 'installations':
+            obj = new NCMBInstallation();
+            break;
+          case 'push':
+            obj = new NCMBPush();
+            break;
+          default:
+            obj = new NCMBObject(_name);
+            break;
         }
         obj.sets(item);
         results.add(obj);
@@ -58,35 +58,35 @@ class NCMBQuery {
       throw e;
     }
   }
-  
+
   void initWhere() {
     if (!_queries.containsKey('where')) _queries['where'] = {};
   }
-  
+
   void equalTo(String key, Object value) {
     setOperand(key, value);
   }
-  
+
   void notEqualTo(String key, Object value) {
     setOperand(key, value, ope: '\$ne');
   }
-  
+
   void lessThan(String key, Object value) {
     setOperand(key, value, ope: '\$lt');
   }
-  
+
   void lessThanOrEqualTo(String key, Object value) {
     setOperand(key, value, ope: '\$lte');
   }
-  
+
   void greaterThan(String key, Object value) {
     setOperand(key, value, ope: '\$gt');
   }
-  
+
   void greaterThanOrEqualTo(String key, Object value) {
     setOperand(key, value, ope: '\$gte');
   }
-  
+
   void inValue(String key, Object value) {
     setOperand(key, value, ope: '\$in');
   }
@@ -98,7 +98,7 @@ class NCMBQuery {
   void exists(String key, {bool value = true}) {
     setOperand(key, value, ope: '\$exists');
   }
-  
+
   void regex(String key, String value) {
     setOperand(key, value, ope: '\$regex');
   }
@@ -137,7 +137,7 @@ class NCMBQuery {
     initWhere();
     _queries['where']['\$relatedTo'] = query;
   }
-  
+
   void or(List<NCMBQuery> queries) {
     initWhere();
     _queries['where']['\$or'] = [];
@@ -146,7 +146,6 @@ class NCMBQuery {
       _queries['where']['\$or'].add(query.where());
     }
   }
-
 
   void include(String className) {
     if (!_queries.containsKey('include')) _queries['include'] = '';
@@ -165,14 +164,14 @@ class NCMBQuery {
       _queries['order'] = "${_queries['order']},$symbol$key";
     }
   }
-  
+
   void limit(int number) {
     if (number < 1 || number > 1000) {
       throw Exception('Limit must be renge of 1~1000.');
     }
     _queries['limit'] = number;
   }
-  
+
   void skip(int number) {
     if (number < 1) {
       throw Exception('Skip must be greater than 0.');
@@ -199,7 +198,7 @@ class NCMBQuery {
         'objectId': obj.get('objectId')
       };
     }
-    
+
     if (ope == '') {
       _queries['where'][key] = value;
     } else {

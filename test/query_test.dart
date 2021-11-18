@@ -9,23 +9,20 @@ void main() {
     Map keys = json.decode(str);
     NCMB(keys['applicationKey'], keys['clientKey']);
   });
-  
+
   group('Query test', () {
     test("Fetch all", () async {
       var query = new NCMBQuery('Item');
-      var item = new NCMBObject('Item')
-        ..set('msg', 'Hello World');
+      var item = new NCMBObject('Item')..set('msg', 'Hello World');
       await item.save();
       var items = await query.fetchAll();
       expect(items.length > 0, true);
     });
- 
+
     test("Fetch or", () async {
-      var item = new NCMBObject('Item')
-        ..set('num', 1);
+      var item = new NCMBObject('Item')..set('num', 1);
       await item.save();
-      item = new NCMBObject('Item')
-        ..set('num', 2);
+      item = new NCMBObject('Item')..set('num', 2);
       await item.save();
       var query1 = new NCMBQuery('Item');
       query1.equalTo('num', 1);

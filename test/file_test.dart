@@ -7,11 +7,13 @@ void main() {
   setUp(() async {
     var path = 'example/keys.json';
     var file = File('../${path}');
-    var str = (await file.exists()) ? await file.readAsString() : await File('./${path}').readAsString();
+    var str = (await file.exists())
+        ? await file.readAsString()
+        : await File('./${path}').readAsString();
     var keys = json.decode(str);
     NCMB(keys['applicationKey'], keys['clientKey']);
   });
-  
+
   group('File test', () {
     test("Upload binary file", () async {
       var fileName = 'dart.png';
@@ -34,16 +36,15 @@ void main() {
   group('File query test', () {
     test("Retribed all files", () async {
       var query = NCMBFile.query();
-      var ary = await query.fetchAll() as List<NCMBFile>;
+      var ary = await query.fetchAll();
       expect(ary[0] is NCMBFile, true);
-      await Future.forEach(ary, (NCMBFile f) async {
-        await f!.delete();
-      });
+      for (NCMBFile f in ary) {
+        await f.delete();
+      }
       var ary2 = await query.fetchAll();
       expect(ary2.length, 0);
     });
   });
 
-  tearDown(() async {
-  });
+  tearDown(() async {});
 }

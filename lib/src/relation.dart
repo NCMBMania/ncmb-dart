@@ -18,12 +18,10 @@ class NCMBRelation {
     if (!(obj is List)) {
       obj = [obj];
     }
-    var key = this._fields.keys.firstWhere((k) => k == '__op', orElse: () => null);
+    var key =
+        this._fields.keys.firstWhere((k) => k == '__op', orElse: () => null);
     if (key == null) {
-      this._fields = {
-        '__op': op,
-        'objects': []
-      };
+      this._fields = {'__op': op, 'objects': []};
     }
     obj.forEach((o) {
       this._fields['objects'].add(o.toJson());

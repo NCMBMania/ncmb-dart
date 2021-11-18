@@ -7,11 +7,13 @@ void main() {
   setUp(() async {
     var path = 'example/keys.json';
     var file = File('../${path}');
-    var str = (await file.exists()) ? await file.readAsString() : await File('./${path}').readAsString();
+    var str = (await file.exists())
+        ? await file.readAsString()
+        : await File('./${path}').readAsString();
     var keys = json.decode(str);
     NCMB(keys['applicationKey'], keys['clientKey']);
   });
-  
+
   group('Object test', () {
     test("Save data", () async {
       var acl = NCMBAcl();
@@ -27,7 +29,7 @@ void main() {
       await item.save();
       expect(item.get('objectId') != null, true);
     });
-    
+
     test('Update date', () async {
       var item = new NCMBObject('Item')
         ..set('msg', 'Hello World')
@@ -40,7 +42,7 @@ void main() {
       await item.save();
       expect(item.get('updateDate') != null, true);
     });
-    
+
     test('Delete data', () async {
       var item = new NCMBObject('Item')
         ..set('msg', 'Hello World')
@@ -54,8 +56,7 @@ void main() {
 
     test('Fetch data', () async {
       var message = 'Hello World';
-      var item = new NCMBObject('Item')
-        ..set('msg', message);
+      var item = new NCMBObject('Item')..set('msg', message);
       await item.save();
       var item2 = new NCMBObject('Item');
       item2.set('objectId', item.get('objectId'));
@@ -64,8 +65,7 @@ void main() {
     });
 
     test('Increment data', () async {
-      var item = new NCMBObject('Item')
-        ..set('number', 1);
+      var item = new NCMBObject('Item')..set('number', 1);
       await item.save();
       item.increment('number', 2);
       await item.save();
@@ -74,8 +74,7 @@ void main() {
     });
 
     test('Add data', () async {
-      var item = new NCMBObject('Item')
-        ..set('ary', ['a']);
+      var item = new NCMBObject('Item')..set('ary', ['a']);
       await item.save();
       item.add('ary', '4');
       await item.save();
@@ -84,8 +83,7 @@ void main() {
     });
 
     test('Add unique data', () async {
-      var item = new NCMBObject('Item')
-        ..set('ary', ['a', 'b', 'c', 'd']);
+      var item = new NCMBObject('Item')..set('ary', ['a', 'b', 'c', 'd']);
       await item.save();
       item.addUnique('ary', ['a', 'e']);
       await item.save();
@@ -94,17 +92,15 @@ void main() {
     });
 
     test('Remove data', () async {
-      var item = new NCMBObject('Item')
-        ..set('ary', ['a', 'b', 'c', 'd']);
+      var item = new NCMBObject('Item')..set('ary', ['a', 'b', 'c', 'd']);
       await item.save();
       item.remove('ary', ['a', 'e']);
       await item.save();
       await item.fetch();
       expect(item.get('ary'), ['b', 'c', 'd']);
     });
-
   });
-  
+
   tearDown(() async {
     var query = new NCMBQuery('Item');
     var items = await query.fetchAll();

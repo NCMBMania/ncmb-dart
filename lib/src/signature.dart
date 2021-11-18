@@ -12,29 +12,30 @@ class Signature {
     "X-NCMB-Application-Key": "",
     "X-NCMB-Timestamp": ""
   };
-  
+
   Signature(NCMB ncmb) {
     _ncmb = ncmb;
     baseInfo['SignatureVersion'] = _signatureVersion;
     baseInfo['SignatureMethod'] = _signatureMethod;
     baseInfo['X-NCMB-Application-Key'] = ncmb.applicationKey;
   }
-  
+
   String path(className, {objectId = '', definePath = ''}) {
     String path = "/$_version";
     if (definePath != '') {
       return "$path/$definePath";
     }
-    if (['users', 'push', 'roles', 'files', 'installations'].indexOf(className) > -1) {
+    if (['users', 'push', 'roles', 'files', 'installations']
+            .indexOf(className) >
+        -1) {
       path = "$path/$className";
     } else {
       path = "$path/classes/$className";
     }
-    if (objectId != '')
-      path = "$path/$objectId";
+    if (objectId != '') path = "$path/$objectId";
     return path;
   }
-  
+
   String url(className, {objectId = '', queries = const {}, definePath = ''}) {
     List queryList = [];
     queries.forEach((key, value) {
@@ -49,8 +50,9 @@ class Signature {
     String queryString = queryList.length == 0 ? '' : "?${queryList.join('&')}";
     return "https://$_fqdn${path(className, objectId: objectId, definePath: definePath)}$queryString";
   }
-  
-  String generate(String method, String className, DateTime time, {objectId = '', queries = const {}, definePath = ''}) {
+
+  String generate(String method, String className, DateTime time,
+      {objectId = '', queries = const {}, definePath = ''}) {
     baseInfo['X-NCMB-Timestamp'] = time.toIso8601String();
     List sigList = [];
     queries.forEach((key, value) {
@@ -62,7 +64,9 @@ class Signature {
       }
       baseInfo[key] = Uri.encodeQueryComponent(value);
     });
-    baseInfo.keys.toList().forEach((key) => sigList.add("$key=${baseInfo[key]}"));
+    baseInfo.keys
+        .toList()
+        .forEach((key) => sigList.add("$key=${baseInfo[key]}"));
     sigList.sort();
     String queryString = sigList.join('&');
     String str = [

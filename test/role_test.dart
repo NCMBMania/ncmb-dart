@@ -16,10 +16,10 @@ void main() {
     keys = json.decode(str);
     NCMB(keys['applicationKey'], keys['clientKey']);
     var query = NCMBUser.query();
-    var users = await query.fetchAll() as List<NCMBUser>;
-    await Future.forEach(users, (NCMBUser u) async {
+    var users = await query.fetchAll();
+    for (NCMBUser u in users) {
       await u.delete();
-    });
+    }
     SharedPreferences.setMockInitialValues({});
   });
 
@@ -49,7 +49,9 @@ void main() {
         ..setPublicWriteAccess(true);
       for (var i = 0; i < 5; i++) {
         var user = NCMBUser();
-        user..set('userName', 'aaa$i')..set('password', 'bbb');
+        user
+          ..set('userName', 'aaa$i')
+          ..set('password', 'bbb');
         await user.signUpByAccount();
         user.set('acl', acl);
         await user.save();
@@ -84,14 +86,16 @@ void main() {
       var role1 = await query.fetch();
       var queryU = NCMBUser.query();
       var user = await queryU.fetch();
-      role1.removeUser(user);
-      await role1.save();
-      var users = await role1.fetchUser() as List<NCMBUser>;
-      expect(users.length, 4);
-      await Future.forEach(users, (NCMBUser u) async {
-        await u.delete();
-      });
-      await role1.delete();
+      if (role1 != null) {
+        role1.removeUser(user);
+        await role1.save();
+        var users = await role1.fetchUser() as List<NCMBUser>;
+        expect(users.length, 4);
+        for (NCMBUser u in users) {
+          await u.delete();
+        }
+        await role1.delete();
+      }
     });
   });
 }
