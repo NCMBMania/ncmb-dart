@@ -98,3 +98,7 @@ Support Flutter 2.
 
 - Update dependencies
 - Support "or" query
+
+## 2.0.5
+
+- Support nullsafety
