@@ -1,8 +1,8 @@
 part of ncmb;
 
 class NCMBGeoPoint {
-  double latitude;
-  double longitude;
+  double? latitude;
+  double? longitude;
   
   NCMBGeoPoint(double lat, double lng) {
     latitude = lat;

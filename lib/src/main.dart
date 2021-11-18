@@ -1,9 +1,9 @@
 part of ncmb;
 
 class NCMB {
-  String applicationKey;
-  String clientKey;
-  String sessionToken;
+  String? applicationKey;
+  String? clientKey;
+  String? sessionToken;
   String version = '2.0.0';
   
   NCMB(String applicationKey, String clientKey) {

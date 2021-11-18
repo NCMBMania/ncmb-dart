@@ -4,7 +4,7 @@ import '../lib/ncmb.dart';
 import 'dart:io';
 import 'dart:convert';
 
-Map keys;
+Map keys = {};
 
 void main() {
   setUp(() async {
@@ -16,8 +16,8 @@ void main() {
     keys = json.decode(str);
     NCMB(keys['applicationKey'], keys['clientKey']);
     var query = NCMBUser.query();
-    var users = await query.fetchAll();
-    await Future.forEach(users, (u) async {
+    var users = await query.fetchAll() as List<NCMBUser>;
+    await Future.forEach(users, (NCMBUser u) async {
       await u.delete();
     });
     SharedPreferences.setMockInitialValues({});
@@ -86,9 +86,9 @@ void main() {
       var user = await queryU.fetch();
       role1.removeUser(user);
       await role1.save();
-      var users = await role1.fetchUser();
+      var users = await role1.fetchUser() as List<NCMBUser>;
       expect(users.length, 4);
-      await Future.forEach(users, (u) async {
+      await Future.forEach(users, (NCMBUser u) async {
         await u.delete();
       });
       await role1.delete();

@@ -1,9 +1,9 @@
 part of ncmb;
 
 class NCMBObject {
-  static NCMB ncmb;
+  static NCMB? ncmb;
 
-  String _name;
+  String _name = '';
   Map _fields = {};
   
   NCMBObject(this._name);
@@ -16,12 +16,12 @@ class NCMBObject {
   
   void set(String name, Object value) {
     if (name == 'createDate' || name == 'updateDate') {
-      value = DateTime.parse(value);
+      value = DateTime.parse(value as String);
     }
     if (name == 'acl') {
       if (!(value is NCMBAcl)) {
         var acl = new NCMBAcl();
-        acl.sets(value);
+        acl.sets(value as Map);
         value = acl;
       }
     }
@@ -127,6 +127,10 @@ class NCMBObject {
   
   Object get(String name) {
     return _fields[name];
+  }
+
+  String getString(String name) {
+    return _fields[name]! as String;
   }
   
   dynamic toJson() {

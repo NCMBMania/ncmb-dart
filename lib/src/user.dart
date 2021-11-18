@@ -1,12 +1,12 @@
 part of ncmb;
 
 class NCMBUser extends NCMBObject {
-  static NCMB ncmb;
-  static SharedPreferences _prefs;
+  static NCMB? ncmb;
+  static SharedPreferences? _prefs;
   static String _userKey = 'CurrentUser';
   static String _sessionKey = 'SessionId';
   
-  static NCMBUser _currentUser;
+  static NCMBUser? _currentUser;
   NCMBUser() : super('users');
   
   Future<void> signUpByAccount() async {
@@ -54,7 +54,7 @@ class NCMBUser extends NCMBObject {
   static Future<NCMBUser> loginWith(String provider, Map data) async {
     NCMBRequest r = new NCMBRequest();
     var fields = {'authData': {}};
-    fields['authData'][provider] = data;
+    fields['authData']![provider] = data;
     Map response = await r.post('users', fields);
     var user = NCMBUser();
     await user.setLoginResponse(response);
@@ -78,23 +78,23 @@ class NCMBUser extends NCMBObject {
   }
 
   static Future<void> logout() async {
-    NCMBUser.ncmb.sessionToken = null;
+    NCMBUser.ncmb!.sessionToken = null;
     try {
       NCMBUser._prefs = await SharedPreferences.getInstance();
-      NCMBUser._prefs.remove(NCMBUser._userKey);
-      NCMBUser._prefs.remove(NCMBUser._sessionKey);
+      NCMBUser._prefs!.remove(NCMBUser._userKey!);
+      NCMBUser._prefs!.remove(NCMBUser._sessionKey!);
     } catch (e) {
     }
     return;
   }
   
-  Future<NCMBUser> CurrentUser() async {
+  Future<NCMBUser?> CurrentUser() async {
     if (NCMBUser._currentUser != null) return NCMBUser._currentUser;
     try {
       NCMBUser._prefs = await SharedPreferences.getInstance();
-      var string = NCMBUser._prefs.getString(NCMBUser._userKey);
+      var string = NCMBUser._prefs!.getString(NCMBUser._userKey);
       if (string != null) {
-        NCMBUser.ncmb.sessionToken = NCMBUser._prefs.getString(NCMBUser._sessionKey);
+        NCMBUser.ncmb!.sessionToken = NCMBUser._prefs!.getString(NCMBUser._sessionKey);
         var user = NCMBUser();
         user.sets(json.decode(string));
         NCMBUser._currentUser = user;
@@ -118,13 +118,13 @@ class NCMBUser extends NCMBObject {
   }
 
   Future<void> setLoginResponse(Map response) async {
-    NCMBUser.ncmb.sessionToken = response['sessionToken'];
+    NCMBUser.ncmb!.sessionToken = response['sessionToken'];
     response.removeWhere((k, v) => k == 'sessionToken');
     this.sets(response);
     try {
       _prefs = await SharedPreferences.getInstance();
-      _prefs.setString(_userKey, this.toString());
-      _prefs.setString(_sessionKey, NCMBUser.ncmb.sessionToken);
+      _prefs!.setString(_userKey, this.toString());
+      _prefs!.setString(_sessionKey, NCMBUser.ncmb!.sessionToken!);
     } catch (e) {
     }
   }

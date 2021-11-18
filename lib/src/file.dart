@@ -1,14 +1,19 @@
 part of ncmb;
 
 class NCMBFile extends NCMBObject {
-  static NCMB ncmb;
+  static NCMB? ncmb;
   NCMBFile() : super('files');
   
   static Future<NCMBFile> upload(String fileName, dynamic blob, {acl = '', mimeType = ''}) async {
     List mime;
     if (mimeType == '') {
       if (blob is Uint8List) {
-        mime = lookupMimeType('test', headerBytes: blob).split('/');
+        var res = lookupMimeType('test', headerBytes: blob);
+        if (res != null) {
+          mime = res.split('/');
+        } else {
+          mime = ['text', 'plain'];
+        }
       } else {
         mime = ['text', 'plain'];
       }
@@ -35,7 +40,7 @@ class NCMBFile extends NCMBObject {
   
   Future<NCMBFile> download(String fileName) async {
     NCMBRequest r = new NCMBRequest();
-    Map response = await r.exec('GET', _name, objectId: fileName, multipart: true);
+    Map response = await r.exec('GET', _name!, objectId: fileName, multipart: true);
     var f = NCMBFile();
     f.set('blob', response['data']);
     return f;
@@ -50,7 +55,7 @@ class NCMBFile extends NCMBObject {
       throw Exception('fileName is not found.');
     }
     NCMBRequest r = new NCMBRequest();
-    Map res = await r.delete(_name, _fields['fileName']);
+    Map res = await r.delete(_name!, _fields['fileName']);
     return res.keys.length == 0;
   }
 }

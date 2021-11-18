@@ -1,7 +1,7 @@
 part of ncmb;
 
 class Signature {
-  NCMB _ncmb;
+  NCMB? _ncmb;
   final String _fqdn = 'mbaas.api.nifcloud.com';
   final String _signatureMethod = 'HmacSHA256';
   final String _signatureVersion = '2';
@@ -71,7 +71,7 @@ class Signature {
       path(className, objectId: objectId, definePath: definePath),
       queryString
     ].join("\n");
-    List<int> key = utf8.encode(_ncmb.clientKey);
+    List<int> key = utf8.encode(_ncmb!.clientKey!);
     Hmac hmac = new Hmac(sha256, key);
     return base64Encode(hmac.convert(str.codeUnits).bytes);
   }

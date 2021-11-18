@@ -1,12 +1,11 @@
 part of ncmb;
 
 class NCMBQuery {
-  String _name;
-  static NCMB ncmb;
-  Map _queries;
+  String _name = '';
+  static NCMB? ncmb;
+  Map _queries = {};
   NCMBQuery(String name) {
     _name = name;
-    _queries = {};
   }
   
   void clear() {
@@ -40,6 +39,12 @@ class NCMBQuery {
           break;
         case 'roles':
           obj = new NCMBRole(item['roleName']);
+          break;
+        case 'installations':
+          obj = new NCMBInstallation();
+          break;
+        case 'push':
+          obj = new NCMBPush();
           break;
         default:
           obj = new NCMBObject(_name);

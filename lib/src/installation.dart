@@ -1,7 +1,7 @@
 part of ncmb;
 
 class NCMBInstallation extends NCMBObject {
-  static NCMB ncmb;
+  static NCMB? ncmb;
   NCMBInstallation() : super('installations');
 
   @override

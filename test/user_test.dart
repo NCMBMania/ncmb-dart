@@ -4,7 +4,7 @@ import '../lib/ncmb.dart';
 import 'dart:io';
 import 'dart:convert';
 
-Map keys;
+Map keys = {};
 
 void main() {
   setUp(() async {
@@ -84,10 +84,9 @@ void main() {
       }
       query = NCMBUser.query();
       query.limit(100);
-      ary = await query.fetchAll();
-      print(ary);
-      expect(ary.length, 5);
-      await Future.forEach(ary, (u) async {
+      var ary1 = await query.fetchAll() as List<NCMBUser>;
+      expect(ary1.length, 5);
+      await Future.forEach(ary1, (NCMBUser u) async {
         await u.delete();
       });
       var ary2 = await query.fetchAll();

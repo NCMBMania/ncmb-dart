@@ -1,7 +1,7 @@
 part of ncmb;
 
 class NCMBRole extends NCMBObject {
-  static NCMB ncmb;
+  static NCMB? ncmb;
 
   NCMBRole(String roleName) : super.initWithParams('roles', {'roleName': roleName});
 

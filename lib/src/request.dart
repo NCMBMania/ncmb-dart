@@ -1,13 +1,13 @@
 part of '../ncmb.dart';
 
 class NCMBRequest {
-  static NCMB ncmb;
+  static NCMB? ncmb;
   NCMBRequest() {
   }
   
   Future<List> get(String name, Map queries, {multipart = false}) async {
     try {
-      Map<String, dynamic> res = await exec('GET', name, queries: queries, multipart: multipart);
+      var res = await exec('GET', name, queries: queries, multipart: multipart) as Map<String, dynamic>;
       return res['results'] as List;
     } catch (e) {
       throw e;
@@ -27,22 +27,23 @@ class NCMBRequest {
   }
   
   Future<Map> exec(String method, String name, {fields = const {}, objectId = '', queries = const {}, path = '', multipart = false}) async {
-    Signature s = new Signature(NCMBRequest.ncmb);
+    Signature s = new Signature(NCMBRequest.ncmb!);
     DateTime time = DateTime.now();
     final newFields = Map.from(fields)
       ..removeWhere((k, v) => (k == 'objectId' || k == 'createDate' || k == 'updateDate'));
     String signature = s.generate(method, name, time, objectId: objectId, queries: queries, definePath: path);
     String url = s.url(name, objectId: objectId, queries: queries, definePath: path);
     Map<String, String> headers = {
-      "X-NCMB-Application-Key": NCMBRequest.ncmb.applicationKey,
+      "X-NCMB-Application-Key": NCMBRequest.ncmb!.applicationKey!,
       "X-NCMB-Timestamp": time.toIso8601String(),
       "X-NCMB-Signature": signature
     };
     if (name == 'files') {
       headers.remove('Content-Type');
     }
-    if (NCMBRequest.ncmb.sessionToken != null) {
-      headers['X-NCMB-Apps-Session-Token'] = NCMBRequest.ncmb.sessionToken;
+    var sessionToken = NCMBRequest.ncmb!.sessionToken;
+    if (sessionToken != null) {
+      headers['X-NCMB-Apps-Session-Token'] = sessionToken;
     }
     try {
       var response = await req(url, method, newFields, headers, multipart: multipart, fileName: objectId);
@@ -52,7 +53,7 @@ class NCMBRequest {
       if (method == 'DELETE') return {};
       return response.data;
     } on DioError catch(e) {
-      throw Exception(e.response.data);
+      throw Exception(e.response!.data);
     }
   }
   
@@ -81,8 +82,9 @@ class NCMBRequest {
     final pattern = new RegExp('.{1,800}'); // 800 is the size of each chunk
     pattern.allMatches(text).forEach((match) => print(match.group(0)));
   }
-  Future<Response> req(String url, String method, Map fields, Map headers, {multipart = false, fileName = ''}) async {
-    Response response;
+
+  Future<Response> req(String url, String method, Map fields, Map<String, dynamic> headers, {multipart = false, fileName = ''}) async {
+    Response? response;
     var dio = new Dio();
     switch (method) {
       case 'GET': {
@@ -142,6 +144,6 @@ class NCMBRequest {
       }
       break;
     }
-    return response;
+    return response!;
   }
 }

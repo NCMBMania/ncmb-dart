@@ -4,7 +4,7 @@ import '../lib/ncmb.dart';
 import 'dart:io';
 import 'dart:convert';
 
-Map keys;
+Map keys = {};
 
 void main() {
   setUp(() async {
@@ -57,8 +57,8 @@ void main() {
 
   tearDownAll(() async {
     var query = NCMBInstallation.query();
-    var items = await query.fetchAll();
-    await Future.forEach(items, (o) async {
+    var items = await query.fetchAll() as List<NCMBInstallation>;
+    await Future.forEach(items, (NCMBInstallation o) async {
       await o.delete();
     });
   });

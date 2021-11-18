@@ -34,10 +34,10 @@ void main() {
   group('File query test', () {
     test("Retribed all files", () async {
       var query = NCMBFile.query();
-      var ary = await query.fetchAll();
+      var ary = await query.fetchAll() as List<NCMBFile>;
       expect(ary[0] is NCMBFile, true);
-      await Future.forEach(ary, (f) async {
-        await f.delete();
+      await Future.forEach(ary, (NCMBFile f) async {
+        await f!.delete();
       });
       var ary2 = await query.fetchAll();
       expect(ary2.length, 0);

@@ -1,7 +1,7 @@
 part of ncmb;
 
 class NCMBPush extends NCMBObject {
-  static NCMB ncmb;
+  static NCMB? ncmb;
   NCMBPush() : super('push');
 
   @override

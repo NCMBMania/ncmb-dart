@@ -3,7 +3,7 @@ import '../lib/ncmb.dart';
 import 'dart:io';
 import 'dart:convert';
 
-Map keys;
+Map keys = {};
 
 void main() {
   setUp(() async {
@@ -60,16 +60,16 @@ void main() {
     query
       ..limit(100)
       ..fetchAll();
-    var items = await query.fetchAll();
-    await Future.forEach(items, (o) async {
+    var items = await query.fetchAll() as List<NCMBObject>;
+    await Future.forEach(items, (NCMBObject o) async {
       await o.delete();
     });
     query = new NCMBQuery('Main');
     query
       ..limit(100)
       ..fetchAll();
-    items = await query.fetchAll();
-    await Future.forEach(items, (o) async {
+    items = await query.fetchAll() as List<NCMBObject>;
+    await Future.forEach(items, (NCMBObject o) async {
       await o.delete();
     });
   });
