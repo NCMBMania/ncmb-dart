@@ -8,8 +8,10 @@ Map keys;
 void main() {
   setUp(() async {
     var path = 'example/keys.json';
-    var file = File('../${path}');
-    var str = (await file.exists()) ? await file.readAsString() : await File('./${path}').readAsString();
+    var file = File('../$path');
+    var str = (await file.exists())
+        ? await file.readAsString()
+        : await File('./$path').readAsString();
     keys = json.decode(str);
     NCMB(keys['applicationKey'], keys['clientKey']);
   });
@@ -55,10 +57,20 @@ void main() {
 
   tearDownAll(() async {
     var query = new NCMBQuery('Test');
+    query
+      ..limit(100)
+      ..fetchAll();
     var items = await query.fetchAll();
     await Future.forEach(items, (o) async {
       await o.delete();
     });
+    query = new NCMBQuery('Main');
+    query
+      ..limit(100)
+      ..fetchAll();
+    items = await query.fetchAll();
+    await Future.forEach(items, (o) async {
+      await o.delete();
+    });
   });
-
 }

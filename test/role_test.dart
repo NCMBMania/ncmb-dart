@@ -9,10 +9,17 @@ Map keys;
 void main() {
   setUp(() async {
     var path = 'example/keys.json';
-    var file = File('../${path}');
-    var str = (await file.exists()) ? await file.readAsString() : await File('./${path}').readAsString();
+    var file = File('../$path');
+    var str = (await file.exists())
+        ? await file.readAsString()
+        : await File('./$path').readAsString();
     keys = json.decode(str);
     NCMB(keys['applicationKey'], keys['clientKey']);
+    var query = NCMBUser.query();
+    var users = await query.fetchAll();
+    await Future.forEach(users, (u) async {
+      await u.delete();
+    });
     SharedPreferences.setMockInitialValues({});
   });
 
@@ -42,9 +49,7 @@ void main() {
         ..setPublicWriteAccess(true);
       for (var i = 0; i < 5; i++) {
         var user = NCMBUser();
-        user
-          ..set('userName', 'aaa${i}')
-          ..set('password', 'bbb');
+        user..set('userName', 'aaa$i')..set('password', 'bbb');
         await user.signUpByAccount();
         user.set('acl', acl);
         await user.save();

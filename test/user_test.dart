@@ -9,8 +9,10 @@ Map keys;
 void main() {
   setUp(() async {
     var path = 'example/keys.json';
-    var file = File('../${path}');
-    var str = (await file.exists()) ? await file.readAsString() : await File('./${path}').readAsString();
+    var file = File('../$path');
+    var str = (await file.exists())
+        ? await file.readAsString()
+        : await File('./$path').readAsString();
     keys = json.decode(str);
     NCMB(keys['applicationKey'], keys['clientKey']);
     SharedPreferences.setMockInitialValues({});
@@ -25,9 +27,7 @@ void main() {
   group('Sign up by account', () {
     test("User registered", () async {
       var user = NCMBUser();
-      user
-        ..set('userName', 'aaa')
-        ..set('password', 'bbb');
+      user..set('userName', 'aaa')..set('password', 'bbb');
       await user.signUpByAccount();
       expect(user.get('objectId') != '', true);
       await user.delete();
@@ -36,9 +36,7 @@ void main() {
 
     test("User login", () async {
       var user = NCMBUser();
-      user
-        ..set('userName', 'aaa')
-        ..set('password', 'bbb');
+      user..set('userName', 'aaa')..set('password', 'bbb');
       await user.signUpByAccount();
       expect(user.get('objectId') != '', true);
       var user2 = await NCMBUser.login('aaa', 'bbb');
@@ -49,9 +47,7 @@ void main() {
 
     test("Update user and fetch", () async {
       var user = NCMBUser();
-      user
-        ..set('userName', 'aaa')
-        ..set('password', 'bbb');
+      user..set('userName', 'aaa')..set('password', 'bbb');
       await user.signUpByAccount();
       try {
         user.set('testName', 'testValue');
@@ -60,8 +56,7 @@ void main() {
         user2.set('objectId', user.get('objectId'));
         await user2.fetch();
         expect(user2.get('testName'), 'testValue');
-      } catch (e) {
-      }
+      } catch (e) {}
       await user.delete();
     });
 
@@ -72,17 +67,16 @@ void main() {
         ..setPublicWriteAccess(true);
       for (var i = 0; i < 5; i++) {
         var user = NCMBUser();
-        user
-          ..set('userName', 'aaa${i}')
-          ..set('password', 'bbb');
+        user..set('userName', 'aaa$i')..set('password', 'bbb');
         await user.signUpByAccount();
         user.set('acl', acl);
         await user.save();
         await NCMBUser.logout();
       }
-
       var query = NCMBUser.query();
+      query.limit(100);
       var ary = await query.fetchAll();
+      print(ary);
       expect(ary.length, 5);
       await Future.forEach(ary, (u) async {
         await u.delete();
@@ -99,13 +93,16 @@ void main() {
     });
 
     test("Sign in with facebook", () async {
-      var facebook_id = keys['user']['facebook']['id'];
+      var facebookId = keys['user']['facebook']['id'];
       var accessToken = keys['user']['facebook']['accessToken'];
-      var expiration_date = {"__type":"Date","iso": keys['user']['facebook']['expiration_date']};
+      var expirationDate = {
+        "__type": "Date",
+        "iso": keys['user']['facebook']['expiration_date']
+      };
       var data = {
-        'id': facebook_id,
+        'id': facebookId,
         'access_token': accessToken,
-        'expiration_date': expiration_date
+        'expiration_date': expirationDate
       };
       var user = await NCMBUser.loginWith('facebook', data);
       expect(user.get('objectId') != '', true);
