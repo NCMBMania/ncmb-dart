@@ -106,3 +106,7 @@ Support Flutter 2.
 ## 2.0.7
 
 - Fix typo
+
+## 2.0.8
+
+- Fix pointer object for Flutter 2.0
