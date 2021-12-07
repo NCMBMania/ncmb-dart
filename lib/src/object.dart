@@ -25,7 +25,8 @@ class NCMBObject {
         value = acl;
       }
     }
-    if (value.runtimeType.toString() == '_HashSet<dynamic>') {
+    if (value.runtimeType.toString() ==
+        '_InternalLinkedHashMap<String, dynamic>') {
       var map = value as Map;
       if (map['className'] != null) {
         NCMBObject obj = NCMBObject(map['className']);

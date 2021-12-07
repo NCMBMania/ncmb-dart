@@ -110,3 +110,8 @@ Support Flutter 2.
 ## 2.0.8
 
 - Fix pointer object for Flutter 2.0
+
+## 2.0.9
+
+- Fix pointer object for Flutter 2.0
+

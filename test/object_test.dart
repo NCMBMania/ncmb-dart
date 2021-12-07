@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+// import 'package:ncmb/ncmb.dart';
 import '../lib/ncmb.dart';
 import 'dart:io';
 import 'dart:convert';
@@ -62,6 +63,19 @@ void main() {
       item2.set('objectId', item.get('objectId'));
       await item2.fetch();
       expect(item.get('msg'), item2.get('msg'));
+    });
+
+    test('Test pointer data', () async {
+      var message = 'Hello World';
+      var item = NCMBObject('Item')..set('msg', message);
+      await item.save();
+      var item2 = NCMBObject('Item');
+      item2.set('item', item);
+      await item2.save();
+      var query = NCMBQuery('Item');
+      query.equalTo('objectId', item2.get('objectId'));
+      var data = await query.fetch();
+      expect(data.get('item').get('objectId'), item.get('objectId'));
     });
 
     test('Increment data', () async {
