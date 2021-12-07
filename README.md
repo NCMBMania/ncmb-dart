@@ -119,7 +119,7 @@ var user = await NCMBUser.loginAsAnonymous();
 #### Check session stats
 
 ```dart
-var user = await NCMBUser.CurrentUser();
+var user = await NCMBUser.currentUser();
 if (user != null && (await user.enableSession())) {
   print('Login');
 } else {

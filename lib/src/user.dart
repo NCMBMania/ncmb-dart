@@ -79,7 +79,7 @@ class NCMBUser extends NCMBObject {
     return;
   }
 
-  Future<NCMBUser?> CurrentUser() async {
+  static Future<NCMBUser?> currentUser() async {
     if (NCMBUser._currentUser != null) return NCMBUser._currentUser;
     try {
       NCMBUser._prefs = await SharedPreferences.getInstance();

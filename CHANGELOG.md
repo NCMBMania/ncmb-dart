@@ -102,3 +102,7 @@ Support Flutter 2.
 ## 2.0.5
 
 - Support nullsafety
+
+## 2.0.7
+
+- Fix typo
