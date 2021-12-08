@@ -114,3 +114,7 @@ Support Flutter 2.
 ## 2.1.0
 
 Change version of shared_preferences. Fully support web platform.
+
+## 2.1.1
+
+Move example code.
