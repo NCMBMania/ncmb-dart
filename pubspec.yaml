@@ -1,5 +1,5 @@
 name: ncmb
-version: 2.0.10
+version: 2.1.0
 description: >-
   Dart and Flutter library for Nifcloud mobile backend(NCMB). Nifcloud mobile backend is a web service of mBaaS.
 homepage: https://github.com/NCMBMania/ncmb-dart
@@ -14,7 +14,7 @@ dependencies:
   mime: ^1.0.1
   http_parser: ^4.0.0
   uuid: ^3.0.5
-  shared_preferences: ^2.0.7
+  shared_preferences: ^2.0.9
 dev_dependencies:
   flutter_test:
     sdk: flutter

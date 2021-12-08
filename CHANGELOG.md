@@ -110,3 +110,7 @@ Support Flutter 2.
 ## 2.0.8-2.0.10
 
 - Fix pointer object for Flutter 2.0
+
+## 2.1.0
+
+Change version of shared_preferences. Fully support web platform.
