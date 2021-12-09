@@ -1,4 +1,8 @@
-part of ncmb;
+import 'main.dart';
+import 'user.dart';
+import 'object.dart';
+import 'query.dart';
+import 'relation.dart';
 
 class NCMBRole extends NCMBObject {
   static NCMB? ncmb;
@@ -40,20 +44,20 @@ class NCMBRole extends NCMBObject {
 
   void add(key, obj) {
     var exist =
-        this._fields.keys.firstWhere((k) => k == key, orElse: () => null);
-    if (exist == null || !(this._fields[key] is NCMBRelation)) {
-      this._fields[key] = NCMBRelation();
+        super.fields.keys.firstWhere((k) => k == key, orElse: () => null);
+    if (exist == null || !(super.fields[key] is NCMBRelation)) {
+      super.fields[key] = NCMBRelation();
     }
-    this._fields[key].add(obj);
+    super.fields[key].add(obj);
   }
 
   void remove(key, obj) {
     var exist =
-        this._fields.keys.firstWhere((k) => k == key, orElse: () => null);
-    if (exist == null || !(this._fields[key] is NCMBRelation)) {
-      this._fields[key] = NCMBRelation();
+        super.fields.keys.firstWhere((k) => k == key, orElse: () => null);
+    if (exist == null || !(super.fields[key] is NCMBRelation)) {
+      super.fields[key] = NCMBRelation();
     }
-    this._fields[key].remove(obj);
+    super.fields[key].remove(obj);
   }
 
   static NCMBQuery query() {
@@ -70,11 +74,11 @@ class NCMBRole extends NCMBObject {
 
   @override
   Future<void> save() async {
-    if (!(this._fields['belongUser'] is NCMBRelation)) {
-      this._fields.remove('belongUser');
+    if (!(super.fields['belongUser'] is NCMBRelation)) {
+      super.fields.remove('belongUser');
     }
-    if (!(this._fields['belongRole'] is NCMBRelation)) {
-      this._fields.remove('belongRole');
+    if (!(super.fields['belongRole'] is NCMBRelation)) {
+      super.fields.remove('belongRole');
     }
     return super.save();
   }

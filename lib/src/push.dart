@@ -1,13 +1,14 @@
-part of ncmb;
+import 'dart:async';
+import 'object.dart';
+import 'query.dart';
 
 class NCMBPush extends NCMBObject {
-  static NCMB? ncmb;
   NCMBPush() : super('push');
 
   @override
   Future<void> save() async {
-    if (this._fields['deliveryTime'] == null &&
-        this._fields['immediateDeliveryFlag'] == null) {
+    if (!super.hasKey('deliveryTime') &&
+        !super.hasKey('immediateDeliveryFlag')) {
       throw Exception('deliveryTime or immediateDeliveryFlag are required.');
     }
     return super.save();

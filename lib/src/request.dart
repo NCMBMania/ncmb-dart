@@ -1,4 +1,13 @@
-part of '../ncmb.dart';
+import 'dart:async';
+import 'dart:convert';
+import 'dart:typed_data';
+import 'package:intl/intl.dart';
+import 'package:dio/dio.dart';
+import 'main.dart';
+import 'query.dart';
+import 'relation.dart';
+import 'acl.dart';
+import 'signature.dart';
 
 class NCMBRequest {
   static NCMB? ncmb;

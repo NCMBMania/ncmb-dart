@@ -1,5 +1,3 @@
-part of ncmb;
-
 class NCMBGeoPoint {
   double? latitude;
   double? longitude;

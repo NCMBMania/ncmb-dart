@@ -1,4 +1,6 @@
-part of ncmb;
+import 'main.dart';
+import 'dart:convert';
+import 'package:crypto/crypto.dart';
 
 class Signature {
   NCMB? _ncmb;

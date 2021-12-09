@@ -1,7 +1,14 @@
-part of ncmb;
+import 'package:mime/mime.dart';
+import 'object.dart';
+import 'request.dart';
+import 'acl.dart';
+import 'query.dart';
+import 'dart:async';
+import 'dart:convert';
+import 'dart:typed_data';
+import 'package:http_parser/http_parser.dart';
 
 class NCMBFile extends NCMBObject {
-  static NCMB? ncmb;
   NCMBFile() : super('files');
 
   static Future<NCMBFile> upload(String fileName, dynamic blob,
@@ -45,7 +52,7 @@ class NCMBFile extends NCMBObject {
   Future<NCMBFile> download(String fileName) async {
     NCMBRequest r = new NCMBRequest();
     Map response =
-        await r.exec('GET', _name, objectId: fileName, multipart: true);
+        await r.exec('GET', super.name, objectId: fileName, multipart: true);
     var f = NCMBFile();
     f.set('blob', response['data']);
     return f;
@@ -56,11 +63,11 @@ class NCMBFile extends NCMBObject {
   }
 
   Future<bool> delete() async {
-    if (!_fields.containsKey('fileName')) {
+    if (!super.hasKey('fileName')) {
       throw Exception('fileName is not found.');
     }
     NCMBRequest r = new NCMBRequest();
-    Map res = await r.delete(_name, _fields['fileName']);
+    Map res = await r.delete(super.name, super.getString('fileName'));
     return res.keys.length == 0;
   }
 }

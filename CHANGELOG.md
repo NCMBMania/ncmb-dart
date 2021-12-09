@@ -118,3 +118,7 @@ Change version of shared_preferences. Fully support web platform.
 ## 2.1.1
 
 Move example code.
+
+## 2.2.0
+
+Remove "part of".

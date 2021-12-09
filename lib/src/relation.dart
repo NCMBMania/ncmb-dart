@@ -1,7 +1,4 @@
-part of ncmb;
-
 class NCMBRelation {
-  String? _relatingClass;
   Map _fields = {};
 
   void add(obj) {

@@ -1,15 +1,15 @@
-part of ncmb;
+import 'object.dart';
+import 'query.dart';
 
 class NCMBInstallation extends NCMBObject {
-  static NCMB? ncmb;
   NCMBInstallation() : super('installations');
 
   @override
   Future<void> save() async {
-    if (this._fields['deviceToken'] == null) {
+    if (!super.hasKey('deviceToken')) {
       throw Exception('deviceToken is required.');
     }
-    if (this._fields['deviceType'] == null) {
+    if (!super.hasKey('deviceType')) {
       throw Exception('deviceType is required (ios or android).');
     }
     return super.save();

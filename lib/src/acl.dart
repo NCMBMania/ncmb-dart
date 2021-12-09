@@ -1,4 +1,4 @@
-part of ncmb;
+import 'user.dart';
 
 class NCMBAcl {
   var fields = {

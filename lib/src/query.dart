@@ -1,4 +1,12 @@
-part of ncmb;
+import 'dart:async';
+import 'main.dart';
+import 'push.dart';
+import 'file.dart';
+import 'user.dart';
+import 'role.dart';
+import 'object.dart';
+import 'installation.dart';
+import 'request.dart';
 
 class NCMBQuery {
   String _name = '';

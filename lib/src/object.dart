@@ -1,4 +1,8 @@
-part of ncmb;
+import 'main.dart';
+import 'dart:convert';
+import 'dart:async';
+import 'acl.dart';
+import 'request.dart';
 
 class NCMBObject {
   static NCMB? ncmb;
@@ -9,6 +13,7 @@ class NCMBObject {
   NCMBObject(this._name);
 
   get name => _name;
+  get fields => _fields;
 
   NCMBObject.initWithParams(this._name, params) {
     this.sets(params);
@@ -25,7 +30,9 @@ class NCMBObject {
         value = acl;
       }
     }
-    if (value.runtimeType.toString() == '_JsonMap') {
+    if (value.runtimeType.toString() == '_JsonMap' ||
+        value.runtimeType.toString() ==
+            '_InternalLinkedHashMap<String, dynamic>') {
       var map = value as Map;
       if (map['className'] != null) {
         NCMBObject obj = NCMBObject(map['className']);
@@ -112,6 +119,10 @@ class NCMBObject {
     NCMBRequest r = new NCMBRequest();
     Map res = await r.delete(_name, _fields['objectId']);
     return res.keys.length == 0;
+  }
+
+  bool hasKey(String name) {
+    return _fields.containsKey(name);
   }
 
   Object get(String name) {

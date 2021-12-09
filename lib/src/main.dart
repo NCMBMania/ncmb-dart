@@ -1,4 +1,6 @@
-part of ncmb;
+import 'object.dart';
+import 'request.dart';
+import 'user.dart';
 
 class NCMB {
   String? applicationKey;
@@ -11,11 +13,6 @@ class NCMB {
     this.clientKey = clientKey;
     NCMBUser.ncmb = this;
     NCMBObject.ncmb = this;
-    NCMBInstallation.ncmb = this;
-    NCMBFile.ncmb = this;
-    NCMBQuery.ncmb = this;
     NCMBRequest.ncmb = this;
-    NCMBRole.ncmb = this;
-    NCMBPush.ncmb = this;
   }
 }

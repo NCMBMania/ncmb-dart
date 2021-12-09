@@ -1,4 +1,11 @@
-part of ncmb;
+import 'main.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'object.dart';
+import 'request.dart';
+import 'dart:async';
+import 'dart:convert';
+import 'package:uuid/uuid.dart';
+import 'query.dart';
 
 class NCMBUser extends NCMBObject {
   static NCMB? ncmb;
@@ -10,9 +17,9 @@ class NCMBUser extends NCMBObject {
   NCMBUser() : super('users');
 
   Future<void> signUpByAccount() async {
-    _fields = {'userName': get('userName'), 'password': get('password')};
+    Map _fields = {'userName': get('userName'), 'password': get('password')};
     NCMBRequest r = new NCMBRequest();
-    Map response = await r.post(_name, _fields);
+    Map response = await r.post(super.name, _fields);
     _fields.remove('password');
     await setLoginResponse(response);
   }
@@ -58,14 +65,14 @@ class NCMBUser extends NCMBObject {
   static Future<void> requestSignUpEmail(String mailAddress) async {
     Map _fields = {'mailAddress': mailAddress};
     NCMBRequest r = new NCMBRequest();
-    Map response = await r.exec('POST', 'users',
+    await r.exec('POST', 'users',
         fields: _fields, path: 'requestMailAddressUserEntry');
   }
 
   static Future<void> requestPasswordReset(String mailAddress) async {
     Map _fields = {'mailAddress': mailAddress};
     NCMBRequest r = new NCMBRequest();
-    Map response = await r.exec('POST', 'users',
+    await r.exec('POST', 'users',
         fields: _fields, path: 'requestPasswordReset');
   }
 
