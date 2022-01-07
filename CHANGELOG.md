@@ -122,3 +122,7 @@ Move example code.
 ## 2.2.0
 
 Remove "part of".
+
+## 2.2.1
+
+NCMBObject can save with NCMBGeoPoint.

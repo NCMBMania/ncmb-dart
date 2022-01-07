@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 import 'package:intl/intl.dart';
 import 'package:dio/dio.dart';
+import 'package:ncmb/ncmb.dart';
 import 'main.dart';
 import 'query.dart';
 import 'relation.dart';
@@ -88,6 +89,9 @@ class NCMBRequest {
         fields[k] = v.toJson();
       }
       if (v is NCMBQuery) {
+        fields[k] = v.toJson();
+      }
+      if (v is NCMBGeoPoint) {
         fields[k] = v.toJson();
       }
     });
