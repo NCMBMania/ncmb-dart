@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'dart:async';
 import 'acl.dart';
 import 'request.dart';
+import 'geopoint.dart';
+import "package:intl/intl.dart";
 
 class NCMBObject {
   static NCMB? ncmb;
@@ -40,6 +42,15 @@ class NCMBObject {
         map.remove('__type');
         obj.sets(map);
         value = obj;
+      }
+      if (map.containsKey('__type') && map['__type'] == 'GeoPoint') {
+        var geo = NCMBGeoPoint(
+            map['latitude'].toDouble(), map['longitude'].toDouble());
+        value = geo;
+      }
+      if (map.containsKey('__type') && map['__type'] == 'Date') {
+        var format = new DateFormat("yyyy-MM-ddTHH:mm:ss.S'Z'");
+        value = format.parseStrict(map['iso']);
       }
     }
     _fields[name] = value;

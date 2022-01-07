@@ -126,3 +126,7 @@ Remove "part of".
 ## 2.2.1
 
 NCMBObject can save with NCMBGeoPoint.
+
+## 2.2.2
+
+NCMBObject can get NCMBGeoPoint and Date.

@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 // import 'package:ncmb/ncmb.dart';
+// import 'package:ncmb/ncmb.dart';
 import '../lib/ncmb.dart';
 import 'dart:io';
 import 'dart:convert';
@@ -17,6 +18,7 @@ void main() {
 
   group('Object test', () {
     test("Save data", () async {
+      var geo = NCMBGeoPoint(50.0, 137.0);
       var acl = NCMBAcl();
       acl
         ..setPublicReadAccess(false)
@@ -26,9 +28,19 @@ void main() {
         ..set('array', ['a', 'b'])
         ..set('int', 1)
         ..set('acl', acl)
+        ..set('geo', geo)
         ..set('name', 'Atsushi');
       await item.save();
-      expect(item.get('objectId') != null, true);
+      expect(item.hasKey('objectId'), true);
+    });
+
+    test("Save geo and get", () async {
+      var geo = new NCMBGeoPoint(50.0, 137.0);
+      var item = new NCMBObject('Item')..set('geo', geo);
+      await item.save();
+      var item2 = new NCMBObject('Item')..set('objectId', item.get('objectId'));
+      await item2.fetch();
+      expect(item2.get('geo').runtimeType.toString(), 'NCMBGeoPoint');
     });
 
     test('Update date', () async {
