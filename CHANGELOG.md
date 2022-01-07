@@ -130,3 +130,7 @@ NCMBObject can save with NCMBGeoPoint.
 ## 2.2.2
 
 NCMBObject can get NCMBGeoPoint and Date.
+
+## 2.2.3
+
+Fix NCMBObject to String method.

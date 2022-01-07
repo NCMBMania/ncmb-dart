@@ -4,7 +4,8 @@ import 'dart:async';
 import 'acl.dart';
 import 'request.dart';
 import 'geopoint.dart';
-import "package:intl/intl.dart";
+import 'package:intl/intl.dart';
+import 'relation.dart';
 
 class NCMBObject {
   static NCMB? ncmb;
@@ -160,7 +161,10 @@ class NCMBObject {
     if (item is DateTime) {
       return item.toIso8601String();
     }
-    if (item is NCMBAcl) {
+    if (item is NCMBAcl ||
+        item is NCMBGeoPoint ||
+        item is NCMBObject ||
+        item is NCMBRelation) {
       return item.toJson();
     }
     return item;
