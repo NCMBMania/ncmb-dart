@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'main.dart';
 import 'push.dart';
 import 'file.dart';
@@ -7,6 +8,7 @@ import 'role.dart';
 import 'object.dart';
 import 'installation.dart';
 import 'request.dart';
+import 'geopoint.dart';
 
 class NCMBQuery {
   String _name = '';
@@ -117,6 +119,33 @@ class NCMBQuery {
 
   void notInArray(String key, Object value) {
     setOperand(key, value, ope: '\$notInArray');
+  }
+
+  void near(String key, NCMBGeoPoint geo) {
+    setOperand(key, geo.toJson(), ope: '\$nearSphere');
+  }
+
+  void withinKilometers(String key, NCMBGeoPoint geo, double maxDistance) {
+    setOperand(key, maxDistance, ope: '\$maxDistanceInKilometers');
+    setOperand(key, geo.toJson(), ope: '\$nearSphere');
+  }
+
+  void withinMiles(String key, NCMBGeoPoint geo, double maxDistance) {
+    setOperand(key, maxDistance, ope: '\$maxDistanceInMiles');
+    setOperand(key, geo.toJson(), ope: '\$nearSphere');
+  }
+
+  void withinRadians(String key, NCMBGeoPoint geo, double maxDistance) {
+    setOperand(key, maxDistance, ope: '\$maxDistanceInRadians');
+    setOperand(key, geo.toJson(), ope: '\$nearSphere');
+  }
+
+  void withinSquare(
+      String key, NCMBGeoPoint southWestVertex, NCMBGeoPoint northEastVertex) {
+    var box = {
+      '\$box': [southWestVertex.toJson(), northEastVertex.toJson()]
+    };
+    setOperand(key, box, ope: '\$within');
   }
 
   void allInArray(String key, Object value) {

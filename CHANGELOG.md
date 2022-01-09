@@ -134,3 +134,7 @@ NCMBObject can get NCMBGeoPoint and Date.
 ## 2.2.3
 
 Fix NCMBObject to String method.
+
+## 2.3.0
+
+Support to search by geo location.

@@ -1,6 +1,4 @@
 import 'package:flutter_test/flutter_test.dart';
-// import 'package:ncmb/ncmb.dart';
-// import 'package:ncmb/ncmb.dart';
 import '../lib/ncmb.dart';
 import 'dart:io';
 import 'dart:convert';
