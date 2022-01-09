@@ -6,9 +6,7 @@ import 'relation.dart';
 
 class NCMBRole extends NCMBObject {
   static NCMB? ncmb;
-
-  NCMBRole(String roleName)
-      : super.initWithParams('roles', {'roleName': roleName});
+  NCMBRole(String roleName) : super('roles', fields: {'roleName': roleName});
 
   void addRole(role) {
     var key = 'belongRole';

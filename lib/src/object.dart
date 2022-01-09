@@ -1,3 +1,5 @@
+// lib/src/object.dart
+
 import 'main.dart';
 import 'dart:convert';
 import 'dart:async';
@@ -7,21 +9,29 @@ import 'geopoint.dart';
 import 'package:intl/intl.dart';
 import 'relation.dart';
 
+/// NCMBObject is a class for DataStore in NCMB.
 class NCMBObject {
+  /// For accessing to NCMB
   static NCMB? ncmb;
 
+  /// Class name
   String _name = '';
+
+  /// Fields data
   Map _fields = {};
 
-  NCMBObject(this._name);
-
-  get name => _name;
-  get fields => _fields;
-
-  NCMBObject.initWithParams(this._name, params) {
-    this.sets(params);
+  /// Initializing NCMBObjct. Required class name.
+  NCMBObject(this._name, {Map fields = const {}}) {
+    _fields = {};
   }
 
+  /// Accessor methods. We can get class name by obj.name
+  get name => _name;
+
+  /// Accessor methods. We can get fields data by obj.fields
+  get fields => _fields;
+
+  /// Set [name] and [value] to fields.
   void set(String name, Object value) {
     if (name == 'createDate' || name == 'updateDate') {
       value = DateTime.parse(value as String);
@@ -57,15 +67,14 @@ class NCMBObject {
     _fields[name] = value;
   }
 
-  String className() {
-    return _name;
-  }
-
+  /// Call set methods for each key and value in [map]
   void sets(Map map) {
     map.removeWhere((k, v) => v == null);
     map.forEach((k, v) => set(k, v));
   }
 
+  /// Fetch a data from DataStore in NCMB.
+  /// After fetched data, set to own fields from data.
   Future<void> fetch() async {
     if (!_fields.containsKey('objectId')) {
       throw Exception('ObjectId is required.');
@@ -75,7 +84,8 @@ class NCMBObject {
     sets(response);
   }
 
-  void increment(String name, int number) {
+  // Increment update [name] fields. [number] is count to update(1 is default).
+  void increment(String name, {int number = 1}) {
     if (!_fields.containsKey('objectId')) {
       return set(name, number);
     }

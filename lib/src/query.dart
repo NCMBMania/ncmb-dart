@@ -231,7 +231,7 @@ class NCMBQuery {
       var obj = value as NCMBObject;
       value = {
         '__type': 'Pointer',
-        'className': obj.className(),
+        'className': obj.name,
         'objectId': obj.get('objectId')
       };
     }
