@@ -146,3 +146,7 @@ Supprt `getString` / `getDateTime` / `getInt` / `getDouble` / `getBool` to NCMBO
 ## 2.3.2
 
 Change to static method 'NCMBUser.singupByAccount` & 'NCMBFile.download'
+
+## 2.3.3
+
+Change access method to data at NCMBFile

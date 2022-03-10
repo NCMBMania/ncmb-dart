@@ -10,6 +10,7 @@ import 'package:http_parser/http_parser.dart';
 
 class NCMBFile extends NCMBObject {
   NCMBFile() : super('files');
+  var data;
 
   static Future<NCMBFile> upload(String fileName, dynamic blob,
       {acl = '', mimeType = ''}) async {
@@ -54,7 +55,7 @@ class NCMBFile extends NCMBObject {
     Map response =
         await r.exec('GET', 'files', objectId: fileName, multipart: true);
     var f = NCMBFile();
-    f.set('blob', response['data']);
+    f.data = response['data'];
     return f;
   }
 
