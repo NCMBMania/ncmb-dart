@@ -31,22 +31,14 @@ void main() {
 
   group('Sign up by account', () {
     test("User registered", () async {
-      var user = NCMBUser();
-      user
-        ..set('userName', 'aaa')
-        ..set('password', 'bbb');
-      await user.signUpByAccount();
+      var user = await NCMBUser.signUpByAccount('aaa', 'bbb');
       expect(user.get('objectId') != '', true);
       await user.delete();
       await NCMBUser.logout();
     });
 
     test("User login", () async {
-      var user = NCMBUser();
-      user
-        ..set('userName', 'aaa')
-        ..set('password', 'bbb');
-      await user.signUpByAccount();
+      var user = await NCMBUser.signUpByAccount('aaa', 'bbb');
       expect(user.get('objectId') != '', true);
       var user2 = await NCMBUser.login('aaa', 'bbb');
       expect(user.get('objectId'), user2.get('objectId'));
@@ -55,11 +47,7 @@ void main() {
     });
 
     test("Update user and fetch", () async {
-      var user = NCMBUser();
-      user
-        ..set('userName', 'aaa')
-        ..set('password', 'bbb');
-      await user.signUpByAccount();
+      var user = await NCMBUser.signUpByAccount('aaa', 'bbb');
       try {
         user.set('testName', 'testValue');
         await user.save();
@@ -81,11 +69,7 @@ void main() {
         ..setPublicReadAccess(true)
         ..setPublicWriteAccess(true);
       for (var i = 0; i < 5; i++) {
-        var user = NCMBUser();
-        user
-          ..set('userName', 'aaa$i')
-          ..set('password', 'bbb');
-        await user.signUpByAccount();
+        var user = await NCMBUser.signUpByAccount('aaa$i', 'bbb');
         user.set('acl', acl);
         await user.save();
         await NCMBUser.logout();

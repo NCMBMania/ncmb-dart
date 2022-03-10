@@ -16,12 +16,15 @@ class NCMBUser extends NCMBObject {
   static NCMBUser? _currentUser;
   NCMBUser() : super('users');
 
-  Future<void> signUpByAccount() async {
-    Map _fields = {'userName': get('userName'), 'password': get('password')};
+  static Future<NCMBUser> signUpByAccount(
+      String userName, String password) async {
+    Map _fields = {'userName': userName, 'password': password};
     NCMBRequest r = new NCMBRequest();
-    Map response = await r.post(super.name, _fields);
+    Map response = await r.post('users', _fields);
     _fields.remove('password');
-    await setLoginResponse(response);
+    var user = NCMBUser();
+    await user.setLoginResponse(response);
+    return user;
   }
 
   static Future<NCMBUser> loginAsAnonymous({String id = ''}) async {

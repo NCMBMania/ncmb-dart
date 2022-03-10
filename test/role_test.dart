@@ -48,11 +48,7 @@ void main() {
         ..setPublicReadAccess(true)
         ..setPublicWriteAccess(true);
       for (var i = 0; i < 5; i++) {
-        var user = NCMBUser();
-        user
-          ..set('userName', 'aaa$i')
-          ..set('password', 'bbb');
-        await user.signUpByAccount();
+        var user = await NCMBUser.signUpByAccount('aaa$i', 'bbb');
         user.set('acl', acl);
         await user.save();
         ary.add(user);

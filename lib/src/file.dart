@@ -49,10 +49,10 @@ class NCMBFile extends NCMBObject {
     return f;
   }
 
-  Future<NCMBFile> download(String fileName) async {
+  static Future<NCMBFile> download(String fileName) async {
     NCMBRequest r = new NCMBRequest();
     Map response =
-        await r.exec('GET', super.name, objectId: fileName, multipart: true);
+        await r.exec('GET', 'files', objectId: fileName, multipart: true);
     var f = NCMBFile();
     f.set('blob', response['data']);
     return f;

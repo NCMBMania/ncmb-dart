@@ -142,3 +142,7 @@ Support to search by geo location.
 ## 2.3.1
 
 Supprt `getString` / `getDateTime` / `getInt` / `getDouble` / `getBool` to NCMBObject
+
+## 2.3.2
+
+Change to static method 'NCMBUser.singupByAccount` & 'NCMBFile.download'
