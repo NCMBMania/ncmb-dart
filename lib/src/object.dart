@@ -60,7 +60,7 @@ class NCMBObject {
         value = geo;
       }
       if (map.containsKey('__type') && map['__type'] == 'Date') {
-        var format = new DateFormat("yyyy-MM-ddTHH:mm:ss.S'Z'");
+        var format = DateFormat("yyyy-MM-ddTHH:mm:ss.S'Z'");
         value = format.parseStrict(map['iso']);
       }
     }
@@ -147,12 +147,33 @@ class NCMBObject {
     return _fields.containsKey(name);
   }
 
-  Object get(String name) {
+  Object? get(String name) {
     return _fields[name];
   }
 
-  String getString(String name) {
+  String getString(String name, {String? defaultValue}) {
+    if (!_fields.containsKey(name) && defaultValue != null) return defaultValue;
     return _fields[name]! as String;
+  }
+
+  DateTime getDateTime(String name, {DateTime? defaultValue}) {
+    if (!_fields.containsKey(name) && defaultValue != null) return defaultValue;
+    return _fields[name]! as DateTime;
+  }
+
+  int getInt(String name, {int? defaultValue}) {
+    if (!_fields.containsKey(name) && defaultValue != null) return defaultValue;
+    return _fields[name]! as int;
+  }
+
+  double getDouble(String name, {double? defaultValue}) {
+    if (!_fields.containsKey(name) && defaultValue != null) return defaultValue;
+    return _fields[name]! as double;
+  }
+
+  bool getBool(String name, {bool? defaultValue}) {
+    if (!_fields.containsKey(name) && defaultValue != null) return defaultValue;
+    return _fields[name]! as bool;
   }
 
   dynamic toJson() {

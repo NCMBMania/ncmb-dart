@@ -64,7 +64,7 @@ void main() {
         user.set('testName', 'testValue');
         await user.save();
         var user2 = NCMBUser();
-        user2.set('objectId', user.get('objectId'));
+        user2.set('objectId', user.get('objectId') as String);
         await user2.fetch();
         expect(user2.get('testName'), 'testValue');
       } catch (e) {}

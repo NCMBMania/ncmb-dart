@@ -30,7 +30,7 @@ void main() {
       var obj3 = NCMBObject('Main');
       obj3.set('tests', r);
       await obj3.save();
-      expect(obj3.get('objectId') != null, true);
+      expect(obj3.get('objectId'), true);
     });
 
     test('Retrive data from relation', () async {
@@ -60,7 +60,7 @@ void main() {
     query
       ..limit(100)
       ..fetchAll();
-    var items = await query.fetchAll() ;
+    var items = await query.fetchAll();
     for (NCMBObject o in items) {
       await o.delete();
     }

@@ -6,10 +6,10 @@ import 'dart:convert';
 void main() {
   setUp(() async {
     var path = 'example/keys.json';
-    var file = File('../${path}');
+    var file = File('../$path');
     var str = (await file.exists())
         ? await file.readAsString()
-        : await File('./${path}').readAsString();
+        : await File('./$path').readAsString();
     var keys = json.decode(str);
     NCMB(keys['applicationKey'], keys['clientKey']);
   });

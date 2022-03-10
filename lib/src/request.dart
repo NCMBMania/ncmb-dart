@@ -12,7 +12,7 @@ import 'signature.dart';
 
 class NCMBRequest {
   static NCMB? ncmb;
-  NCMBRequest() {}
+  // NCMBRequest() {}
 
   Future<List> get(String name, Map queries, {multipart = false}) async {
     try {

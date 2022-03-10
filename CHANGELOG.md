@@ -138,3 +138,7 @@ Fix NCMBObject to String method.
 ## 2.3.0
 
 Support to search by geo location.
+
+## 2.3.1
+
+Supprt `getString` / `getDateTime` / `getInt` / `getDouble` / `getBool` to NCMBObject

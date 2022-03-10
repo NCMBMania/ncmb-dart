@@ -1,5 +1,4 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../lib/ncmb.dart';
 import 'dart:io';
 import 'dart:convert';
@@ -9,10 +8,10 @@ Map keys = {};
 void main() {
   setUp(() async {
     var path = 'example/keys.json';
-    var file = File('../${path}');
+    var file = File('../$path');
     var str = (await file.exists())
         ? await file.readAsString()
-        : await File('./${path}').readAsString();
+        : await File('./$path').readAsString();
     keys = json.decode(str);
     NCMB(keys['applicationKey'], keys['clientKey']);
   });
@@ -35,7 +34,7 @@ void main() {
       await installation.save();
       expect(installation.get('objectId') != '', true);
       var installation2 = NCMBInstallation();
-      installation2.set('objectId', installation.get('objectId'));
+      installation2.set('objectId', installation.get('objectId') as String);
       await installation2.fetch();
       expect(installation.get('objectId'), installation2.get('objectId'));
     });
@@ -50,7 +49,7 @@ void main() {
       installation..set('another', 'value');
       await installation.save();
       var installation2 = NCMBInstallation();
-      installation2.set('objectId', installation.get('objectId'));
+      installation2.set('objectId', installation.get('objectId') as String);
       await installation2.fetch();
       expect(installation2.get('another'), 'value');
     });
