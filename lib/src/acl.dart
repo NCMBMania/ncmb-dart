@@ -1,9 +1,7 @@
 import 'user.dart';
 
 class NCMBAcl {
-  var fields = {
-    '*': {'read': true, 'write': true}
-  };
+  var fields = {};
 
   NCMBAcl();
 

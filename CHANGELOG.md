@@ -150,3 +150,7 @@ Change to static method 'NCMBUser.singupByAccount` & 'NCMBFile.download'
 ## 2.3.3
 
 Change access method to data at NCMBFile
+
+## 2.3.4
+
+Remove default ACL.
