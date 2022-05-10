@@ -154,3 +154,7 @@ Change access method to data at NCMBFile
 ## 2.3.4
 
 Remove default ACL.
+
+## 2.3.5
+
+Ignore update fields if updating user data.

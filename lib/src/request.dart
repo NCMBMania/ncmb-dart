@@ -45,8 +45,11 @@ class NCMBRequest {
     Signature s = new Signature(NCMBRequest.ncmb!);
     DateTime time = DateTime.now();
     final newFields = Map.from(fields)
-      ..removeWhere((k, v) =>
-          (k == 'objectId' || k == 'createDate' || k == 'updateDate'));
+      ..removeWhere((k, v) => (k == 'objectId' ||
+          k == 'createDate' ||
+          k == 'updateDate' ||
+          (name == 'users' && k == 'authData') ||
+          (name == 'users' && k == 'mailAddressConfirm')));
     String signature = s.generate(method, name, time,
         objectId: objectId, queries: queries, definePath: path);
     String url =
