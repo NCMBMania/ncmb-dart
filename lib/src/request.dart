@@ -48,8 +48,8 @@ class NCMBRequest {
       ..removeWhere((k, v) => (k == 'objectId' ||
           k == 'createDate' ||
           k == 'updateDate' ||
-          (name == 'users' && k == 'authData') ||
-          (name == 'users' && k == 'mailAddressConfirm')));
+          (method == 'PUT' && name == 'users' && k == 'authData') ||
+          (method == 'PUT' && name == 'users' && k == 'mailAddressConfirm')));
     String signature = s.generate(method, name, time,
         objectId: objectId, queries: queries, definePath: path);
     String url =

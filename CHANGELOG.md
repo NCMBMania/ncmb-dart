@@ -158,3 +158,7 @@ Remove default ACL.
 ## 2.3.5
 
 Ignore update fields if updating user data.
+
+## 2.3.6
+
+Bug fix.
