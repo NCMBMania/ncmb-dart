@@ -162,3 +162,7 @@ Ignore update fields if updating user data.
 ## 2.3.6
 
 Bug fix.
+
+## 2.4.0
+
+Support Flutter 3.0

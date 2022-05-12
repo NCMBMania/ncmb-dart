@@ -22,7 +22,9 @@ class NCMBObject {
 
   /// Initializing NCMBObjct. Required class name.
   NCMBObject(this._name, {Map fields = const {}}) {
-    _fields = {};
+    fields.forEach((key, value) {
+      _fields[key] = fields[key];
+    });
   }
 
   /// Accessor methods. We can get class name by obj.name

@@ -30,7 +30,7 @@ void main() {
       var obj3 = NCMBObject('Main');
       obj3.set('tests', r);
       await obj3.save();
-      expect(obj3.get('objectId'), true);
+      expect(obj3.getString('objectId') != '', true);
     });
 
     test('Retrive data from relation', () async {

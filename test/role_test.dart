@@ -31,14 +31,21 @@ void main() {
 
     test('Add role to role', () async {
       var role = NCMBRole('RoleTest1');
+      var acl = NCMBAcl();
+      acl.setPublicReadAccess(true);
+      acl.setPublicWriteAccess(true);
+      role.set('acl', acl);
       await role.save();
       expect(role.get('objectId') != null, true);
       var role2 = NCMBRole('RoleTest2');
+      role2.set('acl', acl);
       await role2.save();
       role.addRole(role2);
       await role.save();
       var roles = await role.fetchRole();
       expect(role2.get('objectId'), roles[0].get('objectId'));
+      await role.delete();
+      await role2.delete();
     });
 
     test('add user to role', () async {
@@ -48,7 +55,7 @@ void main() {
         ..setPublicReadAccess(true)
         ..setPublicWriteAccess(true);
       for (var i = 0; i < 5; i++) {
-        var user = await NCMBUser.signUpByAccount('aaa$i', 'bbb');
+        var user = await NCMBUser.signUpByAccount('aaa1$i', 'bbb');
         user.set('acl', acl);
         await user.save();
         ary.add(user);
@@ -60,15 +67,33 @@ void main() {
       await role.save();
       var users = await role.fetchUser();
       expect(users.length, 5);
+      role.delete();
+      for (NCMBUser u in users) {
+        await u.delete();
+      }
     });
 
     test('Remove role from role', () async {
+      var acl = NCMBAcl();
+      acl
+        ..setPublicReadAccess(true)
+        ..setPublicWriteAccess(true);
+      var role = NCMBRole('RoleTest1');
+      role.set('acl', acl);
+      await role.save();
+      expect(role.get('objectId') != null, true);
+      var role2 = NCMBRole('RoleTest2');
+      role2.set('acl', acl);
+      await role2.save();
+      role.addRole(role2);
+      await role.save();
+
       var query = NCMBRole.query();
       query.equalTo('roleName', 'RoleTest1');
       var role1 = await query.fetch();
       query.equalTo('roleName', 'RoleTest2');
-      var role2 = await query.fetch();
-      role1.removeRole(role2);
+      var role3 = await query.fetch();
+      role1.removeRole(role3);
       await role1.save();
       var roles = await role1.fetchRole();
       expect(roles.length, 0);
@@ -77,21 +102,39 @@ void main() {
     });
 
     test('Remove user from role', () async {
+      var acl = NCMBAcl();
+      acl
+        ..setPublicReadAccess(true)
+        ..setPublicWriteAccess(true);
+      var role = NCMBRole('UserTest');
+      role.set('acl', acl);
+      await role.save();
+      var ary = [];
+      for (var i = 0; i < 5; i++) {
+        var user = await NCMBUser.signUpByAccount('ccc2$i', 'bbb');
+        user.set('acl', acl);
+        await user.save();
+        ary.add(user);
+        role.addUser(user);
+        await NCMBUser.logout();
+      }
+      await role.save();
       var query = NCMBRole.query();
       query.equalTo('roleName', 'UserTest');
       var role1 = await query.fetch();
       var queryU = NCMBUser.query();
+      queryU.regex('userName', '^ccc.*');
+      queryU.limit(100);
       var user = await queryU.fetch();
-      if (role1 != null) {
-        role1.removeUser(user);
-        await role1.save();
-        var users = await role1.fetchUser() as List<NCMBUser>;
-        expect(users.length, 4);
-        for (NCMBUser u in users) {
-          await u.delete();
-        }
-        await role1.delete();
+      role1.removeUser(user);
+      await role1.save();
+      var users = await role1.fetchUser();
+      expect(users.length, 4);
+      for (NCMBUser u in users) {
+        await u.delete();
       }
+      await user.delete();
+      await role1.delete();
     });
   });
 }

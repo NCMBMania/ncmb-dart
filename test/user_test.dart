@@ -69,14 +69,16 @@ void main() {
         ..setPublicReadAccess(true)
         ..setPublicWriteAccess(true);
       for (var i = 0; i < 5; i++) {
-        var user = await NCMBUser.signUpByAccount('aaa$i', 'bbb');
+        var userName = 'bbb$i';
+        var user = await NCMBUser.signUpByAccount(userName, 'bbb');
         user.set('acl', acl);
         await user.save();
         await NCMBUser.logout();
       }
       query = NCMBUser.query();
+      query.regex('userName', '^bbb.*');
       query.limit(100);
-      var ary1 = await query.fetchAll() as List<NCMBUser>;
+      var ary1 = await query.fetchAll();
       expect(ary1.length, 5);
       for (NCMBUser u in ary1) {
         await u.delete();

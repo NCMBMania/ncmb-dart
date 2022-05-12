@@ -14,10 +14,12 @@ class NCMBAcl {
   }
 
   void setPublicReadAccess(bool allow) {
+    roleInit('*');
     fields['*']!['read'] = allow;
   }
 
   void setPublicWriteAccess(bool allow) {
+    roleInit('*');
     fields['*']!['write'] = allow;
   }
 

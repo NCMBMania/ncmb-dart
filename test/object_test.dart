@@ -56,7 +56,6 @@ void main() {
         ..set('geo', geo)
         ..set('name', 'Atsushi');
       await item.save();
-      print(item.getString('msg'));
       expect(item.hasKey('objectId'), true);
       expect(item.getString('msg'), 'Hello World');
       expect(item.getString('msg2', defaultValue: 'Test'), 'Test');
@@ -74,7 +73,7 @@ void main() {
       // Update data
       item.set('name', 'goofmint');
       await item.save();
-      expect(item.get('updateDate'), true);
+      expect(item.getDateTime('updateDate').runtimeType, DateTime);
     });
 
     test('Delete data', () async {
