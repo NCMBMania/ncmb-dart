@@ -19,6 +19,14 @@ void main() {
       expect(items.length > 0, true);
     });
 
+    test("Fetch date all", () async {
+      var dt = DateTime.now();
+      var query = new NCMBQuery('Item');
+      query.lessThanOrEqualTo('createDate', dt);
+      var items = await query.fetchAll();
+      expect(items.length > 0, true);
+    });
+
     test("Fetch or", () async {
       var item = new NCMBObject('Item')..set('num', 1);
       await item.save();

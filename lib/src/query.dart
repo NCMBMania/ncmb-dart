@@ -227,6 +227,13 @@ class NCMBQuery {
 
   void setOperand(String key, Object value, {String ope = ''}) {
     initWhere();
+    if (value.runtimeType == DateTime) {
+      var v = value as DateTime;
+      value = {
+        '__type': 'Date',
+        'iso': v.toUtc().toIso8601String(),
+      };
+    }
     if (value.runtimeType == NCMBObject) {
       var obj = value as NCMBObject;
       value = {

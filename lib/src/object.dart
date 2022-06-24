@@ -192,7 +192,7 @@ class NCMBObject {
 
   dynamic myEncode(dynamic item) {
     if (item is DateTime) {
-      return item.toIso8601String();
+      return item.toUtc().toIso8601String();
     }
     if (item is NCMBAcl ||
         item is NCMBGeoPoint ||

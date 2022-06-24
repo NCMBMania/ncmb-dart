@@ -1,7 +1,7 @@
 # This is a generated file; do not edit or check into version control.
 package_info=/Volumes/SSD/flutter/.pub-cache/hosted/pub.dartlang.org/package_info-2.0.2/
-path_provider_linux=/Volumes/SSD/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider_linux-2.1.6/
-path_provider_windows=/Volumes/SSD/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider_windows-2.0.6/
+path_provider_linux=/Volumes/SSD/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider_linux-2.1.7/
+path_provider_windows=/Volumes/SSD/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider_windows-2.1.0/
 shared_preferences=/Volumes/SSD/flutter/.pub-cache/hosted/pub.dartlang.org/shared_preferences-2.0.15/
 shared_preferences_android=/Volumes/SSD/flutter/.pub-cache/hosted/pub.dartlang.org/shared_preferences_android-2.0.12/
 shared_preferences_ios=/Volumes/SSD/flutter/.pub-cache/hosted/pub.dartlang.org/shared_preferences_ios-2.1.1/

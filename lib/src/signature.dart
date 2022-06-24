@@ -55,7 +55,7 @@ class Signature {
 
   String generate(String method, String className, DateTime time,
       {objectId = '', queries = const {}, definePath = ''}) {
-    baseInfo['X-NCMB-Timestamp'] = time.toIso8601String();
+    baseInfo['X-NCMB-Timestamp'] = time.toUtc().toIso8601String();
     List sigList = [];
     queries.forEach((key, value) {
       if (value is Map || value is List) {

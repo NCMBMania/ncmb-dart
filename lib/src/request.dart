@@ -56,7 +56,7 @@ class NCMBRequest {
         s.url(name, objectId: objectId, queries: queries, definePath: path);
     Map<String, String> headers = {
       "X-NCMB-Application-Key": NCMBRequest.ncmb!.applicationKey!,
-      "X-NCMB-Timestamp": time.toIso8601String(),
+      "X-NCMB-Timestamp": time.toUtc().toIso8601String(),
       "X-NCMB-Signature": signature
     };
     if (name == 'files') {
@@ -82,8 +82,7 @@ class NCMBRequest {
   String jsonEncode(Map fields) {
     fields.forEach((k, v) {
       if (v is DateTime) {
-        var format = new DateFormat("yyyy-MM-ddTHH:mm:ss.S'Z'");
-        fields[k] = {'__type': 'Date', 'iso': format.format(v)};
+        fields[k] = {'__type': 'Date', 'iso': v.toUtc().toIso8601String()};
       }
       if (v is NCMBAcl) {
         fields[k] = v.toJson();

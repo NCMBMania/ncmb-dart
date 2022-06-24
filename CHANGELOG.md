@@ -166,3 +166,8 @@ Bug fix.
 ## 2.4.0
 
 Support Flutter 3.0
+
+## 2.4.1
+
+Fix date query.
+
