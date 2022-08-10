@@ -30,7 +30,7 @@ void main() async {
   var item2 = await query.fetch();
   print(item2.get('msg'));
 
-  query.equalTo('objectId', item.get('objectId'));
+  query.equalTo('objectId', item.getString('objectId'));
   var item3 = await query.fetch();
   print(item3.get('objectId'));
   var acl = NCMBAcl();

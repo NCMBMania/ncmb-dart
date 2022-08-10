@@ -13,3 +13,4 @@ export 'src/file.dart';
 export 'src/role.dart';
 export 'src/relation.dart';
 export 'src/push.dart';
+export 'src/script.dart';

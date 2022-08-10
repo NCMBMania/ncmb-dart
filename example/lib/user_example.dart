@@ -8,12 +8,7 @@ void main() async {
   NCMB(keys['applicationKey'], keys['clientKey']);
   var userName = 'aaa';
   var password = 'bbb';
-  var user = NCMBUser();
-  user.sets({
-    'userName': userName,
-    'password': password,
-  });
-  await user.signUpByAccount();
+  var user = await NCMBUser.signUpByAccount(userName, password);
   print(NCMBUser.ncmb!.sessionToken);
   print(user.get('objectId'));
   NCMBUser.ncmb!.sessionToken = null;

@@ -155,3 +155,42 @@ var file = await NCMBFile.upload(fileName, 'a,b,c', mimeType: 'text/csv');
 ```dart
 var file = await NCMBFile.download('dart.png');
 ```
+
+## Script
+
+### Common method
+
+```dart
+var script = NCMBScript('script_test_get.js'); // Script name
+script.query('hoge', 'fuga');
+script.header('foo1', 'bar1');
+script.header('foo2', 'bar2');
+
+// Only POST or PUT method
+script.body('hoge2', 'fuga2');
+script.body('hoge3', 'fuga3');
+```
+
+### GET
+
+```dart
+var result = await script.get();
+```
+
+### DELETE
+
+```dart
+var result = await script.delete();
+```
+
+### POST
+
+```dart
+var result = await script.post();
+```
+
+### PUT
+
+```dart
+var result = await script.put();
+```

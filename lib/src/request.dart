@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:typed_data';
-import 'package:intl/intl.dart';
 import 'package:dio/dio.dart';
 import 'main.dart';
 import 'query.dart';
@@ -40,9 +39,11 @@ class NCMBRequest {
       {fields = const {},
       objectId = '',
       queries = const {},
+      Map<String, String> additionalHeaders = const {},
       path = '',
-      multipart = false}) async {
-    Signature s = new Signature(NCMBRequest.ncmb!);
+      multipart = false,
+      isScript = false}) async {
+    Signature s = new Signature(NCMBRequest.ncmb!, isScript: isScript);
     DateTime time = DateTime.now();
     final newFields = Map.from(fields)
       ..removeWhere((k, v) => (k == 'objectId' ||
@@ -59,6 +60,7 @@ class NCMBRequest {
       "X-NCMB-Timestamp": time.toUtc().toIso8601String(),
       "X-NCMB-Signature": signature
     };
+    headers.addAll(additionalHeaders);
     if (name == 'files') {
       headers.remove('Content-Type');
     }
@@ -72,7 +74,8 @@ class NCMBRequest {
       if (response.data is Uint8List) {
         return {"data": response.data};
       }
-      if (method == 'DELETE') return {};
+
+      if (!isScript && method == 'DELETE') return {};
       return response.data;
     } on DioError catch (e) {
       throw Exception(e.response!.data);
