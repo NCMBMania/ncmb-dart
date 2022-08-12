@@ -54,6 +54,42 @@ items = await query.fetchAll();
 print(items.length);
 ```
 
+#### Retribete with type
+
+```dart
+// String
+item.getString('fieldName');
+// Int
+item.getInt('fieldName');
+// double
+item.getDouble('fieldName');
+// bool
+item.getBool('fieldName');
+// DateTime
+item.getDateTime('fieldName');
+// List
+item.getList('fieldName');
+```
+
+You can use default value for there is no field.
+
+```dart
+// String
+item.getString('fieldName', defaultValue = '');
+// Int
+item.getInt('fieldName', defaultValue = 0);
+// double
+item.getDouble('fieldName', defaultValue = 0);
+// bool
+item.getBool('fieldName', defaultValue = true);
+// DateTime
+item.getDateTime('fieldName', defaultValue = DateTime.now());
+// List
+item.getList('fieldName', defaultValue = ['']);
+```
+
+If there is no defaultValue and field, you will get Exception.
+
 ### ACL
 
 ```dart

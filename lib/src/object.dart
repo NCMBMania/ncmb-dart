@@ -20,6 +20,9 @@ class NCMBObject {
   /// Fields data
   Map _fields = {};
 
+  /// ObjectId
+  String? objectId;
+
   /// Initializing NCMBObjct. Required class name.
   NCMBObject(this._name, {Map fields = const {}}) {
     fields.forEach((key, value) {
@@ -38,6 +41,9 @@ class NCMBObject {
     if (name == 'createDate' || name == 'updateDate') {
       value = DateTime.parse(value as String);
     }
+    if (name == 'objectId') {
+      objectId = value as String;
+    }
     if (name == 'acl') {
       if (!(value is NCMBAcl)) {
         var acl = new NCMBAcl();
@@ -45,9 +51,7 @@ class NCMBObject {
         value = acl;
       }
     }
-    if (value.runtimeType.toString() == '_JsonMap' ||
-        value.runtimeType.toString() ==
-            '_InternalLinkedHashMap<String, dynamic>') {
+    try {
       var map = value as Map;
       if (map['className'] != null) {
         NCMBObject obj = NCMBObject(map['className']);
@@ -65,8 +69,10 @@ class NCMBObject {
         var format = DateFormat("yyyy-MM-ddTHH:mm:ss.S'Z'");
         value = format.parseStrict(map['iso']);
       }
+      _fields[name] = value;
+    } catch (e) {
+      _fields[name] = value;
     }
-    _fields[name] = value;
   }
 
   /// Call set methods for each key and value in [map]
@@ -176,6 +182,11 @@ class NCMBObject {
   bool getBool(String name, {bool? defaultValue}) {
     if (!_fields.containsKey(name) && defaultValue != null) return defaultValue;
     return _fields[name]! as bool;
+  }
+
+  List<dynamic> getList(String name, {List<dynamic>? defaultValue}) {
+    if (!_fields.containsKey(name) && defaultValue != null) return defaultValue;
+    return _fields[name]! as List;
   }
 
   dynamic toJson() {

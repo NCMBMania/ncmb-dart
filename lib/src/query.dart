@@ -184,6 +184,38 @@ class NCMBQuery {
     }
   }
 
+  void select(String key, String subKey, NCMBQuery query) {
+    initWhere();
+    var className = '';
+    switch (query._name) {
+      case 'users':
+        className = 'user';
+        break;
+      case 'roles':
+        className = 'role';
+        break;
+      case 'installations':
+        className = 'installation';
+        break;
+      case 'files':
+        className = 'file';
+        break;
+      default:
+        className = query._name;
+        break;
+    }
+    _queries['where'][key] = {};
+    var subQuery = query._queries;
+    var params = {'className': className, 'where': subQuery['where']};
+    if (subQuery.containsKey('limit')) {
+      params['limit'] = subQuery['limit'];
+    }
+    if (subQuery.containsKey('skip')) {
+      params['skip'] = subQuery['skip'];
+    }
+    _queries['where'][key]['\$select'] = {'query': params, 'key': subKey};
+  }
+
   void include(String className) {
     if (!_queries.containsKey('include')) _queries['include'] = '';
     _queries['include'] = className;

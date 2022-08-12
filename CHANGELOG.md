@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## 2.6.1
+
+- Fix convert data.
+- Add "objectId" property to NCMBObject
+- Add "getList" method to NCMBQuery
+
+## 2.6.0
+
+Support sub query.
+
 ## 2.5.0
 
 Support Script.
