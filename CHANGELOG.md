@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 2.6.2
+
+- Fix include bug.
+
 ## 2.6.1
 
 - Fix convert data.

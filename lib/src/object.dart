@@ -8,6 +8,9 @@ import 'request.dart';
 import 'geopoint.dart';
 import 'package:intl/intl.dart';
 import 'relation.dart';
+import 'user.dart';
+import 'push.dart';
+import 'installation.dart';
 
 /// NCMBObject is a class for DataStore in NCMB.
 class NCMBObject {
@@ -54,11 +57,30 @@ class NCMBObject {
     try {
       var map = value as Map;
       if (map['className'] != null) {
-        NCMBObject obj = NCMBObject(map['className']);
-        map.remove('className');
+        var className = map['className'] as String;
         map.remove('__type');
-        obj.sets(map);
-        value = obj;
+        map.remove('className');
+        switch (className) {
+          case 'user':
+            var user = NCMBUser();
+            user.sets(map);
+            value = user;
+            break;
+          case 'installation':
+            var installation = NCMBInstallation();
+            installation.sets(map);
+            value = installation;
+            break;
+          case 'push':
+            var push = NCMBPush();
+            push.sets(map);
+            value = push;
+            break;
+          default:
+            NCMBObject obj = NCMBObject(className);
+            obj.sets(map);
+            value = obj;
+        }
       }
       if (map.containsKey('__type') && map['__type'] == 'GeoPoint') {
         var geo = NCMBGeoPoint(
