@@ -43,9 +43,19 @@ class NCMBObject {
   void set(String name, Object value) {
     if (name == 'createDate' || name == 'updateDate') {
       value = DateTime.parse(value as String);
+      _fields[name] = value;
+      return;
+    }
+    if (['NCMBUser', 'NCMBObject', 'NCMBFile', 'NCMBPush', 'NCMBInstallation']
+            .indexOf(value.runtimeType.toString()) >
+        -1) {
+      _fields[name] = value;
+      return;
     }
     if (name == 'objectId') {
       objectId = value as String;
+      _fields[name] = value;
+      return;
     }
     if (name == 'acl') {
       if (!(value is NCMBAcl)) {
@@ -53,13 +63,16 @@ class NCMBObject {
         acl.sets(value as Map);
         value = acl;
       }
+      _fields[name] = value;
+      return;
     }
     try {
       var map = value as Map;
-      if (map['className'] != null) {
+      if (map.containsKey('className')) {
         var className = map['className'] as String;
         map.remove('__type');
         map.remove('className');
+        print(className);
         switch (className) {
           case 'user':
             var user = NCMBUser();
@@ -81,17 +94,19 @@ class NCMBObject {
             obj.sets(map);
             value = obj;
         }
+        _fields[name] = value;
+        return;
       }
       if (map.containsKey('__type') && map['__type'] == 'GeoPoint') {
         var geo = NCMBGeoPoint(
             map['latitude'].toDouble(), map['longitude'].toDouble());
-        value = geo;
-      }
-      if (map.containsKey('__type') && map['__type'] == 'Date') {
+        _fields[name] = geo;
+        return;
+      } else if (map.containsKey('__type') && map['__type'] == 'Date') {
         var format = DateFormat("yyyy-MM-ddTHH:mm:ss.S'Z'");
-        value = format.parseStrict(map['iso']);
+        _fields[name] = format.parseStrict(map['iso']);
+        return;
       }
-      _fields[name] = value;
     } catch (e) {
       _fields[name] = value;
     }

@@ -61,6 +61,21 @@ void main() {
       expect(items.length, 2);
     });
 
+    test("Include test", () async {
+      var user = await NCMBUser.loginAsAnonymous();
+      var item = new NCMBObject('Item')..set('name', 'Group');
+      item.set('user', user);
+      await item.save();
+      var query = new NCMBQuery('Item');
+      query.equalTo('objectId', item.objectId!);
+      query.include('user');
+      var result = await query.fetch();
+      var user2 = result.get('user') as NCMBUser;
+      print(user2.objectId);
+      await item.delete();
+      await user.delete();
+      NCMBUser.logout();
+    });
     test("Fetch select", () async {
       for (var i = 1; i <= 3; i++) {
         var item = new NCMBObject('Group')..set('name', 'Group $i');
