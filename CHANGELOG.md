@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 2.6.5
+
+- Add containsKey method to NCMBObject, NCMBUser, NCMBInstallation, NCMBPush, NCMBFile.
+
 ## 2.6.4
 
 - Save user data to shared preference after update user data.

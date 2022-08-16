@@ -167,6 +167,10 @@ class NCMBObject {
     set(name, {'__op': 'Remove', 'objects': value});
   }
 
+  bool containsKey(String name) {
+    return _fields.containsKey(name);
+  }
+
   Future<void> save() async {
     if (!_fields.containsKey('objectId')) {
       NCMBRequest r = new NCMBRequest();
