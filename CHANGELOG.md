@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 2.6.4
+
+- Save user data to shared preference after update user data.
+
 ## 2.6.2 - 2.6.3
 
 - Fix include bug.

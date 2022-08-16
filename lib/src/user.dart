@@ -140,6 +140,14 @@ class NCMBUser extends NCMBObject {
     };
   }
 
+  Future<void> save() async {
+    await super.save();
+    try {
+      _prefs = await SharedPreferences.getInstance();
+      _prefs!.setString(_userKey, this.toString());
+    } catch (e) {}
+  }
+
   Future<bool> enableSession() async {
     try {
       var query = NCMBUser.query();
