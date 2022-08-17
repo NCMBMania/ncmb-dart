@@ -217,6 +217,9 @@ class NCMBObject {
 
   double getDouble(String name, {double? defaultValue}) {
     if (!_fields.containsKey(name) && defaultValue != null) return defaultValue;
+    if (_fields[name].runtimeType == int) {
+      return (_fields[name] as int).toDouble();
+    }
     return _fields[name]! as double;
   }
 

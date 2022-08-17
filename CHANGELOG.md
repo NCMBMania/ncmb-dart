@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 2.6.6
+
+Fix getDouble method.
+
 ## 2.6.5
 
 - Add containsKey method to NCMBObject, NCMBUser, NCMBInstallation, NCMBPush, NCMBFile.
