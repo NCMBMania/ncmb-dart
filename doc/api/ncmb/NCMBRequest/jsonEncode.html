@@ -60,6 +60,11 @@
 
     </section>
     
+<section class="desc markdown">
+  <p>データをJSON化する
+NCMB特有のデータ変換を行う。
+<code>fields</code> データ情報</p>
+</section>
 
 
     
@@ -68,8 +73,7 @@
   <pre class="language-dart"><code class="language-dart">String jsonEncode(Map fields) {
   fields.forEach((k, v) {
     if (v is DateTime) {
-      var format = new DateFormat(&quot;yyyy-MM-ddTHH:mm:ss.S&#39;Z&#39;&quot;);
-      fields[k] = {&#39;__type&#39;: &#39;Date&#39;, &#39;iso&#39;: format.format(v)};
+      fields[k] = {&#39;__type&#39;: &#39;Date&#39;, &#39;iso&#39;: v.toUtc().toIso8601String()};
     }
     if (v is NCMBAcl) {
       fields[k] = v.toJson();
@@ -109,8 +113,8 @@
     <h5>NCMBRequest class</h5>
     <ol>
 
-    <li class="section-title"><a href="../../ncmb/NCMBRequest-class.html#constructors">Constructors</a></li>
-    <li><a href="../../ncmb/NCMBRequest/NCMBRequest.html">NCMBRequest</a></li>
+        <li class="section-title"><a href="../../ncmb/NCMBRequest-class.html#constructors">Constructors</a></li>
+          <li><a href="../../ncmb/NCMBRequest/NCMBRequest.html">NCMBRequest</a></li>
 
 
     <li class="section-title inherited">
@@ -135,8 +139,8 @@
     <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/operator_equals.html">operator ==</a></li>
 
 
-    <li class="section-title"><a href="../../ncmb/NCMBRequest-class.html#static-properties">Static properties</a></li>
-    <li><a href="../../ncmb/NCMBRequest/ncmb.html">ncmb</a></li>
+        <li class="section-title"><a href="../../ncmb/NCMBRequest-class.html#static-properties">Static properties</a></li>
+          <li><a href="../../ncmb/NCMBRequest/ncmb.html">ncmb</a></li>
 
 
 </ol>
@@ -151,7 +155,7 @@
 <footer>
   <span class="no-break">
     ncmb
-      2.3.0
+      2.6.6
   </span>
 
   

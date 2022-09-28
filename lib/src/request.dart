@@ -9,10 +9,15 @@ import 'geopoint.dart';
 import 'acl.dart';
 import 'signature.dart';
 
+/// NCMBリクエストを扱うクラス
 class NCMBRequest {
+  /// NCMBオブジェクト
   static NCMB? ncmb;
-  // NCMBRequest() {}
 
+  /// GETリクエストを行う
+  /// [name] クラス名
+  /// [queries] 検索条件
+  /// [multipart] マルチパートリクエストかどうか（ファイルストア用）。省略時はfalse
   Future<List> get(String name, Map queries, {multipart = false}) async {
     try {
       var res = await exec('GET', name, queries: queries, multipart: multipart)
@@ -23,18 +28,39 @@ class NCMBRequest {
     }
   }
 
+  /// POSTリクエストを行う
+  /// [name] クラス名
+  /// [fields] 追加するデータ情報
+  /// [multipart] マルチパートリクエストかどうか（ファイルストア用）。省略時はfalse
   Future<Map> post(String name, Map fields, {multipart = false}) async {
     return exec('POST', name, fields: fields, multipart: multipart);
   }
 
+  /// PUTリクエストを行う
+  /// [name] クラス名
+  /// [objectId] 更新対象のオブジェクトID
+  /// [fields] 更新するデータ情報
   Future<Map> put(String name, String objectId, Map fields) async {
     return exec('PUT', name, fields: fields, objectId: objectId);
   }
 
+  /// DELETEリクエストを行う
+  /// [name] クラス名
+  /// [objectId] 削除対象のオブジェクトID
   Future<Map> delete(String name, String objectId) async {
     return exec('DELETE', name, objectId: objectId);
   }
 
+  /// リクエストを実行する
+  /// [method] リクエストメソッド
+  /// [name] クラス名
+  /// [objectId] オブジェクトID。省略時は空文字。
+  /// [fields] データ情報。省略時は空のMap。
+  /// [queries] 検索条件。省略時は空のMap。
+  /// [multipart] マルチパートリクエストかどうか（ファイルストア用）。省略時はfalse
+  /// [path] パス。省略時は空文字。
+  /// [additionHeaders] 追加するヘッダー情報。省略時は空のMap。
+  /// [isScript] スクリプト実行かどうか。省略時はfalse。
   Future<Map> exec(String method, String name,
       {fields = const {},
       objectId = '',
@@ -82,6 +108,9 @@ class NCMBRequest {
     }
   }
 
+  /// データをJSON化する
+  /// NCMB特有のデータ変換を行う。
+  /// [fields] データ情報
   String jsonEncode(Map fields) {
     fields.forEach((k, v) {
       if (v is DateTime) {
@@ -103,11 +132,20 @@ class NCMBRequest {
     return json.encode(fields);
   }
 
+  /// データ表示用（デバッグ用）
+  /// [text] テキスト
   void printWrapped(String text) {
     final pattern = new RegExp('.{1,800}'); // 800 is the size of each chunk
     pattern.allMatches(text).forEach((match) => print(match.group(0)));
   }
 
+  /// リクエスト用オブジェクトを返す
+  /// [url] URL
+  /// [method] リクエストメソッド
+  /// [fields] データ情報
+  /// [headers] ヘッダー情報
+  /// [multipart] マルチパートリクエストかどうか（ファイルストア用）。省略時はfalse
+  /// [fileName] ファイル名（ファイルストア用）。省略時は空文字。
   Future<Response> req(
       String url, String method, Map fields, Map<String, dynamic> headers,
       {multipart = false, fileName = ''}) async {

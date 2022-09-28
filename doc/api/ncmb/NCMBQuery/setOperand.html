@@ -62,6 +62,9 @@
 
     </section>
     
+<section class="desc markdown">
+  <p>検索条件を設定する内部用関数</p>
+</section>
 
 
     
@@ -69,6 +72,13 @@
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">void setOperand(String key, Object value, {String ope = &#39;&#39;}) {
   initWhere();
+  if (value.runtimeType == DateTime) {
+    var v = value as DateTime;
+    value = {
+      &#39;__type&#39;: &#39;Date&#39;,
+      &#39;iso&#39;: v.toUtc().toIso8601String(),
+    };
+  }
   if (value.runtimeType == NCMBObject) {
     var obj = value as NCMBObject;
     value = {
@@ -108,8 +118,8 @@
     <h5>NCMBQuery class</h5>
     <ol>
 
-    <li class="section-title"><a href="../../ncmb/NCMBQuery-class.html#constructors">Constructors</a></li>
-    <li><a href="../../ncmb/NCMBQuery/NCMBQuery.html">NCMBQuery</a></li>
+        <li class="section-title"><a href="../../ncmb/NCMBQuery-class.html#constructors">Constructors</a></li>
+          <li><a href="../../ncmb/NCMBQuery/NCMBQuery.html">NCMBQuery</a></li>
 
 
     <li class="section-title inherited">
@@ -144,6 +154,7 @@
     <li><a href="../../ncmb/NCMBQuery/order.html">order</a></li>
     <li><a href="../../ncmb/NCMBQuery/regex.html">regex</a></li>
     <li><a href="../../ncmb/NCMBQuery/relatedTo.html">relatedTo</a></li>
+    <li><a href="../../ncmb/NCMBQuery/select.html">select</a></li>
     <li><a href="../../ncmb/NCMBQuery/setOperand.html">setOperand</a></li>
     <li><a href="../../ncmb/NCMBQuery/skip.html">skip</a></li>
     <li><a href="../../ncmb/NCMBQuery/toJson.html">toJson</a></li>
@@ -158,8 +169,8 @@
     <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/operator_equals.html">operator ==</a></li>
 
 
-    <li class="section-title"><a href="../../ncmb/NCMBQuery-class.html#static-properties">Static properties</a></li>
-    <li><a href="../../ncmb/NCMBQuery/ncmb.html">ncmb</a></li>
+        <li class="section-title"><a href="../../ncmb/NCMBQuery-class.html#static-properties">Static properties</a></li>
+          <li><a href="../../ncmb/NCMBQuery/ncmb.html">ncmb</a></li>
 
 
 </ol>
@@ -174,7 +185,7 @@
 <footer>
   <span class="no-break">
     ncmb
-      2.3.0
+      2.6.6
   </span>
 
   

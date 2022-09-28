@@ -50,21 +50,26 @@
 </h1></div>
 
     
+<section class="desc markdown">
+  <p>データストアの検索を扱うクラス</p>
+</section>
 
 
 
-    <section class="summary offset-anchor" id="constructors">
-      <h2>Constructors</h2>
+    
+  <section class="summary offset-anchor" id="constructors">
+    <h2>Constructors</h2>
 
-      <dl class="constructor-summary-list">
+    <dl class="constructor-summary-list">
         <dt id="NCMBQuery" class="callable">
           <span class="name"><a href="../ncmb/NCMBQuery/NCMBQuery.html">NCMBQuery</a></span><span class="signature">(<span class="parameter" id="-param-name"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">name</span></span>)</span>
         </dt>
         <dd>
-           
+          コンストラクター
+<code>name</code> クラス名
         </dd>
-      </dl>
-    </section>
+    </dl>
+  </section>
 
     <section class="summary offset-anchor inherited" id="instance-properties">
       <h2>Properties</h2>
@@ -76,7 +81,7 @@
 
 </dt>
 <dd class="inherited">
-  The hash code for this object. <a href="https://api.flutter.dev/flutter/dart-core/Object/hashCode.html">[...]</a>
+  The hash code for this object.
   <div class="features">read-only, inherited</div>
 
 </dd>
@@ -87,7 +92,7 @@
 
 </dt>
 <dd class="inherited">
-  A representation of the runtime type of the object. 
+  A representation of the runtime type of the object.
   <div class="features">read-only, inherited</div>
 
 </dd>
@@ -95,9 +100,12 @@
       </dl>
     </section>
 
-    <section class="summary offset-anchor" id="instance-methods">
-      <h2>Methods</h2>
-      <dl class="callables">
+    
+  <section
+      class="summary offset-anchor"
+      id="instance-methods">
+    <h2>Methods</h2>
+    <dl class="callables">
         <dt id="allInArray" class="callable">
   <span class="name"><a href="../ncmb/NCMBQuery/allInArray.html">allInArray</a></span><span class="signature">(<wbr><span class="parameter" id="allInArray-param-key"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">key</span>, </span><span class="parameter" id="allInArray-param-value"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Object-class.html">Object</a></span> <span class="parameter-name">value</span></span>)
     <span class="returntype parameter">&#8594; void</span>
@@ -106,7 +114,7 @@
 
 </dt>
 <dd>
-   
+  
   
 
 </dd>
@@ -119,7 +127,7 @@
 
 </dt>
 <dd>
-   
+  検索条件のクリア
   
 
 </dd>
@@ -132,7 +140,7 @@
 
 </dt>
 <dd>
-   
+  検索結果に総件数を含める
   
 
 </dd>
@@ -145,7 +153,9 @@
 
 </dt>
 <dd>
-   
+  指定したフィールドの値が指定した値と等しいことを検索条件に追加する
+<code>key</code> フィールド名
+<code>value</code> 検索する値
   
 
 </dd>
@@ -158,7 +168,9 @@
 
 </dt>
 <dd>
-   
+  指定したフィールドの値が存在する（または存在しない）ことを検索条件に追加する
+<code>key</code> フィールド名
+<code>value</code> 検索する値（true:存在する、false:存在しない）
   
 
 </dd>
@@ -171,7 +183,9 @@
 
 </dt>
 <dd>
-   
+  最初の一件だけ取得する
+検索結果はNCMBObjectやNCMBUser、NCMBFile、NCMBPush、NCMBInstallationのインスタンスとして返るので、
+ここではdynamic型で返す
   
 
 </dd>
@@ -184,7 +198,9 @@
 
 </dt>
 <dd>
-   
+  検索を実行する
+検索結果はNCMBObjectやNCMBUser、NCMBFile、NCMBPush、NCMBInstallationのインスタンスのリストとして返されるため、
+ここではdynamic型のリストで返す
   
 
 </dd>
@@ -197,7 +213,9 @@
 
 </dt>
 <dd>
-   
+  指定したフィールドの値が指定した値より大きいことを検索条件に追加する
+<code>key</code> フィールド名
+<code>value</code> 検索する値
   
 
 </dd>
@@ -210,7 +228,9 @@
 
 </dt>
 <dd>
-   
+  指定したフィールドの値が指定した値より大きいか等しいことを検索条件に追加する
+<code>key</code> フィールド名
+<code>value</code> 検索する値
   
 
 </dd>
@@ -223,7 +243,9 @@
 
 </dt>
 <dd>
-   
+  指定したフィールドの値が、指定した値のいずれかを含むことを検索条件に追加する
+<code>key</code> フィールド名
+<code>value</code> 検索する値
   
 
 </dd>
@@ -236,7 +258,7 @@
 
 </dt>
 <dd>
-   
+  指定したフィールド（ポインター）のデータを、検索結果に含める
   
 
 </dd>
@@ -249,7 +271,7 @@
 
 </dt>
 <dd>
-   
+  検索条件の初期化
   
 
 </dd>
@@ -262,7 +284,9 @@
 
 </dt>
 <dd>
-   
+  指定したフィールドの値が指定した値の中に含まれることを検索条件に追加する
+<code>key</code> フィールド名
+<code>value</code> 検索する値
   
 
 </dd>
@@ -275,7 +299,9 @@
 
 </dt>
 <dd>
-   
+  指定したフィールドの値が指定した値より小さいことを検索条件に追加する
+<code>key</code> フィールド名
+<code>value</code> 検索する値
   
 
 </dd>
@@ -288,7 +314,9 @@
 
 </dt>
 <dd>
-   
+  指定したフィールドの値が指定した値より小さいか等しいことを検索条件に追加する
+<code>key</code> フィールド名
+<code>value</code> 検索する値
   
 
 </dd>
@@ -301,7 +329,8 @@
 
 </dt>
 <dd>
-   
+  検索結果の取得件数を指定する
+<code>number</code> 取得件数。最大1000件まで。
   
 
 </dd>
@@ -314,7 +343,9 @@
 
 </dt>
 <dd>
-   
+  指定したフィールドの値が、指定した位置情報の近い順にデータを取得する
+<code>key</code> フィールド名
+<code>geo</code> 位置情報
   
 
 </dd>
@@ -327,7 +358,7 @@
 
 </dt>
 <dd class="inherited">
-  Invoked when a non-existent method or property is accessed. <a href="https://api.flutter.dev/flutter/dart-core/Object/noSuchMethod.html">[...]</a>
+  Invoked when a non-existent method or property is accessed.
   <div class="features">inherited</div>
 
 </dd>
@@ -340,7 +371,9 @@
 
 </dt>
 <dd>
-   
+  指定したフィールドの値が指定した値と等しくないことを検索条件に追加する
+<code>key</code> フィールド名
+<code>value</code> 検索する値
   
 
 </dd>
@@ -353,7 +386,9 @@
 
 </dt>
 <dd>
-   
+  指定したフィールドの値が、指定した値のいずれも含まないことを検索条件に追加する
+<code>key</code> フィールド名
+<code>value</code> 検索する値
   
 
 </dd>
@@ -366,7 +401,9 @@
 
 </dt>
 <dd>
-   
+  指定したフィールドの値が指定した値の中に含まれないことを検索条件に追加する
+<code>key</code> フィールド名
+<code>value</code> 検索する値
   
 
 </dd>
@@ -379,7 +416,8 @@
 
 </dt>
 <dd>
-   
+  クエリー同士をOR検索する
+<code>queries</code> OR検索するクエリー
   
 
 </dd>
@@ -392,7 +430,9 @@
 
 </dt>
 <dd>
-   
+  検索結果を、指定したフィールドでソートする
+<code>key</code> フィールド名
+<code>descending</code> 並び順（true: 昇順、false: 降順）。省略時は昇順
   
 
 </dd>
@@ -405,7 +445,9 @@
 
 </dt>
 <dd>
-   
+  指定したフィールドの値を正規表現で検索する
+<code>key</code> フィールド名
+<code>value</code> 正規表現
   
 
 </dd>
@@ -418,7 +460,25 @@
 
 </dt>
 <dd>
-   
+  指定したデータが、指定された親のリレーションにひもづく子のデータを取得
+<code>obj</code> 元データ
+<code>key</code> リレーションのフィールド名
+  
+
+</dd>
+
+        <dt id="select" class="callable">
+  <span class="name"><a href="../ncmb/NCMBQuery/select.html">select</a></span><span class="signature">(<wbr><span class="parameter" id="select-param-key"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">key</span>, </span><span class="parameter" id="select-param-subKey"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">subKey</span>, </span><span class="parameter" id="select-param-query"><span class="type-annotation"><a href="../ncmb/NCMBQuery-class.html">NCMBQuery</a></span> <span class="parameter-name">query</span></span>)
+    <span class="returntype parameter">&#8594; void</span>
+  </span>
+  
+
+</dt>
+<dd>
+  指定したフィールドを、別なクエリーの検索結果で絞り込む
+<code>key</code> フィールド名
+<code>subKey</code> 別なクエリーの検索対象とするフィールド名
+<code>query</code> 別なクエリー
   
 
 </dd>
@@ -431,7 +491,7 @@
 
 </dt>
 <dd>
-   
+  検索条件を設定する内部用関数
   
 
 </dd>
@@ -444,7 +504,9 @@
 
 </dt>
 <dd>
-   
+  取得結果をスキップする
+limitと組み合わせてページネーションに利用できる
+<code>number</code> スキップする件数
   
 
 </dd>
@@ -457,7 +519,7 @@
 
 </dt>
 <dd>
-   
+  クエリーをJSON化する
   
 
 </dd>
@@ -470,7 +532,7 @@
 
 </dt>
 <dd class="inherited">
-  A string representation of this object. <a href="https://api.flutter.dev/flutter/dart-core/Object/toString.html">[...]</a>
+  A string representation of this object.
   <div class="features">inherited</div>
 
 </dd>
@@ -483,7 +545,7 @@
 
 </dt>
 <dd>
-   
+  検索条件を返す
   
 
 </dd>
@@ -496,7 +558,10 @@
 
 </dt>
 <dd>
-   
+  指定したフィールドの値が、指定した位置情報の指定したキロメートル以内に存在することを検索条件に追加する
+<code>key</code> フィールド名
+<code>geo</code> 位置情報
+<code>maxDistance</code> 最大距離（キロメートル）
   
 
 </dd>
@@ -509,7 +574,10 @@
 
 </dt>
 <dd>
-   
+  指定したフィールドの値が、指定した位置情報の指定したマイル以内に存在することを検索条件に追加する
+<code>key</code> フィールド名
+<code>geo</code> 位置情報
+<code>maxDistance</code> 最大距離（マイル）
   
 
 </dd>
@@ -522,7 +590,10 @@
 
 </dt>
 <dd>
-   
+  指定したフィールドの値が、指定した位置情報の指定したラジアン以内に存在することを検索条件に追加する
+<code>key</code> フィールド名
+<code>geo</code> 位置情報
+<code>maxDistance</code> 最大距離（ラジアン）
   
 
 </dd>
@@ -535,17 +606,22 @@
 
 </dt>
 <dd>
-   
+  指定したフィールドの値が、指定した位置情報の指定した範囲内に存在することを検索条件に追加する
+<code>key</code> フィールド名
+<code>southWestVertex</code> 南西の位置情報（実際には四角の1点を示していればOK）
+<code>northEastVertex</code> 北東の位置情報（実際には四角の1点を示していればOK）
   
 
 </dd>
 
-      </dl>
-    </section>
-
-    <section class="summary offset-anchor inherited" id="operators">
-      <h2>Operators</h2>
-      <dl class="callables">
+    </dl>
+  </section>
+    
+  <section
+      class="summary offset-anchor inherited"
+      id="operators">
+    <h2>Operators</h2>
+    <dl class="callables">
         <dt id="operator ==" class="callable inherited">
   <span class="name"><a href="https://api.flutter.dev/flutter/dart-core/Object/operator_equals.html">operator ==</a></span><span class="signature">(<wbr><span class="parameter" id="==-param-other"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Object-class.html">Object</a></span> <span class="parameter-name">other</span></span>)
     <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span>
@@ -554,32 +630,33 @@
 
 </dt>
 <dd class="inherited">
-  The equality operator. <a href="https://api.flutter.dev/flutter/dart-core/Object/operator_equals.html">[...]</a>
+  The equality operator.
   <div class="features">inherited</div>
 
 </dd>
 
-      </dl>
-    </section>
+    </dl>
+  </section>
+    
+  <section class="summary offset-anchor" id="static-properties">
+    <h2>Static Properties</h2>
 
-    <section class="summary offset-anchor" id="static-properties">
-      <h2>Static Properties</h2>
-
-      <dl class="properties">
+    <dl class="properties">
         <dt id="ncmb" class="property">
   <span class="name"><a href="../ncmb/NCMBQuery/ncmb.html">ncmb</a></span>
   <span class="signature">&#8596; <a href="../ncmb/NCMB-class.html">NCMB</a>?</span> 
 
 </dt>
 <dd>
-   
+  NCMBオブジェクト
   <div class="features">read / write</div>
 
 </dd>
 
-      </dl>
-    </section>
-
+    </dl>
+  </section>
+    
+    
 
 
   </div> <!-- /.main-content -->
@@ -612,6 +689,7 @@
   <li><a href="../ncmb/NCMBRelation-class.html">NCMBRelation</a></li>
   <li><a href="../ncmb/NCMBRequest-class.html">NCMBRequest</a></li>
   <li><a href="../ncmb/NCMBRole-class.html">NCMBRole</a></li>
+  <li><a href="../ncmb/NCMBScript-class.html">NCMBScript</a></li>
   <li><a href="../ncmb/NCMBUser-class.html">NCMBUser</a></li>
   <li><a href="../ncmb/Signature-class.html">Signature</a></li>
 
@@ -629,8 +707,8 @@
   <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
     <ol>
 
-    <li class="section-title"><a href="../ncmb/NCMBQuery-class.html#constructors">Constructors</a></li>
-    <li><a href="../ncmb/NCMBQuery/NCMBQuery.html">NCMBQuery</a></li>
+        <li class="section-title"><a href="../ncmb/NCMBQuery-class.html#constructors">Constructors</a></li>
+          <li><a href="../ncmb/NCMBQuery/NCMBQuery.html">NCMBQuery</a></li>
 
 
     <li class="section-title inherited">
@@ -665,6 +743,7 @@
     <li><a href="../ncmb/NCMBQuery/order.html">order</a></li>
     <li><a href="../ncmb/NCMBQuery/regex.html">regex</a></li>
     <li><a href="../ncmb/NCMBQuery/relatedTo.html">relatedTo</a></li>
+    <li><a href="../ncmb/NCMBQuery/select.html">select</a></li>
     <li><a href="../ncmb/NCMBQuery/setOperand.html">setOperand</a></li>
     <li><a href="../ncmb/NCMBQuery/skip.html">skip</a></li>
     <li><a href="../ncmb/NCMBQuery/toJson.html">toJson</a></li>
@@ -679,8 +758,8 @@
     <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/operator_equals.html">operator ==</a></li>
 
 
-    <li class="section-title"><a href="../ncmb/NCMBQuery-class.html#static-properties">Static properties</a></li>
-    <li><a href="../ncmb/NCMBQuery/ncmb.html">ncmb</a></li>
+        <li class="section-title"><a href="../ncmb/NCMBQuery-class.html#static-properties">Static properties</a></li>
+          <li><a href="../ncmb/NCMBQuery/ncmb.html">ncmb</a></li>
 
 
 </ol>
@@ -692,7 +771,7 @@
 <footer>
   <span class="no-break">
     ncmb
-      2.3.0
+      2.6.6
   </span>
 
   

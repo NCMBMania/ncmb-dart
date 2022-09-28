@@ -8,10 +8,19 @@ import 'dart:convert';
 import 'dart:typed_data';
 import 'package:http_parser/http_parser.dart';
 
+/// ファイルストアを扱うクラス
 class NCMBFile extends NCMBObject {
-  NCMBFile() : super('files');
+  /// ファイルデータ
   var data;
 
+  /// コンストラクター
+  NCMBFile() : super('files');
+
+  /// ファイルストアへのファイルアップロード
+  /// [fileName] アップロードするファイル名
+  /// [blob] アップロードするファイルデータ
+  /// [acl] アクセス権限
+  /// [mimeType] MIMEタイプ
   static Future<NCMBFile> upload(String fileName, dynamic blob,
       {acl = '', mimeType = ''}) async {
     List mime;
@@ -50,6 +59,8 @@ class NCMBFile extends NCMBObject {
     return f;
   }
 
+  /// ファイルストアからファイルのダウンロード
+  /// [fileName] ダウンロードするファイル名
   static Future<NCMBFile> download(String fileName) async {
     NCMBRequest r = new NCMBRequest();
     Map response =
@@ -59,10 +70,12 @@ class NCMBFile extends NCMBObject {
     return f;
   }
 
+  /// ファイル検索を行うクエリークラスを返す
   static NCMBQuery query() {
     return NCMBQuery('files');
   }
 
+  /// ファイルストアからファイルの削除
   Future<bool> delete() async {
     if (!super.hasKey('fileName')) {
       throw Exception('fileName is not found.');

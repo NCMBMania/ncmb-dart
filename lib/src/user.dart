@@ -7,15 +7,29 @@ import 'dart:convert';
 import 'package:uuid/uuid.dart';
 import 'query.dart';
 
+/// ユーザークラス
 class NCMBUser extends NCMBObject {
+  /// NCMBオブジェクト
   static NCMB? ncmb;
+
+  /// 認証データ保存用
   static SharedPreferences? _prefs;
+
+  /// 認証データ保存用キー
   static String _userKey = 'CurrentUser';
+
+  /// セッションデータ保存用キー
   static String _sessionKey = 'SessionId';
 
+  /// 現在ログインしているユーザーのインスタンス
   static NCMBUser? _currentUser;
+
+  /// コンストラクター
   NCMBUser() : super('users');
 
+  /// ユーザー登録を行う
+  /// [userName] ユーザー名
+  /// [password] パスワード
   static Future<NCMBUser> signUpByAccount(
       String userName, String password) async {
     Map _fields = {'userName': userName, 'password': password};
@@ -27,6 +41,8 @@ class NCMBUser extends NCMBObject {
     return user;
   }
 
+  /// 匿名認証を行う
+  /// [id] 匿名認証用のID。指定しない場合は自動生成される
   static Future<NCMBUser> loginAsAnonymous({String id = ''}) async {
     var uuid = Uuid();
     if (id == '') {
@@ -44,6 +60,9 @@ class NCMBUser extends NCMBObject {
     return user;
   }
 
+  /// メールアドレス認証を行う
+  /// [mailAddress] メールアドレス
+  /// [password] パスワード
   static Future<NCMBUser> loginWithMailAddress(
       String mailAddress, String password) async {
     var _fields = {'mailAddress': mailAddress, 'password': password};
@@ -55,6 +74,9 @@ class NCMBUser extends NCMBObject {
     return user;
   }
 
+  /// ソーシャルログイン、匿名認証用
+  /// [provider] プロバイダー名（Google、Twitter、Facebook、Apple、anonymous）
+  /// [data] 認証データ
   static Future<NCMBUser> loginWith(String provider, Map data) async {
     NCMBRequest r = new NCMBRequest();
     var fields = {'authData': {}};
@@ -65,6 +87,8 @@ class NCMBUser extends NCMBObject {
     return user;
   }
 
+  /// ユーザー登録メールを送信する
+  /// [mailAddress] メールアドレス
   static Future<void> requestSignUpEmail(String mailAddress) async {
     Map _fields = {'mailAddress': mailAddress};
     NCMBRequest r = new NCMBRequest();
@@ -72,6 +96,8 @@ class NCMBUser extends NCMBObject {
         fields: _fields, path: 'requestMailAddressUserEntry');
   }
 
+  /// パスワードリマインダーメール送信
+  /// [mailAddress] メールアドレス
   static Future<void> requestPasswordReset(String mailAddress) async {
     Map _fields = {'mailAddress': mailAddress};
     NCMBRequest r = new NCMBRequest();
@@ -79,6 +105,7 @@ class NCMBUser extends NCMBObject {
         fields: _fields, path: 'requestPasswordReset');
   }
 
+  /// ログアウトする
   static Future<void> logout() async {
     NCMBUser.ncmb!.sessionToken = null;
     try {
@@ -89,6 +116,8 @@ class NCMBUser extends NCMBObject {
     return;
   }
 
+  /// 現在ログインしているユーザーインスタンスを返す
+  /// ログインしていない場合はnullを返す
   static Future<NCMBUser?> currentUser() async {
     if (NCMBUser._currentUser != null) return NCMBUser._currentUser;
     try {
@@ -107,6 +136,9 @@ class NCMBUser extends NCMBObject {
     }
   }
 
+  /// ID認証を行う
+  /// [userName] ユーザー名
+  /// [password] パスワード
   static Future<NCMBUser> login(String userName, String password) async {
     Map _fields = {'userName': userName, 'password': password};
     NCMBRequest r = new NCMBRequest();
@@ -117,6 +149,8 @@ class NCMBUser extends NCMBObject {
     return user;
   }
 
+  /// ログインレスポンスをローカルデータなどに保存する
+  /// [response] レスポンスデータ
   Future<void> setLoginResponse(Map response) async {
     NCMBUser.ncmb!.sessionToken = response['sessionToken'];
     response.removeWhere((k, v) => k == 'sessionToken');
@@ -128,10 +162,12 @@ class NCMBUser extends NCMBObject {
     } catch (e) {}
   }
 
+  /// ユーザー検索用のクエリーオブジェクトを返す
   static NCMBQuery query() {
     return new NCMBQuery('users');
   }
 
+  // データをJSON化する
   Map toJson() {
     return {
       '__type': 'Pointer',
@@ -140,6 +176,7 @@ class NCMBUser extends NCMBObject {
     };
   }
 
+  /// ユーザー情報を保存する
   Future<void> save() async {
     await super.save();
     try {
@@ -148,6 +185,7 @@ class NCMBUser extends NCMBObject {
     } catch (e) {}
   }
 
+  /// セッションの有効性を確認する
   Future<bool> enableSession() async {
     try {
       var query = NCMBUser.query();

@@ -50,36 +50,45 @@
 </h1></div>
 
     
+<section class="desc markdown">
+  <p>プッシュ通知を扱うクラス</p>
+</section>
 
 
     <section>
       <dl class="dl-horizontal">
-        <dt>Inheritance</dt>
-        <dd><ul class="gt-separated dark clazz-relationships">
-          <li><a href="https://api.flutter.dev/flutter/dart-core/Object-class.html">Object</a></li>
-          <li><a href="../ncmb/NCMBObject-class.html">NCMBObject</a></li>
-          <li>NCMBPush</li>
-        </ul></dd>
+        
+  <dt>Inheritance</dt>
+  <dd>
+    <ul class="gt-separated dark clazz-relationships">
+      <li><a href="https://api.flutter.dev/flutter/dart-core/Object-class.html">Object</a></li>
+        <li><a href="../ncmb/NCMBObject-class.html">NCMBObject</a></li>
+      <li>NCMBPush</li>
+    </ul>
+  </dd>
+
+        
+        
 
 
 
-
-
+        
       </dl>
     </section>
 
-    <section class="summary offset-anchor" id="constructors">
-      <h2>Constructors</h2>
+    
+  <section class="summary offset-anchor" id="constructors">
+    <h2>Constructors</h2>
 
-      <dl class="constructor-summary-list">
+    <dl class="constructor-summary-list">
         <dt id="NCMBPush" class="callable">
           <span class="name"><a href="../ncmb/NCMBPush/NCMBPush.html">NCMBPush</a></span><span class="signature">()</span>
         </dt>
         <dd>
-           
+          コンストラクター
         </dd>
-      </dl>
-    </section>
+    </dl>
+  </section>
 
     <section class="summary offset-anchor inherited" id="instance-properties">
       <h2>Properties</h2>
@@ -91,7 +100,7 @@
 
 </dt>
 <dd class="inherited">
-  Accessor methods. We can get fields data by obj.fields 
+  アクセサメソッド。フィールドデータを返す
   <div class="features">read-only, inherited</div>
 
 </dd>
@@ -102,7 +111,7 @@
 
 </dt>
 <dd class="inherited">
-  The hash code for this object. <a href="https://api.flutter.dev/flutter/dart-core/Object/hashCode.html">[...]</a>
+  The hash code for this object.
   <div class="features">read-only, inherited</div>
 
 </dd>
@@ -113,8 +122,19 @@
 
 </dt>
 <dd class="inherited">
-  Accessor methods. We can get class name by obj.name 
+  アクセサメソッド。クラス名を返す
   <div class="features">read-only, inherited</div>
+
+</dd>
+
+        <dt id="objectId" class="property inherited">
+  <span class="name"><a href="../ncmb/NCMBObject/objectId.html">objectId</a></span>
+  <span class="signature">&#8596; <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> 
+
+</dt>
+<dd class="inherited">
+  オブジェクトID
+  <div class="features">read / write, inherited</div>
 
 </dd>
 
@@ -124,7 +144,7 @@
 
 </dt>
 <dd class="inherited">
-  A representation of the runtime type of the object. 
+  A representation of the runtime type of the object.
   <div class="features">read-only, inherited</div>
 
 </dd>
@@ -132,9 +152,12 @@
       </dl>
     </section>
 
-    <section class="summary offset-anchor" id="instance-methods">
-      <h2>Methods</h2>
-      <dl class="callables">
+    
+  <section
+      class="summary offset-anchor"
+      id="instance-methods">
+    <h2>Methods</h2>
+    <dl class="callables">
         <dt id="add" class="callable inherited">
   <span class="name"><a href="../ncmb/NCMBObject/add.html">add</a></span><span class="signature">(<wbr><span class="parameter" id="add-param-name"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">name</span>, </span><span class="parameter" id="add-param-value"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Object-class.html">Object</a></span> <span class="parameter-name">value</span></span>)
     <span class="returntype parameter">&#8594; void</span>
@@ -143,7 +166,9 @@
 
 </dt>
 <dd class="inherited">
-   
+  指定したフィールドに値を追加する
+<code>name</code> フィールド名
+<code>value</code> 追加するオブジェクト
   <div class="features">inherited</div>
 
 </dd>
@@ -156,7 +181,23 @@
 
 </dt>
 <dd class="inherited">
-   
+  指定したフィールドに値を追加する（すでにある場合は追加しない）
+<code>name</code> フィールド名
+<code>value</code> 追加するオブジェクト
+  <div class="features">inherited</div>
+
+</dd>
+
+        <dt id="containsKey" class="callable inherited">
+  <span class="name"><a href="../ncmb/NCMBObject/containsKey.html">containsKey</a></span><span class="signature">(<wbr><span class="parameter" id="containsKey-param-name"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">name</span></span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span>
+  </span>
+  
+
+</dt>
+<dd class="inherited">
+  指定したフィールドが存在するか確認する
+<code>name</code> フィールド名
   <div class="features">inherited</div>
 
 </dd>
@@ -169,7 +210,7 @@
 
 </dt>
 <dd class="inherited">
-   
+  データを削除する
   <div class="features">inherited</div>
 
 </dd>
@@ -182,34 +223,112 @@
 
 </dt>
 <dd class="inherited">
-  Fetch a data from DataStore in NCMB.
-After fetched data, set to own fields from data. 
+  フィールドデータを取得する
+取得したデータは自分自身にセットする
   <div class="features">inherited</div>
 
 </dd>
 
         <dt id="get" class="callable inherited">
   <span class="name"><a href="../ncmb/NCMBObject/get.html">get</a></span><span class="signature">(<wbr><span class="parameter" id="get-param-name"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">name</span></span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/Object-class.html">Object</a></span>
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/Object-class.html">Object</a>?</span>
   </span>
   
 
 </dt>
 <dd class="inherited">
-   
+  指定したフィールドの値を返す
+<code>name</code> フィールド名
+  <div class="features">inherited</div>
+
+</dd>
+
+        <dt id="getBool" class="callable inherited">
+  <span class="name"><a href="../ncmb/NCMBObject/getBool.html">getBool</a></span><span class="signature">(<wbr><span class="parameter" id="getBool-param-name"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">name</span>, </span><span class="parameter" id="getBool-param-defaultValue">{<span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a>?</span> <span class="parameter-name">defaultValue</span>}</span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span>
+  </span>
+  
+
+</dt>
+<dd class="inherited">
+  指定したフィールドの値を真偽値として返す
+<code>name</code> フィールド名
+<code>defaultValue</code> デフォルト値
+  <div class="features">inherited</div>
+
+</dd>
+
+        <dt id="getDateTime" class="callable inherited">
+  <span class="name"><a href="../ncmb/NCMBObject/getDateTime.html">getDateTime</a></span><span class="signature">(<wbr><span class="parameter" id="getDateTime-param-name"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">name</span>, </span><span class="parameter" id="getDateTime-param-defaultValue">{<span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/DateTime-class.html">DateTime</a>?</span> <span class="parameter-name">defaultValue</span>}</span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/DateTime-class.html">DateTime</a></span>
+  </span>
+  
+
+</dt>
+<dd class="inherited">
+  指定したフィールドの値を日時型として返す
+<code>name</code> フィールド名
+<code>defaultValue</code> デフォルト値
+  <div class="features">inherited</div>
+
+</dd>
+
+        <dt id="getDouble" class="callable inherited">
+  <span class="name"><a href="../ncmb/NCMBObject/getDouble.html">getDouble</a></span><span class="signature">(<wbr><span class="parameter" id="getDouble-param-name"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">name</span>, </span><span class="parameter" id="getDouble-param-defaultValue">{<span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a>?</span> <span class="parameter-name">defaultValue</span>}</span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a></span>
+  </span>
+  
+
+</dt>
+<dd class="inherited">
+  挻定したフィールドの値を数値型（double）として返す
+<code>name</code> フィールド名
+<code>defaultValue</code> デフォルト値
+  <div class="features">inherited</div>
+
+</dd>
+
+        <dt id="getInt" class="callable inherited">
+  <span class="name"><a href="../ncmb/NCMBObject/getInt.html">getInt</a></span><span class="signature">(<wbr><span class="parameter" id="getInt-param-name"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">name</span>, </span><span class="parameter" id="getInt-param-defaultValue">{<span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">defaultValue</span>}</span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span>
+  </span>
+  
+
+</dt>
+<dd class="inherited">
+  指定したフィールドの値を数値型（int）として返す
+<code>name</code> フィールド名
+<code>defaultValue</code> デフォルト値
+  <div class="features">inherited</div>
+
+</dd>
+
+        <dt id="getList" class="callable inherited">
+  <span class="name"><a href="../ncmb/NCMBObject/getList.html">getList</a></span><span class="signature">(<wbr><span class="parameter" id="getList-param-name"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">name</span>, </span><span class="parameter" id="getList-param-defaultValue">{<span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a>?</span> <span class="parameter-name">defaultValue</span>}</span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a></span>
+  </span>
+  
+
+</dt>
+<dd class="inherited">
+  指定したフィールドの値をリストとして返す
+<code>name</code> フィールド名
+<code>defaultValue</code> デフォルト値
   <div class="features">inherited</div>
 
 </dd>
 
         <dt id="getString" class="callable inherited">
-  <span class="name"><a href="../ncmb/NCMBObject/getString.html">getString</a></span><span class="signature">(<wbr><span class="parameter" id="getString-param-name"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">name</span></span>)
+  <span class="name"><a href="../ncmb/NCMBObject/getString.html">getString</a></span><span class="signature">(<wbr><span class="parameter" id="getString-param-name"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">name</span>, </span><span class="parameter" id="getString-param-defaultValue">{<span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">defaultValue</span>}</span>)
     <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
   </span>
   
 
 </dt>
 <dd class="inherited">
-   
+  指定したフィールドの値を文字列型として返す
+<code>name</code> フィールド名
+<code>defaultValue</code> デフォルト値
   <div class="features">inherited</div>
 
 </dd>
@@ -222,7 +341,8 @@ After fetched data, set to own fields from data.
 
 </dt>
 <dd class="inherited">
-   
+  指定したフィールドが存在するか確認する
+<code>name</code> フィールド名
   <div class="features">inherited</div>
 
 </dd>
@@ -235,7 +355,9 @@ After fetched data, set to own fields from data.
 
 </dt>
 <dd class="inherited">
-   
+  指定したフィールドの値をインクリメンタルする設定にする
+<code>name</code> フィールド名
+<code>number</code> インクリメントする値。省略時は1
   <div class="features">inherited</div>
 
 </dd>
@@ -248,7 +370,7 @@ After fetched data, set to own fields from data.
 
 </dt>
 <dd class="inherited">
-   
+  文字列化する際に利用するエンコード関数
   <div class="features">inherited</div>
 
 </dd>
@@ -261,7 +383,7 @@ After fetched data, set to own fields from data.
 
 </dt>
 <dd class="inherited">
-  Invoked when a non-existent method or property is accessed. <a href="https://api.flutter.dev/flutter/dart-core/Object/noSuchMethod.html">[...]</a>
+  Invoked when a non-existent method or property is accessed.
   <div class="features">inherited</div>
 
 </dd>
@@ -274,7 +396,9 @@ After fetched data, set to own fields from data.
 
 </dt>
 <dd class="inherited">
-   
+  指定したフィールドの値を削除する
+<code>name</code> フィールド名
+<code>value</code> 削除するオブジェクト
   <div class="features">inherited</div>
 
 </dd>
@@ -287,7 +411,8 @@ After fetched data, set to own fields from data.
 
 </dt>
 <dd>
-   
+  プッシュ通知を保存する
+deliveryTimeかimmediateDeliveryFlagは必須なので、それをチェックして保存する
   <div class="features">override</div>
 
 </dd>
@@ -300,7 +425,9 @@ After fetched data, set to own fields from data.
 
 </dt>
 <dd class="inherited">
-  Set <code>name</code> and <code>value</code> to fields. 
+  フィールドデータをセットする
+<code>name</code> フィールド名
+<code>value</code> セットするデータ
   <div class="features">inherited</div>
 
 </dd>
@@ -313,7 +440,8 @@ After fetched data, set to own fields from data.
 
 </dt>
 <dd class="inherited">
-  Call set methods for each key and value in <code>map</code> 
+  フィールドデータをまとめてセットする
+<code>map</code> フィールド名をキーにしたマップデータ
   <div class="features">inherited</div>
 
 </dd>
@@ -326,7 +454,7 @@ After fetched data, set to own fields from data.
 
 </dt>
 <dd class="inherited">
-   
+  データをJSON化する
   <div class="features">inherited</div>
 
 </dd>
@@ -339,17 +467,19 @@ After fetched data, set to own fields from data.
 
 </dt>
 <dd class="inherited">
-  A string representation of this object. <a href="../ncmb/NCMBObject/toString.html">[...]</a>
+  データを文字列化する
   <div class="features">inherited</div>
 
 </dd>
 
-      </dl>
-    </section>
-
-    <section class="summary offset-anchor inherited" id="operators">
-      <h2>Operators</h2>
-      <dl class="callables">
+    </dl>
+  </section>
+    
+  <section
+      class="summary offset-anchor inherited"
+      id="operators">
+    <h2>Operators</h2>
+    <dl class="callables">
         <dt id="operator ==" class="callable inherited">
   <span class="name"><a href="https://api.flutter.dev/flutter/dart-core/Object/operator_equals.html">operator ==</a></span><span class="signature">(<wbr><span class="parameter" id="==-param-other"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Object-class.html">Object</a></span> <span class="parameter-name">other</span></span>)
     <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span>
@@ -358,18 +488,18 @@ After fetched data, set to own fields from data.
 
 </dt>
 <dd class="inherited">
-  The equality operator. <a href="https://api.flutter.dev/flutter/dart-core/Object/operator_equals.html">[...]</a>
+  The equality operator.
   <div class="features">inherited</div>
 
 </dd>
 
-      </dl>
-    </section>
-
-
-    <section class="summary offset-anchor" id="static-methods">
-      <h2>Static Methods</h2>
-      <dl class="callables">
+    </dl>
+  </section>
+    
+    
+  <section class="summary offset-anchor" id="static-methods">
+    <h2>Static Methods</h2>
+    <dl class="callables">
         <dt id="query" class="callable">
   <span class="name"><a href="../ncmb/NCMBPush/query.html">query</a></span><span class="signature">(<wbr>)
     <span class="returntype parameter">&#8594; <a href="../ncmb/NCMBQuery-class.html">NCMBQuery</a></span>
@@ -378,13 +508,14 @@ After fetched data, set to own fields from data.
 
 </dt>
 <dd>
-   
+  プッシュ通知を検索するクエリークラスを返す
   
 
 </dd>
 
-      </dl>
-    </section>
+    </dl>
+  </section>
+    
 
 
   </div> <!-- /.main-content -->
@@ -417,6 +548,7 @@ After fetched data, set to own fields from data.
   <li><a href="../ncmb/NCMBRelation-class.html">NCMBRelation</a></li>
   <li><a href="../ncmb/NCMBRequest-class.html">NCMBRequest</a></li>
   <li><a href="../ncmb/NCMBRole-class.html">NCMBRole</a></li>
+  <li><a href="../ncmb/NCMBScript-class.html">NCMBScript</a></li>
   <li><a href="../ncmb/NCMBUser-class.html">NCMBUser</a></li>
   <li><a href="../ncmb/Signature-class.html">Signature</a></li>
 
@@ -434,8 +566,8 @@ After fetched data, set to own fields from data.
   <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
     <ol>
 
-    <li class="section-title"><a href="../ncmb/NCMBPush-class.html#constructors">Constructors</a></li>
-    <li><a href="../ncmb/NCMBPush/NCMBPush.html">NCMBPush</a></li>
+        <li class="section-title"><a href="../ncmb/NCMBPush-class.html#constructors">Constructors</a></li>
+          <li><a href="../ncmb/NCMBPush/NCMBPush.html">NCMBPush</a></li>
 
 
     <li class="section-title inherited">
@@ -444,14 +576,21 @@ After fetched data, set to own fields from data.
     <li class="inherited"><a href="../ncmb/NCMBObject/fields.html">fields</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/hashCode.html">hashCode</a></li>
     <li class="inherited"><a href="../ncmb/NCMBObject/name.html">name</a></li>
+    <li class="inherited"><a href="../ncmb/NCMBObject/objectId.html">objectId</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/runtimeType.html">runtimeType</a></li>
 
     <li class="section-title"><a href="../ncmb/NCMBPush-class.html#instance-methods">Methods</a></li>
     <li class="inherited"><a href="../ncmb/NCMBObject/add.html">add</a></li>
     <li class="inherited"><a href="../ncmb/NCMBObject/addUnique.html">addUnique</a></li>
+    <li class="inherited"><a href="../ncmb/NCMBObject/containsKey.html">containsKey</a></li>
     <li class="inherited"><a href="../ncmb/NCMBObject/delete.html">delete</a></li>
     <li class="inherited"><a href="../ncmb/NCMBObject/fetch.html">fetch</a></li>
     <li class="inherited"><a href="../ncmb/NCMBObject/get.html">get</a></li>
+    <li class="inherited"><a href="../ncmb/NCMBObject/getBool.html">getBool</a></li>
+    <li class="inherited"><a href="../ncmb/NCMBObject/getDateTime.html">getDateTime</a></li>
+    <li class="inherited"><a href="../ncmb/NCMBObject/getDouble.html">getDouble</a></li>
+    <li class="inherited"><a href="../ncmb/NCMBObject/getInt.html">getInt</a></li>
+    <li class="inherited"><a href="../ncmb/NCMBObject/getList.html">getList</a></li>
     <li class="inherited"><a href="../ncmb/NCMBObject/getString.html">getString</a></li>
     <li class="inherited"><a href="../ncmb/NCMBObject/hasKey.html">hasKey</a></li>
     <li class="inherited"><a href="../ncmb/NCMBObject/increment.html">increment</a></li>
@@ -469,8 +608,8 @@ After fetched data, set to own fields from data.
 
 
 
-    <li class="section-title"><a href="../ncmb/NCMBPush-class.html#static-methods">Static methods</a></li>
-    <li><a href="../ncmb/NCMBPush/query.html">query</a></li>
+        <li class="section-title"><a href="../ncmb/NCMBPush-class.html#static-methods">Static methods</a></li>
+          <li><a href="../ncmb/NCMBPush/query.html">query</a></li>
 
 </ol>
 
@@ -481,7 +620,7 @@ After fetched data, set to own fields from data.
 <footer>
   <span class="no-break">
     ncmb
-      2.3.0
+      2.6.6
   </span>
 
   

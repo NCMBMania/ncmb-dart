@@ -58,14 +58,28 @@
 <li><span class="parameter" id="exec-param-fields">{<span class="type-annotation">dynamic</span> <span class="parameter-name">fields</span> = <span class="default-value">const {}</span>, </span></li>
 <li><span class="parameter" id="exec-param-objectId"><span class="type-annotation">dynamic</span> <span class="parameter-name">objectId</span> = <span class="default-value">&#39;&#39;</span>, </span></li>
 <li><span class="parameter" id="exec-param-queries"><span class="type-annotation">dynamic</span> <span class="parameter-name">queries</span> = <span class="default-value">const {}</span>, </span></li>
+<li><span class="parameter" id="exec-param-additionalHeaders"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>, <span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>&gt;</span></span> <span class="parameter-name">additionalHeaders</span> = <span class="default-value">const {}</span>, </span></li>
 <li><span class="parameter" id="exec-param-path"><span class="type-annotation">dynamic</span> <span class="parameter-name">path</span> = <span class="default-value">&#39;&#39;</span>, </span></li>
-<li><span class="parameter" id="exec-param-multipart"><span class="type-annotation">dynamic</span> <span class="parameter-name">multipart</span> = <span class="default-value">false</span>}</span></li>
+<li><span class="parameter" id="exec-param-multipart"><span class="type-annotation">dynamic</span> <span class="parameter-name">multipart</span> = <span class="default-value">false</span>, </span></li>
+<li><span class="parameter" id="exec-param-isScript"><span class="type-annotation">dynamic</span> <span class="parameter-name">isScript</span> = <span class="default-value">false</span>}</span></li>
 </ol>)
 
       
 
     </section>
     
+<section class="desc markdown">
+  <p>リクエストを実行する
+<code>method</code> リクエストメソッド
+<code>name</code> クラス名
+<code>objectId</code> オブジェクトID。省略時は空文字。
+<code>fields</code> データ情報。省略時は空のMap。
+<code>queries</code> 検索条件。省略時は空のMap。
+<code>multipart</code> マルチパートリクエストかどうか（ファイルストア用）。省略時はfalse
+<code>path</code> パス。省略時は空文字。
+<code>additionHeaders</code> 追加するヘッダー情報。省略時は空のMap。
+<code>isScript</code> スクリプト実行かどうか。省略時はfalse。</p>
+</section>
 
 
     
@@ -75,22 +89,28 @@
     {fields = const {},
     objectId = &#39;&#39;,
     queries = const {},
+    Map&lt;String, String&gt; additionalHeaders = const {},
     path = &#39;&#39;,
-    multipart = false}) async {
-  Signature s = new Signature(NCMBRequest.ncmb!);
+    multipart = false,
+    isScript = false}) async {
+  Signature s = new Signature(NCMBRequest.ncmb!, isScript: isScript);
   DateTime time = DateTime.now();
   final newFields = Map.from(fields)
-    ..removeWhere((k, v) =&gt;
-        (k == &#39;objectId&#39; || k == &#39;createDate&#39; || k == &#39;updateDate&#39;));
+    ..removeWhere((k, v) =&gt; (k == &#39;objectId&#39; ||
+        k == &#39;createDate&#39; ||
+        k == &#39;updateDate&#39; ||
+        (method == &#39;PUT&#39; &amp;&amp; name == &#39;users&#39; &amp;&amp; k == &#39;authData&#39;) ||
+        (method == &#39;PUT&#39; &amp;&amp; name == &#39;users&#39; &amp;&amp; k == &#39;mailAddressConfirm&#39;)));
   String signature = s.generate(method, name, time,
       objectId: objectId, queries: queries, definePath: path);
   String url =
       s.url(name, objectId: objectId, queries: queries, definePath: path);
   Map&lt;String, String&gt; headers = {
     &quot;X-NCMB-Application-Key&quot;: NCMBRequest.ncmb!.applicationKey!,
-    &quot;X-NCMB-Timestamp&quot;: time.toIso8601String(),
+    &quot;X-NCMB-Timestamp&quot;: time.toUtc().toIso8601String(),
     &quot;X-NCMB-Signature&quot;: signature
   };
+  headers.addAll(additionalHeaders);
   if (name == &#39;files&#39;) {
     headers.remove(&#39;Content-Type&#39;);
   }
@@ -104,7 +124,8 @@
     if (response.data is Uint8List) {
       return {&quot;data&quot;: response.data};
     }
-    if (method == &#39;DELETE&#39;) return {};
+
+    if (!isScript &amp;&amp; method == &#39;DELETE&#39;) return {};
     return response.data;
   } on DioError catch (e) {
     throw Exception(e.response!.data);
@@ -133,8 +154,8 @@
     <h5>NCMBRequest class</h5>
     <ol>
 
-    <li class="section-title"><a href="../../ncmb/NCMBRequest-class.html#constructors">Constructors</a></li>
-    <li><a href="../../ncmb/NCMBRequest/NCMBRequest.html">NCMBRequest</a></li>
+        <li class="section-title"><a href="../../ncmb/NCMBRequest-class.html#constructors">Constructors</a></li>
+          <li><a href="../../ncmb/NCMBRequest/NCMBRequest.html">NCMBRequest</a></li>
 
 
     <li class="section-title inherited">
@@ -159,8 +180,8 @@
     <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/operator_equals.html">operator ==</a></li>
 
 
-    <li class="section-title"><a href="../../ncmb/NCMBRequest-class.html#static-properties">Static properties</a></li>
-    <li><a href="../../ncmb/NCMBRequest/ncmb.html">ncmb</a></li>
+        <li class="section-title"><a href="../../ncmb/NCMBRequest-class.html#static-properties">Static properties</a></li>
+          <li><a href="../../ncmb/NCMBRequest/ncmb.html">ncmb</a></li>
 
 
 </ol>
@@ -175,7 +196,7 @@
 <footer>
   <span class="no-break">
     ncmb
-      2.3.0
+      2.6.6
   </span>
 
   

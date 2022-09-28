@@ -1,5 +1,3 @@
-// lib/src/object.dart
-
 import 'main.dart';
 import 'dart:convert';
 import 'dart:async';
@@ -12,34 +10,38 @@ import 'user.dart';
 import 'push.dart';
 import 'installation.dart';
 
-/// NCMBObject is a class for DataStore in NCMB.
+/// データストアのオブジェクトを扱うクラス
 class NCMBObject {
-  /// For accessing to NCMB
+  /// NCMBオブジェクト
   static NCMB? ncmb;
 
-  /// Class name
+  /// クラス名
   String _name = '';
 
-  /// Fields data
+  /// フィールドデータ
   Map _fields = {};
 
-  /// ObjectId
+  /// オブジェクトID
   String? objectId;
 
-  /// Initializing NCMBObjct. Required class name.
+  /// コンストラクター
+  /// [name] クラス名
+  /// [fields] フィールドデータ。省略時は空のMap
   NCMBObject(this._name, {Map fields = const {}}) {
     fields.forEach((key, value) {
       _fields[key] = fields[key];
     });
   }
 
-  /// Accessor methods. We can get class name by obj.name
+  /// アクセサメソッド。クラス名を返す
   get name => _name;
 
-  /// Accessor methods. We can get fields data by obj.fields
+  /// アクセサメソッド。フィールドデータを返す
   get fields => _fields;
 
-  /// Set [name] and [value] to fields.
+  /// フィールドデータをセットする
+  /// [name] フィールド名
+  /// [value] セットするデータ
   void set(String name, Object value) {
     if (name == 'createDate' || name == 'updateDate') {
       value = DateTime.parse(value as String);
@@ -112,14 +114,15 @@ class NCMBObject {
     }
   }
 
-  /// Call set methods for each key and value in [map]
+  /// フィールドデータをまとめてセットする
+  /// [map] フィールド名をキーにしたマップデータ
   void sets(Map map) {
     map.removeWhere((k, v) => v == null);
     map.forEach((k, v) => set(k, v));
   }
 
-  /// Fetch a data from DataStore in NCMB.
-  /// After fetched data, set to own fields from data.
+  /// フィールドデータを取得する
+  /// 取得したデータは自分自身にセットする
   Future<void> fetch() async {
     if (!_fields.containsKey('objectId')) {
       throw Exception('ObjectId is required.');
@@ -129,7 +132,9 @@ class NCMBObject {
     sets(response);
   }
 
-  // Increment update [name] fields. [number] is count to update(1 is default).
+  /// 指定したフィールドの値をインクリメンタルする設定にする
+  /// [name] フィールド名
+  /// [number] インクリメントする値。省略時は1
   void increment(String name, {int number = 1}) {
     if (!_fields.containsKey('objectId')) {
       return set(name, number);
@@ -137,6 +142,9 @@ class NCMBObject {
     set(name, {'__op': 'Increment', 'amount': number});
   }
 
+  /// 指定したフィールドに値を追加する
+  /// [name] フィールド名
+  /// [value] 追加するオブジェクト
   void add(String name, Object value) {
     if (!_fields.containsKey('objectId')) {
       return set(name, value);
@@ -147,6 +155,9 @@ class NCMBObject {
     set(name, {'__op': 'Add', 'objects': value});
   }
 
+  /// 指定したフィールドに値を追加する（すでにある場合は追加しない）
+  /// [name] フィールド名
+  /// [value] 追加するオブジェクト
   void addUnique(String name, Object value) {
     if (!_fields.containsKey('objectId')) {
       return set(name, value);
@@ -157,6 +168,9 @@ class NCMBObject {
     set(name, {'__op': 'AddUnique', 'objects': value});
   }
 
+  /// 指定したフィールドの値を削除する
+  /// [name] フィールド名
+  /// [value] 削除するオブジェクト
   void remove(String name, Object value) {
     if (!_fields.containsKey('objectId')) {
       return set(name, value);
@@ -167,10 +181,13 @@ class NCMBObject {
     set(name, {'__op': 'Remove', 'objects': value});
   }
 
+  /// 指定したフィールドが存在するか確認する
+  /// [name] フィールド名
   bool containsKey(String name) {
     return _fields.containsKey(name);
   }
 
+  /// データを保存する
   Future<void> save() async {
     if (!_fields.containsKey('objectId')) {
       NCMBRequest r = new NCMBRequest();
@@ -183,6 +200,7 @@ class NCMBObject {
     }
   }
 
+  /// データを削除する
   Future<bool> delete() async {
     if (!_fields.containsKey('objectId')) {
       throw Exception('objectId is not found.');
@@ -192,29 +210,45 @@ class NCMBObject {
     return res.keys.length == 0;
   }
 
+  /// 指定したフィールドが存在するか確認する
+  /// [name] フィールド名
   bool hasKey(String name) {
     return _fields.containsKey(name);
   }
 
+  /// 指定したフィールドの値を返す
+  /// [name] フィールド名
   Object? get(String name) {
     return _fields[name];
   }
 
+  /// 指定したフィールドの値を文字列型として返す
+  /// [name] フィールド名
+  /// [defaultValue] デフォルト値
   String getString(String name, {String? defaultValue}) {
     if (!_fields.containsKey(name) && defaultValue != null) return defaultValue;
     return _fields[name]! as String;
   }
 
+  /// 指定したフィールドの値を日時型として返す
+  /// [name] フィールド名
+  /// [defaultValue] デフォルト値
   DateTime getDateTime(String name, {DateTime? defaultValue}) {
     if (!_fields.containsKey(name) && defaultValue != null) return defaultValue;
     return _fields[name]! as DateTime;
   }
 
+  /// 指定したフィールドの値を数値型（int）として返す
+  /// [name] フィールド名
+  /// [defaultValue] デフォルト値
   int getInt(String name, {int? defaultValue}) {
     if (!_fields.containsKey(name) && defaultValue != null) return defaultValue;
     return _fields[name]! as int;
   }
 
+  /// 挻定したフィールドの値を数値型（double）として返す
+  /// [name] フィールド名
+  /// [defaultValue] デフォルト値
   double getDouble(String name, {double? defaultValue}) {
     if (!_fields.containsKey(name) && defaultValue != null) return defaultValue;
     if (_fields[name].runtimeType == int) {
@@ -223,16 +257,23 @@ class NCMBObject {
     return _fields[name]! as double;
   }
 
+  /// 指定したフィールドの値を真偽値として返す
+  /// [name] フィールド名
+  /// [defaultValue] デフォルト値
   bool getBool(String name, {bool? defaultValue}) {
     if (!_fields.containsKey(name) && defaultValue != null) return defaultValue;
     return _fields[name]! as bool;
   }
 
+  /// 指定したフィールドの値をリストとして返す
+  /// [name] フィールド名
+  /// [defaultValue] デフォルト値
   List<dynamic> getList(String name, {List<dynamic>? defaultValue}) {
     if (!_fields.containsKey(name) && defaultValue != null) return defaultValue;
     return _fields[name]! as List;
   }
 
+  /// データをJSON化する
   dynamic toJson() {
     return {
       '__type': 'Pointer',
@@ -241,10 +282,12 @@ class NCMBObject {
     };
   }
 
+  /// データを文字列化する
   String toString() {
     return json.encode(_fields, toEncodable: myEncode);
   }
 
+  /// 文字列化する際に利用するエンコード関数
   dynamic myEncode(dynamic item) {
     if (item is DateTime) {
       return item.toUtc().toIso8601String();
