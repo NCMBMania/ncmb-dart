@@ -70,6 +70,14 @@ class NCMBFile extends NCMBObject {
     return f;
   }
 
+  Future<Uint8List> contents() async {
+    NCMBRequest r = new NCMBRequest();
+    Map response = await r.exec('GET', 'files',
+        objectId: this.getString("fileName"), multipart: true);
+    data = response['data'];
+    return data as Uint8List;
+  }
+
   /// ファイル検索を行うクエリークラスを返す
   static NCMBQuery query() {
     return NCMBQuery('files');

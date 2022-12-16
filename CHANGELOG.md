@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 2.7.0
+
+Get file content by NCMBFile instance
+
 ## 2.6.6
 
 Fix getDouble method.
