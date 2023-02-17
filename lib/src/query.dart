@@ -171,7 +171,7 @@ class NCMBQuery {
   /// [key] フィールド名
   /// [value] 検索する値
   void notInArray(String key, Object value) {
-    setOperand(key, value, ope: '\$notInArray');
+    setOperand(key, value, ope: '\$ninArray');
   }
 
   /// 指定したフィールドの値が、指定した位置情報の近い順にデータを取得する
