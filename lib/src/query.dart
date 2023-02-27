@@ -313,7 +313,7 @@ class NCMBQuery {
 
   /// 検索結果を、指定したフィールドでソートする
   /// [key] フィールド名
-  /// [descending] 並び順（true: 昇順、false: 降順）。省略時は昇順
+  /// [descending] 並び順（true: 降順、false: 昇順）。省略時は降順
   void order(String key, {bool descending = true}) {
     var symbol = descending == true ? '-' : '';
     if (!_queries.containsKey('order')) {
